@@ -4,6 +4,7 @@ import java.io.Serializable;
 import java.util.Date;
 import java.util.List;
 
+import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
@@ -21,7 +22,7 @@ public class Article implements Serializable
 	@Column(name="id")
 	long id;
 	@Column(name="images")
-	@OneToMany(targetEntity=Image.class, mappedBy="article")
+	@OneToMany(targetEntity=Image.class, mappedBy="article", cascade=CascadeType.ALL)
 	List<Image> images;
 	@Column(name="description")
 	String description;

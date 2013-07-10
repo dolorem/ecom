@@ -19,13 +19,14 @@ public abstract class AbstractDAO<T extends Serializable>
 	private final Class<T> clazz;
     @Autowired
     SessionFactory sessionFactory;
+    public static Session fooSession = null;
 
     public AbstractDAO(final Class< T> clazzToSet) 
     {
         this.clazz = clazzToSet;
     }
 
-    public T getById(final Integer id) 
+    public T getById(final Long id) 
     {
         if (id != null)
         	return (T) this.getCurrentSession().get(this.clazz, id);
@@ -49,6 +50,7 @@ public abstract class AbstractDAO<T extends Serializable>
 	        {
 	        	this.getCurrentSession().saveOrUpdate(entity);
 	        }
+	        this.getCurrentSession().flush();
         }
     }
 
@@ -56,6 +58,7 @@ public abstract class AbstractDAO<T extends Serializable>
     {
         if (entity != null)
         	this.getCurrentSession().merge(entity);
+        this.getCurrentSession().flush();
     }
 
     public void delete(final T entity) 
@@ -64,7 +67,7 @@ public abstract class AbstractDAO<T extends Serializable>
         	this.getCurrentSession().delete(entity);
     }
 
-    public void deleteById(final Integer entityId) 
+    public void deleteById(final Long entityId) 
     {
         final T entity = this.getById(entityId);
         if (entity != null)
@@ -78,7 +81,13 @@ public abstract class AbstractDAO<T extends Serializable>
 
     protected final Session getCurrentSession() 
     {
-        return this.sessionFactory.getCurrentSession();
+//        return this.sessionFactory.getCurrentSession();
+    	if (AbstractDAO.fooSession == null)
+    	
+    		AbstractDAO.fooSession = this.sessionFactory.openSession();
+    	
+//    		AbstractDAO.fooSession = this.sessionFactory.getCurrentSession();
+    	return AbstractDAO.fooSession;
     }
     
     public List<T> getWithCriteria(List<Criterion> criteria)

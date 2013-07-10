@@ -2,6 +2,7 @@ package com.smiechmateusz.model;
 
 import java.io.Serializable;
 
+import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
@@ -18,7 +19,7 @@ public class Image implements Serializable
 	@GeneratedValue
 	@Column(name="id")
 	long id;
-	@ManyToOne
+	@ManyToOne(cascade=CascadeType.ALL)
 	@JoinColumn(name="images")
 	Article article;
 	@Column(name="path")
