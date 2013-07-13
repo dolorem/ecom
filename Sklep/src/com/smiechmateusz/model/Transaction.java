@@ -6,7 +6,7 @@ public class Transaction
 {
 	long id;
 	Article article;
-	User user;
+	MyUser user;
 	long amount;
 	double course;
 	Date date;

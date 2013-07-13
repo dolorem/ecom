@@ -3,9 +3,8 @@ package com.smiechmateusz.security;
 import java.util.ArrayList;
 import java.util.Collection;
 import java.util.List;
- 
-import com.smiechmateusz.security.UserDAO;
-import com.smiechmateusz.security.DbUser;
+
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.dao.DataAccessException;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.authority.GrantedAuthorityImpl;
@@ -14,6 +13,9 @@ import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.transaction.annotation.Transactional;
+
+import com.smiechmateusz.dao.UserDAO;
+import com.smiechmateusz.model.Role;
  
 /**
  * A custom service for retrieving users from a custom datasource, such as a database.
@@ -23,7 +25,8 @@ import org.springframework.transaction.annotation.Transactional;
 @Transactional(readOnly = true)
 public class CustomUserDetailsService implements UserDetailsService {
   
- private UserDAO userDAO = new UserDAO();
+	@Autowired
+     UserDAO userDAO;
   
  /**
   * Retrieves a user record containing the user's credentials and access.
@@ -40,7 +43,7 @@ public class CustomUserDetailsService implements UserDetailsService {
    // You can provide a custom DAO to access your persistence layer
    // Or use JDBC to access your database
    // DbUser is our custom domain user. This is not the same as Spring's User
-   DbUser dbUser = userDAO.searchDatabase(username);
+	com.smiechmateusz.model.MyUser dbUser = userDAO.searchDatabase(username);
     
    // Populate the Spring User object with details from the dbUser
    // Here we just pass the username, password, and access level
@@ -48,12 +51,12 @@ public class CustomUserDetailsService implements UserDetailsService {
  
    user =  new User(
      dbUser.getUsername(),
-     dbUser.getPassword().toLowerCase(),
+     dbUser.getPasswordHash().toLowerCase(),
      true,
      true,
      true,
      true,
-     getAuthorities(dbUser.getAccess()) );
+     getAuthorities(dbUser.getRole()) );
  
   } catch (Exception e) {
    System.out.println("Error in retrieving user");
@@ -73,9 +76,9 @@ public class CustomUserDetailsService implements UserDetailsService {
   * @param access an integer value representing the access of the user
   * @return collection of granted authorities
   */
-  public Collection<GrantedAuthority> getAuthorities(Integer access) {
+  public Collection<GrantedAuthority> getAuthorities(List<Role> roles) {
    // Create a list of grants for this user
-   List<GrantedAuthority> authList = new ArrayList<GrantedAuthority>(2);
+   /*List<GrantedAuthority> authList = new ArrayList<GrantedAuthority>(2);
     
    // All users are granted with ROLE_USER access
    // Therefore this user gets a ROLE_USER by default
@@ -87,10 +90,10 @@ public class CustomUserDetailsService implements UserDetailsService {
    if ( access.compareTo(1) == 0) {
     // User has admin access
     System.out.println("Grant ROLE_ADMIN to this user");
-    authList.add(new GrantedAuthorityImpl("ROLE_ADMIN"));
-   }
- 
+    authList.add(new GrantedAuthorityImpl("ROLE_ADMIN"));*/
+	 List<GrantedAuthority> auth = new ArrayList<GrantedAuthority>(2);
+	auth.add(new GrantedAuthorityImpl("ROLE_USER"));
    // Return list of granted authorities
-   return authList;
+   return auth;
    }
 }

@@ -19,7 +19,7 @@ import com.smiechmateusz.dao.UserDAO;
 import com.smiechmateusz.model.Article;
 import com.smiechmateusz.model.Category;
 import com.smiechmateusz.model.Image;
-import com.smiechmateusz.model.User;
+import com.smiechmateusz.model.MyUser;
 import com.smiechmateusz.model.Role;
 
 public class DatabaseTest
@@ -50,7 +50,7 @@ public class DatabaseTest
 		assertEquals(gottenArticle.getDescription(), a.getDescription());
 		assertEquals(gottenArticle.getImages().get(0).getPath(), i.getPath());
 		assertEquals(gottenArticle.getImages().get(0).getType(), i.getType());
-		articleDAO.delete(a);
+//		articleDAO.delete(a);
 //		imageDAO.delete(i);
 		
 		a = new Article();
@@ -83,11 +83,11 @@ public class DatabaseTest
 		assertEquals(gottenCategory.getArticles().get(0), a);
 //		articleDAO.delete(a);
 		c.setArticles(new ArrayList<Article>());
-		categoryDAO.delete(c);
+//		categoryDAO.delete(c);
 //		categoryDAO.deleteById(1L);
-		categoryDAO.delete(c2);
+//		categoryDAO.delete(c2);
 
-		User u = new User();
+		MyUser u = new MyUser();
 		u.setEmail("email@mydomain.com");
 		u.setPasswordHash("rgaeodf+);}d);]+ y=");
 		u.setUsername("username");
@@ -95,19 +95,19 @@ public class DatabaseTest
 		r.setDescription("my description");
 		userDAO.create(u);
 		roleDAO.create(r);
-		r.setUsers(new ArrayList<User>());
+		r.setUsers(new ArrayList<MyUser>());
 		r.getUsers().add(u);
 		u.setRole(new ArrayList<Role>());
 		u.getRole().add(r);
 		userDAO.update(u);
 		roleDAO.update(r);
-		User gottenUser = (User) userDAO.getById(1L);
+		MyUser gottenUser = (MyUser) userDAO.getById(1L);
 		assertEquals(gottenUser, u);
 		Role gottenRole = (Role) roleDAO.getById(1L);
 		assertEquals(gottenRole, r);
 		//AbstractDAO.fooSession.flush();
-		userDAO.delete(u);
-		roleDAO.delete(r);
+//		userDAO.delete(u);
+//		roleDAO.delete(r);
 //		userDAO.deleteById(u.getId());
 		System.out.println(u.getId());
 //		AbstractDAO.fooSession.flush();

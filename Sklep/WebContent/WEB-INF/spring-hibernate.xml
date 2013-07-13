@@ -17,7 +17,7 @@
 				<value>com.smiechmateusz.model.Article</value>
 				<value>com.smiechmateusz.model.Image</value>
 				<value>com.smiechmateusz.model.Category</value>
-				<value>com.smiechmateusz.model.User</value>
+				<value>com.smiechmateusz.model.MyUser</value>
 				<value>com.smiechmateusz.model.Role</value>
         	</list>
     	</property>

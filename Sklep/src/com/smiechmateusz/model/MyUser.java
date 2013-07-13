@@ -16,7 +16,7 @@ import javax.persistence.Transient;
 
 @Entity
 @Table(name="User")
-public class User implements Serializable
+public class MyUser implements Serializable
 {
 	@Id
 	@GeneratedValue
