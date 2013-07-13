@@ -12,7 +12,6 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
 import org.springframework.transaction.annotation.Transactional;
 
-@Repository
 @Transactional
 public abstract class AbstractDAO<T extends Serializable> 
 {
@@ -40,15 +39,30 @@ public abstract class AbstractDAO<T extends Serializable>
 
     public void create(final T entity) 
     {
+    	boolean persisted = false;
         if (entity != null)
         {
 	        try
 	        {
 	        	this.getCurrentSession().persist(entity);
+	        	persisted = true;
+	        	this.getCurrentSession().flush();
 	        }
 	        catch (PersistentObjectException e)
 	        {
-	        	this.getCurrentSession().saveOrUpdate(entity);
+	        	try
+	        	{
+	        		if (!persisted)
+	        		{
+	        			this.getCurrentSession().saveOrUpdate(entity);
+	        			this.getCurrentSession().flush();
+	        		}
+	        	}
+	        	catch(Exception e2)
+	        	{
+	        		e2.printStackTrace();
+	        	}
+	        	e.printStackTrace();
 	        }
 	        this.getCurrentSession().flush();
         }
@@ -57,14 +71,42 @@ public abstract class AbstractDAO<T extends Serializable>
     public void update(final T entity) 
     {
         if (entity != null)
-        	this.getCurrentSession().merge(entity);
-        this.getCurrentSession().flush();
+        {
+        	try
+        	{
+        		this.getCurrentSession().merge(entity);
+        		//this.getCurrentSession().update(entity);
+        		this.getCurrentSession().flush();
+        	}
+        	catch (Exception e)
+        	{
+        		e.printStackTrace();
+        	}
+        }
     }
 
     public void delete(final T entity) 
     {
-        if (entity != null)
-        	this.getCurrentSession().delete(entity);
+    	try 
+        {
+    		if (entity != null)
+            	this.getCurrentSession().delete(entity);
+        	this.getCurrentSession().flush();
+        }
+        catch (Exception e)
+        {
+        	e.printStackTrace();
+        }
+    	try
+    	{
+    		this.getCurrentSession().flush();
+    	}
+    	catch (Exception e)
+    	{
+    		e.printStackTrace();
+//    		delete(entity);
+    	}
+    	
     }
 
     public void deleteById(final Long entityId) 

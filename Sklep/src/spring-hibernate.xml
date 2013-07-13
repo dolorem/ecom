@@ -14,8 +14,11 @@
     	<!-- Don't forget to list all your entity classes here -->
     	<property name="annotatedClasses">
         	<list>
-<value>com.smiechmateusz.model.Article</value>
-<value>com.smiechmateusz.model.Image</value>
+				<value>com.smiechmateusz.model.Article</value>
+				<value>com.smiechmateusz.model.Image</value>
+				<value>com.smiechmateusz.model.Category</value>
+				<value>com.smiechmateusz.model.User</value>
+				<value>com.smiechmateusz.model.Role</value>
         	</list>
     	</property>
 
@@ -55,8 +58,7 @@
     	<property name="sessionFactory" ref="sessionFactory" />
 	</bean>
 	<tx:annotation-driven transaction-manager="txManager" />
-    
-	<context:annotation-config />
+    <context:annotation-config />
     
    	 <bean id="hibernateConfiguration" factory-bean="&amp;sessionFactory" factory-method="getConfiguration" /> <!-- Ampersand to taki myk Springowy.-->
     
@@ -65,4 +67,7 @@
       	class="com.smiechmateusz.dao.AbstractDAO"/>
 	<bean id="ImageDAO" parent="AbstractHibernateDAO" class="com.smiechmateusz.dao.ImageDAO" />
 	<bean id="ArticleDAO" parent="AbstractHibernateDAO" class="com.smiechmateusz.dao.ArticleDAO" />
+	<bean id="CategoryDAO" parent="AbstractHibernateDAO" class="com.smiechmateusz.dao.CategoryDAO" />
+	<bean id="UserDAO" parent="AbstractHibernateDAO" class="com.smiechmateusz.dao.UserDAO"/>
+	<bean id="RoleDAO" parent="AbstractHibernateDAO" class="com.smiechmateusz.dao.RoleDAO" />
 </beans>

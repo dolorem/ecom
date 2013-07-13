@@ -9,9 +9,11 @@ import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
+import javax.persistence.JoinColumn;
+import javax.persistence.JoinTable;
+import javax.persistence.ManyToMany;
 import javax.persistence.OneToMany;
 import javax.persistence.Table;
-import javax.persistence.Transient;
 
 @Entity
 @Table(name="Article")
@@ -26,8 +28,9 @@ public class Article implements Serializable
 	List<Image> images;
 	@Column(name="description")
 	String description;
-	@Transient
-	//@Column(name="categories")
+	@ManyToMany(cascade=CascadeType.PERSIST, targetEntity=Category.class)
+	@JoinTable(name="category_article", joinColumns = {@JoinColumn(name="articleId", referencedColumnName="id")}, 
+		inverseJoinColumns={@JoinColumn(name="categoryId", referencedColumnName="id")})
 	List<Category> categories;
 	@Column(name="addDate")
 	Date addDate;

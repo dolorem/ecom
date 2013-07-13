@@ -1,16 +1,23 @@
 package com.smiechmateusz.model;
 
+import java.io.Serializable;
+import java.util.List;
+
+import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.JoinColumn;
+import javax.persistence.JoinTable;
+import javax.persistence.ManyToMany;
 import javax.persistence.Table;
 
 
 @Entity
 @Table(name="Role")
-public class Role 
+public class Role implements Serializable
 {
 	@Id
 	@GeneratedValue(strategy=GenerationType.AUTO)
@@ -18,6 +25,24 @@ public class Role
 	long id;
 	@Column(name="description")
 	String description;
+	@ManyToMany(cascade=CascadeType.ALL, targetEntity=User.class)
+	@JoinTable(name="user_role", joinColumns={@JoinColumn(name="roleId", referencedColumnName="id")},
+		inverseJoinColumns={@JoinColumn(name="userId", referencedColumnName="id")})
+	List<User> users;
+	
+	public Role()
+	{
+		
+	}
+	
+	public List<User> getUsers()
+	{
+		return users;
+	}
+	public void setUsers(List<User> users)
+	{
+		this.users = users;
+	}
 	public long getId()
 	{
 		return id;
