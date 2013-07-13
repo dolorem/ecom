@@ -30,7 +30,7 @@ public class MyUser implements Serializable
 	String email;
 	@Transient	
 	List<Transaction> transactions;
-	@ManyToMany(cascade=CascadeType.ALL, targetEntity=Role.class)
+	@ManyToMany(cascade=CascadeType.PERSIST, targetEntity=Role.class)
 	@JoinTable(name="user_role", joinColumns={@JoinColumn(name="userId", referencedColumnName="id")},
 		inverseJoinColumns={@JoinColumn(name="roleId", referencedColumnName="id")})
 	List<Role> role;

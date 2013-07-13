@@ -25,7 +25,7 @@ public class Role implements Serializable
 	long id;
 	@Column(name="description")
 	String description;
-	@ManyToMany(cascade=CascadeType.ALL, targetEntity=MyUser.class)
+	@ManyToMany(cascade=CascadeType.PERSIST, targetEntity=MyUser.class)
 	@JoinTable(name="user_role", joinColumns={@JoinColumn(name="roleId", referencedColumnName="id")},
 		inverseJoinColumns={@JoinColumn(name="userId", referencedColumnName="id")})
 	List<MyUser> users;

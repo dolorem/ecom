@@ -16,7 +16,7 @@ public class UserDAO extends AbstractDAO
 		super(MyUser.class);
 	}
 	
-	public MyUser searchDatabase(String username)
+	public MyUser findByUsername(String username)
 	{
 		Criteria c = getCurrentSession().createCriteria(MyUser.class);
 		c.add(Restrictions.like("username", username));

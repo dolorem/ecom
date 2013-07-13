@@ -43,7 +43,7 @@ public class CustomUserDetailsService implements UserDetailsService {
    // You can provide a custom DAO to access your persistence layer
    // Or use JDBC to access your database
    // DbUser is our custom domain user. This is not the same as Spring's User
-	com.smiechmateusz.model.MyUser dbUser = userDAO.searchDatabase(username);
+	com.smiechmateusz.model.MyUser dbUser = userDAO.findByUsername(username);
     
    // Populate the Spring User object with details from the dbUser
    // Here we just pass the username, password, and access level

@@ -12,7 +12,7 @@ import com.smiechmateusz.dao.UserDAO;
 @Aspect
 public class Authentication implements ApplicationContextAware
 {
-	
+
 	ApplicationContext context;
 	
 	@Before(value="@annotation(ra)")
@@ -20,20 +20,18 @@ public class Authentication implements ApplicationContextAware
 	{
 		System.out.println(ra.authenticationLevel());
 		System.out.println("here");
-		
 	}
-	
+
 	public void logIn(String username, String password)
 	{
 		System.out.println("Here");
 		UserDAO userDAO = (UserDAO) context.getBean("UserDAO");
-		
 	}
 
 	@Override
 	public void setApplicationContext(ApplicationContext context)
 			throws BeansException
 	{
-		this.context = context;		
+		this.context = context;	
 	}
 }

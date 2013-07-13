@@ -50,7 +50,7 @@ public class DatabaseTest
 		assertEquals(gottenArticle.getDescription(), a.getDescription());
 		assertEquals(gottenArticle.getImages().get(0).getPath(), i.getPath());
 		assertEquals(gottenArticle.getImages().get(0).getType(), i.getType());
-//		articleDAO.delete(a);
+		articleDAO.delete(a);
 //		imageDAO.delete(i);
 		
 		a = new Article();
@@ -81,11 +81,11 @@ public class DatabaseTest
 		gottenCategory = (Category) categoryDAO.getById(c2.getId());
 		assertEquals(gottenCategory, c2);
 		assertEquals(gottenCategory.getArticles().get(0), a);
-//		articleDAO.delete(a);
+		articleDAO.delete(a);
 		c.setArticles(new ArrayList<Article>());
-//		categoryDAO.delete(c);
+		categoryDAO.delete(c);
 //		categoryDAO.deleteById(1L);
-//		categoryDAO.delete(c2);
+		categoryDAO.delete(c2);
 
 		MyUser u = new MyUser();
 		u.setEmail("email@mydomain.com");
@@ -107,7 +107,7 @@ public class DatabaseTest
 		assertEquals(gottenRole, r);
 		//AbstractDAO.fooSession.flush();
 //		userDAO.delete(u);
-//		roleDAO.delete(r);
+		roleDAO.delete(r);
 //		userDAO.deleteById(u.getId());
 		System.out.println(u.getId());
 //		AbstractDAO.fooSession.flush();
