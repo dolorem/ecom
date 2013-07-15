@@ -10,15 +10,16 @@ import org.junit.Test;
 import org.springframework.context.ApplicationContext;
 import org.springframework.context.support.ClassPathXmlApplicationContext;
 
-import com.smiechmateusz.dao.AbstractDAO;
 import com.smiechmateusz.dao.ArticleDAO;
 import com.smiechmateusz.dao.CategoryDAO;
 import com.smiechmateusz.dao.ImageDAO;
+import com.smiechmateusz.dao.MenuDAO;
 import com.smiechmateusz.dao.RoleDAO;
 import com.smiechmateusz.dao.UserDAO;
 import com.smiechmateusz.model.Article;
 import com.smiechmateusz.model.Category;
 import com.smiechmateusz.model.Image;
+import com.smiechmateusz.model.Menu;
 import com.smiechmateusz.model.MyUser;
 import com.smiechmateusz.model.Role;
 
@@ -112,6 +113,30 @@ public class DatabaseTest
 		System.out.println(u.getId());
 //		AbstractDAO.fooSession.flush();
 		System.out.println("HERE?");
+		
+		MenuDAO menuDAO = (MenuDAO) context.getBean("MenuDAO");
+		Menu m = new Menu();
+		m.setDescription("Kuchnia");
+		m.setLink("/kuchnia.htm");
+		m.setParent(null);
+		menuDAO.create(m);
+		Menu m2 = new Menu();
+		m2.setParent(null);
+		m2.setDescription("Jadalnia");
+		m2.setLink("/jadalnia.htm");
+		ArrayList<Menu> submenu = new ArrayList<Menu>();
+		Menu b = new Menu();
+		b.setDescription("Sztućce");
+		b.setLink("/sztucce.htm");
+		Menu d = new Menu();
+		d.setDescription("Talerze");
+		d.setLink("/talerze.htm");
+		submenu.add(b);
+		submenu.add(d);
+		m2.setChildren(submenu);
+		b.setParent(m2);
+		d.setParent(m2);
+		menuDAO.create(m2);
 		
 		}
 		catch(Exception e)

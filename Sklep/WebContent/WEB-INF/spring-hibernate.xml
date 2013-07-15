@@ -19,6 +19,7 @@
 				<value>com.smiechmateusz.model.Category</value>
 				<value>com.smiechmateusz.model.MyUser</value>
 				<value>com.smiechmateusz.model.Role</value>
+				<value>com.smiechmateusz.model.Menu</value>
         	</list>
     	</property>
 
@@ -40,7 +41,7 @@
 	<!-- BoneCP configuration -->
 	<bean id="mainDataSource" class="com.jolbox.bonecp.BoneCPDataSource" destroy-method="close">
     	<property name="driverClass" value="com.mysql.jdbc.Driver" />
-    	<property name="jdbcUrl" value="jdbc:mysql://localhost:3306/java" />
+    	<property name="jdbcUrl" value="jdbc:mysql://localhost:3306/java?characterEncoding=UTF-8" />
     	<property name="username" value="root"/>
     	<property name="password" value="toor"/>
     	<property name="idleConnectionTestPeriod" value="60"/>
@@ -70,7 +71,9 @@
 	<bean id="CategoryDAO" parent="AbstractHibernateDAO" class="com.smiechmateusz.dao.CategoryDAO" />
 	<bean id="UserDAO" parent="AbstractHibernateDAO" class="com.smiechmateusz.dao.UserDAO"/>
 	<bean id="RoleDAO" parent="AbstractHibernateDAO" class="com.smiechmateusz.dao.RoleDAO" />
+	<bean id="MenuDAO" parent="AbstractHibernateDAO" class="com.smiechmateusz.dao.MenuDAO" />
 	
 	<aop:aspectj-autoproxy />
 	<bean id="authenticationAspect" class="com.smiechmateusz.controller.authenticate.Authentication" />
+	<bean id="baseControllerAspect" class="com.smiechmateusz.aspect.BaseControllerAspect" />
 </beans>

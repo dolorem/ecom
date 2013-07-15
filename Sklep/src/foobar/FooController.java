@@ -1,5 +1,7 @@
 package foobar;
 
+import org.springframework.security.core.Authentication;
+import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -7,7 +9,6 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.servlet.ModelAndView;
 
-import com.smiechmateusz.controller.authenticate.Authentication;
 import com.smiechmateusz.controller.authenticate.RequireAuthentication;
 
 @Controller
@@ -29,7 +30,11 @@ public class FooController
     public ModelAndView baz() 
     {
     	//logIn("a", "b");
-    	return new ModelAndView("HelloWorldPage");	
+    	ModelAndView mav = new ModelAndView("HelloWorldPage");
+//    	mav.addObject("foo", "bar");
+    	Authentication auth = SecurityContextHolder.getContext().getAuthentication();
+    	mav.addObject("foo", auth.getCredentials());
+    	return mav;
     }
     
     @RequestMapping(method = RequestMethod.GET, value = "bazz.htm")

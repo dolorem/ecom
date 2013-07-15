@@ -17,11 +17,11 @@
   <security:form-login
     login-page="/auth/login.htm"
     authentication-failure-url="/auth/login.htm?error=true"
-    default-target-url="/main/common.htm"/>
+    default-target-url="/index.htm"/>
     
   <security:logout
     invalidate-session="true"
-    logout-success-url="/auth/login.htm"
+    logout-success-url="/index.htm"
     logout-url="/auth/logout.htm"/>
   
  </security:http>

@@ -48,7 +48,7 @@ public class CustomUserDetailsService implements UserDetailsService {
    // Populate the Spring User object with details from the dbUser
    // Here we just pass the username, password, and access level
    // getAuthorities() will translate the access level to the correct role type
- 
+	System.out.println(dbUser.getUsername());
    user =  new User(
      dbUser.getUsername(),
      dbUser.getPasswordHash().toLowerCase(),
