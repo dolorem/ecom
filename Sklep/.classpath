@@ -40,5 +40,7 @@
 	<classpathentry kind="lib" path="/home/mateusz/Pobrane/eclipse/eclipse moje/spring-security-3.1.4.RELEASE/dist/spring-security-taglibs-3.1.4.RELEASE.jar"/>
 	<classpathentry kind="lib" path="/home/mateusz/Pobrane/eclipse/eclipse moje/spring-security-3.1.4.RELEASE/dist/spring-security-web-3.1.4.RELEASE.jar"/>
 	<classpathentry kind="lib" path="/home/mateusz/Pobrane/eclipse/eclipse moje/spring-security-javaconfig-1.0.0.M1/libs/spring-security-javaconfig-1.0.0.M1.jar"/>
+	<classpathentry kind="lib" path="/home/mateusz/Pobrane/eclipse/eclipse moje/apache-tomcat-7.0.39/lib/commons-fileupload-1.3.jar"/>
+	<classpathentry kind="lib" path="/home/mateusz/Pobrane/eclipse/eclipse moje/apache-tomcat-7.0.39/lib/commons-io-2.4.jar"/>
 	<classpathentry kind="output" path="build/classes"/>
 </classpath>

@@ -93,6 +93,11 @@ public class CustomUserDetailsService implements UserDetailsService {
     authList.add(new GrantedAuthorityImpl("ROLE_ADMIN"));*/
 	 List<GrantedAuthority> auth = new ArrayList<GrantedAuthority>(2);
 	auth.add(new GrantedAuthorityImpl("ROLE_USER"));
+	for (Role r : roles)
+	{
+		if (r.getDescription().equals("admin") || r.getDescription().equals("administrator"))
+			auth.add(new GrantedAuthorityImpl("ROLE_ADMIN"));
+	}
    // Return list of granted authorities
    return auth;
    }

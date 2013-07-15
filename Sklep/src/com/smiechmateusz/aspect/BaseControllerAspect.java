@@ -29,7 +29,7 @@ public class BaseControllerAspect implements ApplicationContextAware
 		this.context = context;
 	}
 	
-	@Around("within(com.smiechmateusz.controller.*)")
+	@Around("within(com.smiechmateusz.controller.*) || within(com.smiechmateusz.controller.administration.*)")
 	public Object BeforeAny(ProceedingJoinPoint pjp) throws Throwable
 	{
 		MethodSignature ms = (MethodSignature) pjp.getSignature();
