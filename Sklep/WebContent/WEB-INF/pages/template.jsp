@@ -1,65 +1,6 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
-<%@page import="java.util.ArrayList" %>
-<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
-<!DOCTYPE html>
-<html>
-<head>
-<c:forEach var="cssItem" items="${css}">
-	<link rel="stylesheet" href="${cssItem}" />
-</c:forEach>
-<c:forEach var="jsItem" items="${js}">
-	<script type="text/javascript" src="${jsItem}"></script>
-</c:forEach>
-<style>
-body
-{
-	padding-top: 60px;
-}
-ul.nav li.dropdown:hover ul.dropdown-menu{
-    display: block;    
-    margin: 0px;
-}
-
-.myMenuNav
-{
-	float: none;
-	text-align: center;
-}
-.navbar .nav,
-    .navbar .nav > li {
-      float:none;
-      display:inline-block;
-      vertical-align: top;
-    }
-
-    .navbar-inner {
-      text-align:center;
-    }
-    
-.masthead .navbar .nav li a
-{
-	text-align: center;
-	border-left: 1px solid rgba(255, 255, 255, .75);
-	border-right: 1px solid rgba(0, 0, 0, .1);
-}
-</style>
-<meta charset="UTF-8">
-</head>
-<body>
-<c:choose>
-	<c:when test="${logged}">
-		<%@include file="headerLogged.jsp" %>
-	</c:when>
-	<c:otherwise>
-		<%@include file="headerNotLogged.jsp" %>
-	</c:otherwise>
-</c:choose>
-<div class="container">
-	<%@include file="menu.jsp" %>
-	<div class="row">
-		<div class="span3"><%@include file="sidebar.jsp" %></div>
-		<div class="span9">
+<%@include file="before.jsp" %>
 			
 
 Lorem ipsum dolor sit amet, consectetur adipiscing elit. Integer iaculis dictum leo, et porttitor tellus dignissim ut. Nullam non sem nec lectus dapibus tempus vitae cursus nulla. Sed quis mi ullamcorper nunc elementum pellentesque. Vivamus tempor nisi ac lectus suscipit posuere. Mauris id ultricies augue. Nam tellus turpis, ullamcorper vel egestas vitae, egestas in lacus. Aliquam ultrices lacus quis pellentesque dictum.
@@ -81,8 +22,4 @@ Pellentesque quis dictum risus, ut tempor mauris. Nunc porta purus augue, sed bi
 Mauris nec adipiscing lectus. Fusce in tempus diam. Interdum et malesuada fames ac ante ipsum primis in faucibus. Morbi gravida turpis ullamcorper enim vestibulum commodo. Sed quis urna magna. Suspendisse magna urna, aliquam lobortis pulvinar mattis, suscipit auctor nisl. Phasellus in ullamcorper augue, a faucibus eros.
 
 Aliquam eu diam nec nisi lobortis convallis ac vitae eros. Fusce tempus nec felis in volutpat. Praesent dui ante, lacinia nec sem in, porttitor feugiat tortor. Praesent tempor malesuada fringilla. Suspendisse id placerat mauris, et egestas lorem. Cras commodo, dui non accumsan volutpat, lacus tellus rutrum lacus, non placerat orci ipsum nec lectus. Vestibulum vitae laoreet sapien, nec vehicula erat. Suspendisse convallis ultricies euismod. Donec venenatis turpis lectus, porttitor cursus augue adipiscing at. Vivamus et orci viverra urna pharetra mollis ut eget quam. Pellentesque ullamcorper lorem vitae elit posuere pellentesque. Aliquam tincidunt enim in felis aliquet suscipit. Mauris et lobortis sapien, vitae dictum magna. Fusce diam nisi, hendrerit sed facilisis ut, rutrum et lacus. Integer iaculis libero et nisi elementum congue. Aenean posuere quis tortor sed tristique. 
-		</div>
-	</div>	
-</div>
-</body>
-</html>
+<%@include file="after.jsp"%>

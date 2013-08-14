@@ -45,8 +45,9 @@ public abstract class AbstractDAO<T extends Serializable>
 	        try
 	        {
 	        	this.getCurrentSession().persist(entity);
-	        	persisted = true;
+	        	this.getCurrentSession().save(entity);
 	        	this.getCurrentSession().flush();
+	        	persisted = true;
 	        }
 	        catch (PersistentObjectException e)
 	        {

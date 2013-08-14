@@ -36,6 +36,12 @@ public class Category implements Serializable
 	@JoinTable(name="category_article", joinColumns = {@JoinColumn(name="categoryId", referencedColumnName="id")}, 
 		inverseJoinColumns={@JoinColumn(name="articleId", referencedColumnName="id")})
 	List<Article> articles;
+	
+	public List<Category> getChildrenAlphabetically()
+	{
+		return getChildren();
+	}
+	
 	public long getId()
 	{
 		return id;

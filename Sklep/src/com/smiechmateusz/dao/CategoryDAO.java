@@ -2,7 +2,9 @@ package com.smiechmateusz.dao;
 
 import java.util.ArrayList;
 
-import org.hibernate.criterion.Criterion;
+import org.hibernate.Criteria;
+import org.hibernate.criterion.Order;
+import org.hibernate.criterion.Restrictions;
 import org.springframework.transaction.annotation.Transactional;
 
 import com.smiechmateusz.model.Category;
@@ -35,5 +37,13 @@ public class CategoryDAO extends AbstractDAO
 			System.out.println("DELETED SAFELY");
 	       	this.getCurrentSession().flush();
 	    }
+	}
+	
+	public ArrayList<Category> loadRootAlphabetically()
+	{
+		Criteria c = this.getCurrentSession().createCriteria(Category.class);
+		c.add(Restrictions.isNull("parent"));
+		c.addOrder(Order.asc("name"));
+		return (ArrayList<Category>) c.list();
 	}
 }

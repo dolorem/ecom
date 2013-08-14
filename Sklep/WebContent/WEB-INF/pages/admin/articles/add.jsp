@@ -6,6 +6,9 @@
 <%@include file="../before.jsp" %>
 <script type="text/javascript" src="/media/js/jQuery.js"></script>
 <script type="text/javascript" src="/media/js/addArticle.js"></script>
+<c:choose>
+	<c:when test=""></c:when>
+</c:choose>
 <form action="/administrator/articles/create.htm" method="POST" class="form-horizontal" enctype="multipart/form-data">
 	<fieldset>
 		<legend>Dodawanie artykułu</legend>
@@ -19,6 +22,12 @@
 			<label class="control-label" for="description">Opis produktu</label>
 			<div class="controls">
 				<textarea id="description" rows="10" cols="15" name="description"></textarea>
+			</div>
+		</div>
+		<div class="control-group">
+			<label class="control-label" for="available">Dostępny</label>
+			<div class="controls">
+				<input type="checkbox" name="available" id="available">
 			</div>
 		</div>
 		<div class="control-group">

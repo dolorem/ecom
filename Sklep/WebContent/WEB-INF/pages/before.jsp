@@ -1,8 +1,8 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
-<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
 <%@page import="java.util.ArrayList" %>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
+<!DOCTYPE html>
 <html>
 <head>
 <c:forEach var="cssItem" items="${css}">
@@ -47,31 +47,16 @@ ul.nav li.dropdown:hover ul.dropdown-menu{
 <meta charset="UTF-8">
 </head>
 <body>
-<div class="navbar navbar-inverse navbar-fixed-top">
-      <div class="navbar-inner">
-        <div class="container">
-           <div class="nav-collapse collapse">
-			<ul class="nav">
-				<li class="dropdown">
-					<a href="/administrator/articles/index.htm">Artykuły<b class="caret"></b></a>
-					<ul class="dropdown-menu">
-						<li><a href="/administrator/articles/add.htm">Dodaj</a></li>
-					</ul>
-				</li>
-				<li class="dropdown">
-					<a href="/administrator/categories/index.htm">Kategorie<b class="caret"></b></a>
-					<ul class="dropdown-menu">
-						<li><a href="/administrator/categories/add.htm">Dodaj</a></li>
-					</ul>
-				</li>
-			</ul>           
-            <ul class="nav pull-right">
-               <li><a href="/auth/logout.htm">Wyloguj się</a></li>  
-            </ul>
-          </div><!--/.nav-collapse -->
-        </div>
-      </div>
-</div>
+<c:choose>
+	<c:when test="${logged}">
+		<%@include file="headerLogged.jsp" %>
+	</c:when>
+	<c:otherwise>
+		<%@include file="headerNotLogged.jsp" %>
+	</c:otherwise>
+</c:choose>
 <div class="container">
+	<%@include file="menu.jsp" %>
 	<div class="row">
-		<div class="span12">
+		<div class="span3"><%@include file="sidebar.jsp" %></div>
+		<div class="span9">

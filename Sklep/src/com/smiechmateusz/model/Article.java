@@ -34,6 +34,25 @@ public class Article implements Serializable
 	List<Category> categories;
 	@Column(name="addDate")
 	Date addDate;
+	@Column(name="name")
+	String name;
+	@Column(name="available")
+	boolean available;
+	
+	public Image getMainImage()
+	{
+		Image img = null;
+		for (Image i : images)
+		{
+			if (i.getType() == Image.TYPE_MAIN)
+			{
+				img = i;
+				break;
+			}
+		}
+		return img;
+	}
+	
 	public long getId()
 	{
 		return id;
@@ -73,5 +92,23 @@ public class Article implements Serializable
 	public void setAddDate(Date addDate)
 	{
 		this.addDate = addDate;
+	}
+	public String getName()
+	{
+		return name;
+	}
+	public void setName(String name)
+	{
+		this.name = name;
+	}
+
+	public boolean isAvailable()
+	{
+		return available;
+	}
+
+	public void setAvailable(boolean available)
+	{
+		this.available = available;
 	}
 }

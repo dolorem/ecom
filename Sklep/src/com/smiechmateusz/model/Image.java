@@ -15,6 +15,9 @@ import javax.persistence.Table;
 @Table(name="Image")
 public class Image implements Serializable
 {
+	public static final int TYPE_MAIN = 1;
+	public static final int TYPE_ADDITIONAL = 2;
+	
 	@Id
 	@GeneratedValue
 	@Column(name="id")
@@ -26,6 +29,21 @@ public class Image implements Serializable
 	String path;
 	@Column(name="type")
 	int type;
+	
+	public Image(Article article, String path, int type)
+	{
+		super();
+		this.id = id;
+		this.article = article;
+		this.path = path;
+		this.type = type;
+	}
+	
+	public Image()
+	{
+		
+	}
+	
 	public long getId()
 	{
 		return id;

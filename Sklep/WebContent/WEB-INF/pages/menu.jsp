@@ -24,7 +24,6 @@
 								<li><a href="${menuItem.getLink()}">${menuItem.getDescription()}</a></li>
 							</c:otherwise>
 						</c:choose>
-						
 					</c:forEach>
 				</ul>
 			</div>
