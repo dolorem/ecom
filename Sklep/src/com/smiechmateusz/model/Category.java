@@ -23,8 +23,6 @@ public class Category implements Serializable
 	@GeneratedValue
 	@Column(name="id")
 	long id;
-	/*@Column(name="parent")
-	long parent;*/
 	@ManyToOne(cascade=CascadeType.PERSIST)
 	@JoinColumn(name="parent")
 	Category parent;

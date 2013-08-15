@@ -36,27 +36,7 @@ public class CategoryController
 	public ModelAndView add()
 	{
 		ModelAndView mav = new ModelAndView("admin/categories/add");
-		ArrayList<Category> categories = categoryDAO.loadRootAlphabetically();
-		ArrayList<Pair<Category, Integer>> cat = new ArrayList<Pair<Category, Integer>>();
-		Stack<Pair<Category, Integer>> q = new Stack<Pair<Category, Integer>>();
-		for (int i = categories.size() - 1; i >= 0; i--)
-			q.add(new Pair<Category, Integer>(categories.get(i), 0));
-		while (!q.empty())
-		{
-			Pair<Category, Integer> pair = q.pop();
-			List<Category> children = pair.getLeft().getChildrenAlphabetically();
-			if (children != null)
-			{
-				for (int i = children.size() - 1; i >= 0; i--)
-					q.add(new Pair<Category, Integer>(children.get(i), pair.getRight() + 1));
-				cat.add(pair);
-			}
-		}
-		System.out.println("categories (" + categories.size() + ")");
-		for (int i = 0; i < categories.size(); i++)
-			System.out.println(categories.get(i).getName());
-		mav.addObject("categories", cat);
-		System.out.println(categories.size() + " == " + cat.size());
+		mav.addObject("categories", categoryDAO.getItemOffsetAlphabeticalList());
 		return mav;
 	}
 	

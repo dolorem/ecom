@@ -25,6 +25,17 @@
 			</div>
 		</div>
 		<div class="control-group">
+			<label class="control-label" for="categories" name="categories">Kategorie</label>
+			<div class="controls">
+				<select multiple="multiple">
+					<option value="0">Brak kategorii</option>
+					<c:forEach var="c" items="${categories}">
+						<option value="${c.getLeft().getId()}"><c:forEach var="i" begin="0" end="${c.getRight()}">&nbsp;</c:forEach>${c.getLeft().getName()}</option>
+					</c:forEach>
+				</select>
+			</div>
+		</div>
+		<div class="control-group">
 			<label class="control-label" for="available">Dostępny</label>
 			<div class="controls">
 				<input type="checkbox" name="available" id="available">

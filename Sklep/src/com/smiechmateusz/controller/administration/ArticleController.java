@@ -20,6 +20,7 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.servlet.ModelAndView;
 
 import com.smiechmateusz.dao.ArticleDAO;
+import com.smiechmateusz.dao.CategoryDAO;
 import com.smiechmateusz.model.Article;
 import com.smiechmateusz.model.Image;
 
@@ -31,6 +32,8 @@ public class ArticleController
 {
 	@Autowired
 	ArticleDAO articleDAO;
+	@Autowired
+	CategoryDAO categoryDAO;
 	
 	@RequestMapping(value = "index", method = RequestMethod.GET)
 	public ModelAndView index()
@@ -44,7 +47,7 @@ public class ArticleController
 	public ModelAndView add()
 	{
 		ModelAndView mav = new ModelAndView("admin/articles/add");
-		
+		mav.addObject("categories", categoryDAO.getItemOffsetAlphabeticalList());
 		return mav;
 	}
 	
