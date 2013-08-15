@@ -35,6 +35,13 @@ public class Category implements Serializable
 		inverseJoinColumns={@JoinColumn(name="articleId", referencedColumnName="id")})
 	List<Article> articles;
 	
+	public boolean equals(Object other)
+	{
+		if (!(other instanceof Category))
+			return false;
+		return ((Category) other).getId() == this.id;
+	}
+	
 	public List<Category> getChildrenAlphabetically()
 	{
 		return getChildren();

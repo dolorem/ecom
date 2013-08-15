@@ -161,12 +161,17 @@ public class ArticleController
 	public ModelAndView editItem(@PathVariable("productId") long id)
 	{
 		ModelAndView mav = new ModelAndView("admin/articles/editItem");
-		System.out.println("item edit page " + id);
+		Article article = (Article) articleDAO.getById(id);
+		if (article != null)
+			mav.addObject("article", article);
+		mav.addObject("categories", categoryDAO.getItemOffsetAlphabeticalList());
+		for (int i = 0; i < article.getCategories().size(); i++)
+			System.out.println(article.getCategories().get(i).getId());
 		return mav;
 	}
 	
 	@RequestMapping(value="edit", method=RequestMethod.POST)
-	public ModelAndView acceptEdit()
+	public ModelAndView acceptEdit(HttpServletRequest request)
 	{
 		return new ModelAndView("redirect:/administrator/articles/edit.htm");
 	}

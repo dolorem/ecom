@@ -3,7 +3,7 @@
 <%@ attribute name="pagedListHolder" required="true" type="org.springframework.beans.support.PagedListHolder" %>
 <%@ attribute name="pagedLink" required="true" type="java.lang.String" %>
 <!-- <a href="css/pagination.css" rel="stylesheet" type="text/css"/>-->
-<div class="pagination">
+<div class="pagination" style="text-align: center">
 	<ul>
 		<c:if test="${pagedListHolder.pageCount > 1}">
 			<c:if test="${!pagedListHolder.firstPage}">
