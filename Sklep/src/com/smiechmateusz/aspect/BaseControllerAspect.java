@@ -40,6 +40,8 @@ public class BaseControllerAspect implements ApplicationContextAware
 			css.add("/media/bootstrap/css/bootstrap.css");
 			ArrayList<String> js = new ArrayList<String>();
 //			js.add("/media/js/jQuery.js");
+//			js.add("/media/js/tinymce/jquery.tinymce.min.js");
+//			js.add("/media/js/addArticle.js");
 //			js.add("/media/bootstrap/js/bootstrap.min.js");
 			ModelAndView mav = (ModelAndView) pjp.proceed();
 			mav.addObject("css", css);

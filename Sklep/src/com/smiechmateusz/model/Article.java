@@ -26,7 +26,7 @@ public class Article implements Serializable
 	@Column(name="images")
 	@OneToMany(targetEntity=Image.class, mappedBy="article", cascade=CascadeType.ALL)
 	List<Image> images;
-	@Column(name="description")
+	@Column(name="description", columnDefinition="LONGTEXT")
 	String description;
 	@ManyToMany(cascade=CascadeType.PERSIST, targetEntity=Category.class)
 	@JoinTable(name="category_article", joinColumns = {@JoinColumn(name="articleId", referencedColumnName="id")}, 

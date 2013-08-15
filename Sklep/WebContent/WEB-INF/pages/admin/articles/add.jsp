@@ -5,6 +5,7 @@
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <%@include file="../before.jsp" %>
 <script type="text/javascript" src="/media/js/jQuery.js"></script>
+<script type="text/javascript" src="/media/js/tinymce/tinymce.min.js"></script>
 <script type="text/javascript" src="/media/js/addArticle.js"></script>
 <c:choose>
 	<c:when test=""></c:when>

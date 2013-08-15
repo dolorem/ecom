@@ -3,6 +3,7 @@ package com.smiechmateusz.controller.administration;
 import java.io.File;
 import java.io.FileOutputStream;
 import java.io.InputStream;
+import java.io.UnsupportedEncodingException;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
@@ -44,23 +45,36 @@ public class ArticleController
 	}
 	
 	@RequestMapping(value = "add", method = RequestMethod.GET)
-	public ModelAndView add()
+	public ModelAndView add(HttpServletRequest request)
 	{
 		ModelAndView mav = new ModelAndView("admin/articles/add");
 		mav.addObject("categories", categoryDAO.getItemOffsetAlphabeticalList());
+		System.out.println("a " + request.getAttribute("css") + " " + request.getParameter("css"));
 		return mav;
 	}
 	
 	@RequestMapping(value = "create", method = RequestMethod.POST)
 	public ModelAndView create(HttpServletRequest request)
 	{
+		try
+		{
+			request.setCharacterEncoding("UTF-8");
+		}
+		catch (UnsupportedEncodingException e1)
+		{
+			// TODO Auto-generated catch block
+			e1.printStackTrace();
+		}
+		System.out.println("desc" + request.getAttribute("description"));
 		ModelAndView mav = new ModelAndView("admin/articles/add");
 		ArrayList<Image> imageList = new ArrayList<Image>();
 		Article article = new Article();
 		article.setAvailable(false);
 		try 
 		{
-	        List<FileItem> items = new ServletFileUpload(new DiskFileItemFactory()).parseRequest(request);
+			ServletFileUpload sfu = new ServletFileUpload(new DiskFileItemFactory());
+			sfu.setHeaderEncoding("UTF-8"); 
+	        List<FileItem> items = sfu.parseRequest(request);
 	        for (FileItem item : items) 
 	        {
 	            if (!item.isFormField()) 
@@ -86,7 +100,7 @@ public class ArticleController
 	            else
 	            {
 	            	String fieldname = item.getFieldName();
-	            	String value = item.getString();
+	            	String value = item.getString("UTF-8");
 	            	System.out.println(fieldname + " " + value);
 	            	if ("name".equals(fieldname))
 	            		article.setName(value);

@@ -1,8 +1,7 @@
 package com.smiechmateusz.controller.administration;
 
+import java.io.UnsupportedEncodingException;
 import java.util.ArrayList;
-import java.util.List;
-import java.util.Stack;
 
 import javax.servlet.http.HttpServletRequest;
 
@@ -14,7 +13,6 @@ import org.springframework.web.servlet.ModelAndView;
 
 import com.smiechmateusz.dao.CategoryDAO;
 import com.smiechmateusz.model.Category;
-import com.smiechmateusz.utils.Pair;
 
 
 @Controller
@@ -43,6 +41,16 @@ public class CategoryController
 	@RequestMapping(value="create", method=RequestMethod.POST)
 	public ModelAndView create(HttpServletRequest request)
 	{
+		try
+		{
+			request.setCharacterEncoding("UTF-8");
+		}
+		catch (UnsupportedEncodingException e)
+		{
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		System.out.println("name = " + request.getParameter("name"));
 		ModelAndView mav = new ModelAndView("admin/categories/add");
 		System.out.println(request.getParameter("primaryCategory") + " " + request.getParameter("name") + " " + request.getParameter("description"));
 		Category c = new Category();
