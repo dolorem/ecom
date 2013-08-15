@@ -7,23 +7,24 @@
 <script type="text/javascript" src="/media/js/jQuery.js"></script>
 <script type="text/javascript" src="/media/js/tinymce/tinymce.min.js"></script>
 <script type="text/javascript" src="/media/js/addArticle.js"></script>
-<form action="/administrator/articles/edit.htm" method="POST" class="form-horizontal" enctype="multipart/form-data">
-	<input type="hidden" name="id" value="${article.getId()}" />
+<%@taglib uri="http://www.springframework.org/tags/form" prefix="form"%>
+<form:form modelAttribute="article" action="/administrator/articles/edit.htm" method="POST" class="form-horizontal" enctype="multipart/form:form-data">
+	<form:hidden path="id" />
 	<fieldset>
 		<legend>Edycja artykułu</legend>
 		<div class="control-group">
-			<label class="control-label" for="name">Nazwa produktu</label>
+			<form:label class="control-label" path="name" for="name">Nazwa produktu</form:label>
 			<div class="controls">
-				<input type="text" id="name" name="name" value="${article.getName()}"/>
+				<form:input path="name" />
 			</div>
 		</div>
 		<div class="control-group">
-			<label class="control-label" for="description">Opis produktu</label>
+			<form:label class="control-label" for="description" path="description">Opis produktu</form:label>
 			<div class="controls">
-				<textarea id="description" rows="10" cols="15" name="description">${article.getDescription()}</textarea>
+				<form:textarea path="description" />
 			</div>
 		</div>
-		<div class="control-group">
+		<!-- <div class="control-group">
 			<label class="control-label" for="categories" name="categories">Kategorie</label>
 			<div class="controls">
 				<select multiple="multiple" name="categories" id="categories">
@@ -33,16 +34,29 @@
 					</c:forEach>
 				</select>
 			</div>
+		</div>-->
+		<div class="control-group">
+			<form:label class="control-label" for="categories" path="categories">Kategorie</form:label>
+			<div class="controls">
+				<form:select multiple="true" path="categories">
+					<option value="0">Brak kategorii</option>
+					<c:forEach var="c" items="${categories}">
+						<option value="${c.getLeft().getId()}" <c:if test="${article.getCategories().contains(c.getLeft())}">selected="selected"</c:if>><c:forEach var="i" begin="0" end="${c.getRight()}">&nbsp;</c:forEach>${c.getLeft().getName()}</option>
+					</c:forEach>
+				</form:select>
+			</div>
 		</div>
 		<div class="control-group">
-			<label class="control-label" for="available">Dostępny</label>
+			<form:label class="control-label" for="available" path="available">Dostępny</form:label>
 			<div class="controls">
-				<input type="checkbox" name="available" id="available" <c:if test="${article.isAvailable()}">checked</c:if>>
+				<form:checkbox path="available" />
 			</div>
 		</div>
 		<div class="form-actions">
 			<button type="submit" class="btn btn-primary">Zapisz zmiany</button>
 		</div>
 	</fieldset>
-</form>
+</form:form>
+
+
 <%@include file="../after.jsp" %>

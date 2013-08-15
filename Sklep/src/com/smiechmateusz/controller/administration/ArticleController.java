@@ -7,6 +7,7 @@ import java.io.UnsupportedEncodingException;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
+import java.util.Set;
 
 import javax.servlet.http.HttpServletRequest;
 
@@ -18,6 +19,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.support.PagedListHolder;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.ServletRequestUtils;
+import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
@@ -28,6 +30,7 @@ import com.smiechmateusz.dao.CategoryDAO;
 import com.smiechmateusz.model.Article;
 import com.smiechmateusz.model.Category;
 import com.smiechmateusz.model.Image;
+import com.smiechmateusz.model.form.FormArticleModel;
 
 
 
@@ -171,8 +174,25 @@ public class ArticleController
 	}
 	
 	@RequestMapping(value="edit", method=RequestMethod.POST)
-	public ModelAndView acceptEdit(HttpServletRequest request)
+	public ModelAndView acceptEdit(@ModelAttribute FormArticleModel model)
 	{
+		System.out.println(model.getName() + " " + model.getDescription() + " " + model.isAvailable() + " " + model.getId());
+		Article a = (Article) articleDAO.getById(model.getId());
+		if (a != null)
+		{
+			a.setDescription(model.getDescription());
+			a.setName(model.getName());
+			a.setAvailable(model.isAvailable());
+			ArrayList<Category> categories = new ArrayList<Category>();
+			for (Long i : model.getCategories())
+			{
+				Category c = (Category) categoryDAO.getById(i);
+				if (c != null)
+					categories.add(c);
+			}
+			a.setCategories(categories);
+			articleDAO.update(a);
+		}
 		return new ModelAndView("redirect:/administrator/articles/edit.htm");
 	}
 }
