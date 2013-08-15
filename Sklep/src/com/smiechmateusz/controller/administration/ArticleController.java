@@ -15,7 +15,10 @@ import org.apache.commons.fileupload.disk.DiskFileItemFactory;
 import org.apache.commons.fileupload.servlet.ServletFileUpload;
 import org.apache.commons.io.FilenameUtils;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.support.PagedListHolder;
 import org.springframework.stereotype.Controller;
+import org.springframework.web.bind.ServletRequestUtils;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.servlet.ModelAndView;
@@ -36,6 +39,7 @@ public class ArticleController
 	ArticleDAO articleDAO;
 	@Autowired
 	CategoryDAO categoryDAO;
+	private final int pageSize = 10;
 	
 	@RequestMapping(value = "index", method = RequestMethod.GET)
 	public ModelAndView index()
@@ -135,5 +139,35 @@ public class ArticleController
 		article.setAddDate(new Date());
 		articleDAO.create(article);
 		return new ModelAndView("redirect:/administrator/articles/add.htm");
+	}
+	
+	@RequestMapping(value="edit", method=RequestMethod.GET)
+	public ModelAndView editIndex(HttpServletRequest request)
+	{
+		ModelAndView mav = new ModelAndView("admin/articles/editIndex");
+		System.out.println("main edit page");
+		List<Article> results = articleDAO.getAll();
+		System.out.println(results.size());
+		PagedListHolder pagedListHolder = new PagedListHolder(results);
+		int page = ServletRequestUtils.getIntParameter(request, "page", 0);
+		System.out.println(page);
+		pagedListHolder.setPage(page);
+		pagedListHolder.setPageSize(pageSize);
+		mav.addObject("pagedListHolder", pagedListHolder);
+		return mav;
+	}
+	
+	@RequestMapping(value="edit/{productId}", method=RequestMethod.GET)
+	public ModelAndView editItem(@PathVariable("productId") long id)
+	{
+		ModelAndView mav = new ModelAndView("admin/articles/editItem");
+		System.out.println("item edit page " + id);
+		return mav;
+	}
+	
+	@RequestMapping(value="edit", method=RequestMethod.POST)
+	public ModelAndView acceptEdit()
+	{
+		return new ModelAndView("redirect:/administrator/articles/edit.htm");
 	}
 }
