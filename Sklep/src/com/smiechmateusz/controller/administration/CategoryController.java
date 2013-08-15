@@ -51,7 +51,6 @@ public class CategoryController
 			e.printStackTrace();
 		}
 		System.out.println("name = " + request.getParameter("name"));
-		ModelAndView mav = new ModelAndView("admin/categories/add");
 		System.out.println(request.getParameter("primaryCategory") + " " + request.getParameter("name") + " " + request.getParameter("description"));
 		Category c = new Category();
 		c.setName((String) request.getParameter("name"));

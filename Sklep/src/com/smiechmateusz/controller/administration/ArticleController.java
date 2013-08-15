@@ -23,6 +23,7 @@ import org.springframework.web.servlet.ModelAndView;
 import com.smiechmateusz.dao.ArticleDAO;
 import com.smiechmateusz.dao.CategoryDAO;
 import com.smiechmateusz.model.Article;
+import com.smiechmateusz.model.Category;
 import com.smiechmateusz.model.Image;
 
 
@@ -66,10 +67,10 @@ public class ArticleController
 			e1.printStackTrace();
 		}
 		System.out.println("desc" + request.getAttribute("description"));
-		ModelAndView mav = new ModelAndView("admin/articles/add");
 		ArrayList<Image> imageList = new ArrayList<Image>();
 		Article article = new Article();
 		article.setAvailable(false);
+		ArrayList<Category> categories = new ArrayList<Category>();
 		try 
 		{
 			ServletFileUpload sfu = new ServletFileUpload(new DiskFileItemFactory());
@@ -108,6 +109,20 @@ public class ArticleController
 	            		article.setDescription(value);
 	            	else if ("available".equals(fieldname) && "on".equals(value))
 	            		article.setAvailable(true);
+	            	else if ("categories".equals(fieldname))
+	            	{
+	            		try
+	            		{
+	            			long id = Long.parseLong(value);
+	            			Category c = (Category) categoryDAO.getById(id);
+	            			if (c != null)
+	            				categories.add(c);
+	            		}
+	            		catch (Exception e)
+	            		{
+	            			
+	            		}
+	            	}
 	            }
 	        }
 	    } 
@@ -115,9 +130,10 @@ public class ArticleController
 		{
 			e.printStackTrace();
 		}
+		article.setCategories(categories);
 		article.setImages(imageList);
 		article.setAddDate(new Date());
 		articleDAO.create(article);
-		return mav;
+		return new ModelAndView("redirect:/administrator/articles/add.htm");
 	}
 }
