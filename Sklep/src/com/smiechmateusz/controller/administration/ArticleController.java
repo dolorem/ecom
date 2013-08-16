@@ -1,13 +1,13 @@
 package com.smiechmateusz.controller.administration;
 
 import java.io.File;
+import java.io.FileInputStream;
 import java.io.FileOutputStream;
+import java.io.IOException;
 import java.io.InputStream;
-import java.io.UnsupportedEncodingException;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
-import java.util.Set;
 
 import javax.servlet.http.HttpServletRequest;
 
@@ -23,15 +23,15 @@ import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.multipart.commons.CommonsMultipartFile;
 import org.springframework.web.servlet.ModelAndView;
 
 import com.smiechmateusz.dao.ArticleDAO;
 import com.smiechmateusz.dao.CategoryDAO;
+import com.smiechmateusz.dao.ImageDAO;
 import com.smiechmateusz.model.Article;
 import com.smiechmateusz.model.Category;
 import com.smiechmateusz.model.Image;
-import com.smiechmateusz.model.form.FormArticleModel;
-
 
 
 @Controller
@@ -42,6 +42,8 @@ public class ArticleController
 	ArticleDAO articleDAO;
 	@Autowired
 	CategoryDAO categoryDAO;
+	@Autowired
+	ImageDAO imageDAO;
 	private final int pageSize = 10;
 	
 	@RequestMapping(value = "index", method = RequestMethod.GET)
@@ -64,7 +66,7 @@ public class ArticleController
 	@RequestMapping(value = "create", method = RequestMethod.POST)
 	public ModelAndView create(HttpServletRequest request)
 	{
-		try
+		/*try
 		{
 			request.setCharacterEncoding("UTF-8");
 		}
@@ -72,7 +74,7 @@ public class ArticleController
 		{
 			// TODO Auto-generated catch block
 			e1.printStackTrace();
-		}
+		}*/
 		System.out.println("desc" + request.getAttribute("description"));
 		ArrayList<Image> imageList = new ArrayList<Image>();
 		Article article = new Article();
@@ -81,7 +83,7 @@ public class ArticleController
 		try 
 		{
 			ServletFileUpload sfu = new ServletFileUpload(new DiskFileItemFactory());
-			sfu.setHeaderEncoding("UTF-8"); 
+			//sfu.setHeaderEncoding("UTF-8"); 
 	        List<FileItem> items = sfu.parseRequest(request);
 	        for (FileItem item : items) 
 	        {
@@ -93,6 +95,19 @@ public class ArticleController
 	                InputStream filecontent = item.getInputStream();
 	                File f = new File(System.getProperty("catalina.base") + "/wtpwebapps/Sklep/media/uploadedImages/"+ filename);
 	                FileOutputStream fos = new FileOutputStream(f);
+	                while (true)
+	                {
+	                	int b = filecontent.read();
+	                	if (b != -1)
+	                		fos.write(b);
+	                	else
+	                		break;
+	                }
+	                fos.close();
+	                filecontent.close();
+	                File f2 = new File("/home/mateusz/git/ecom/Sklep/WebContent/media/uploadedImages/" + filename);
+	                filecontent = new FileInputStream(f);
+	                fos = new FileOutputStream(f2);
 	                while (true)
 	                {
 	                	int b = filecontent.read();
@@ -170,13 +185,13 @@ public class ArticleController
 		mav.addObject("categories", categoryDAO.getItemOffsetAlphabeticalList());
 		for (int i = 0; i < article.getCategories().size(); i++)
 			System.out.println(article.getCategories().get(i).getId());
+		System.out.println("size " + article.getImages().size());
 		return mav;
 	}
 	
 	@RequestMapping(value="edit", method=RequestMethod.POST)
-	public ModelAndView acceptEdit(@ModelAttribute FormArticleModel model)
+	public ModelAndView acceptEdit(@ModelAttribute Article model)
 	{
-		System.out.println(model.getName() + " " + model.getDescription() + " " + model.isAvailable() + " " + model.getId());
 		Article a = (Article) articleDAO.getById(model.getId());
 		if (a != null)
 		{
@@ -184,15 +199,90 @@ public class ArticleController
 			a.setName(model.getName());
 			a.setAvailable(model.isAvailable());
 			ArrayList<Category> categories = new ArrayList<Category>();
-			for (Long i : model.getCategories())
+			if (model.getCategoriesId() != null)
 			{
-				Category c = (Category) categoryDAO.getById(i);
-				if (c != null)
-					categories.add(c);
+				for (Long i : model.getCategoriesId())
+				{
+					Category c = (Category) categoryDAO.getById(i);
+					if (c != null)
+						categories.add(c);
+				}
 			}
 			a.setCategories(categories);
-			articleDAO.update(a);
+			if (model.isDeletedMainImage())
+			{
+				if (model.getNewMainImage() != null);
+				{
+					System.out.println("here");
+					//TODO usuwanie z serwera
+					Image i = a.getMainImage();
+					String filename = model.getNewMainImage().getOriginalFilename();
+					i.setPath(filename);
+					a.getImages().add(i);
+					attemptSaving(model.getNewMainImage());
+					imageDAO.update(i);
+					articleDAO.update(a);
+				}
+			}
+			if (model.getDeletedImagesId() != null)
+			{
+				a.deleteImagesById(model.getDeletedImagesId());
+				for (Long l : model.getDeletedImagesId())
+				{
+					imageDAO.deleteById(l);
+				}
+				articleDAO.update(a);
+			}
+			if (model.getNewAdditionalImages() != null)
+			{
+				System.out.println(model.getNewAdditionalImages().size());
+				boolean added = false;
+				ArrayList<Image> newImages = new ArrayList<Image>();
+				for (int i = 0; i < model.getNewAdditionalImages().size(); i++)
+				{
+					CommonsMultipartFile f = model.getNewAdditionalImages().get(i);
+					if (f != null)
+					{
+						attemptSaving(f);
+						Image img = new Image(a, f.getOriginalFilename(), 2);
+						imageDAO.create(img);
+						newImages.add(img);
+						added = true;
+					}
+				}
+				if (added)
+				{
+					a.addImages(newImages);
+					articleDAO.update(a);
+				}
+			}
 		}
+		System.out.println(model.isDeletedMainImage());
 		return new ModelAndView("redirect:/administrator/articles/edit.htm");
+	}
+	
+	public void attemptSaving(CommonsMultipartFile f)
+	{
+		try
+		{
+			InputStream is = f.getInputStream();
+			//TODO unikatowe nazwy plików		
+			//TODO skalowanie obrazków
+			File outf = new File(System.getProperty("catalina.base") + "/wtpwebapps/Sklep/media/uploadedImages/"+ f.getOriginalFilename());
+			FileOutputStream fos = new FileOutputStream(outf);
+			while (true)
+			{
+				int b = is.read();
+				if (b == -1)
+					break;
+				fos.write(b);
+			}
+			is.close();
+			fos.close();
+		}
+		catch (IOException e)
+		{
+			e.printStackTrace();
+		}		
 	}
 }

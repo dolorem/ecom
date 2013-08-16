@@ -8,7 +8,10 @@ public class FormArticleModel
 	private String description;
 	private boolean available;
 	private long id;
-	Set<Long> categories;
+	private Set<Long> categories;
+	private Set<Long> deletedImagesId;
+	private boolean deletedMainImage;
+	private int amountOfAddedImages;
 	
 	public String getName()
 	{
@@ -49,5 +52,29 @@ public class FormArticleModel
 	public Set<Long> getCategories()
 	{
 		return categories;
+	}
+	public Set<Long> getDeletedImagesId()
+	{
+		return deletedImagesId;
+	}
+	public void setDeletedImagesId(Set<Long> deletedImagesId)
+	{
+		this.deletedImagesId = deletedImagesId;
+	}
+	public boolean isDeletedMainImage()
+	{
+		return deletedMainImage;
+	}
+	public void setDeletedMainImage(boolean deletedMainImage)
+	{
+		this.deletedMainImage = deletedMainImage;
+	}
+	public int getAmountOfAddedImages()
+	{
+		return amountOfAddedImages;
+	}
+	public void setAmountOfAddedImages(int amountOfAddedImages)
+	{
+		this.amountOfAddedImages = amountOfAddedImages;
 	}
 }

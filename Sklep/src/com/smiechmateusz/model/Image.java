@@ -22,7 +22,7 @@ public class Image implements Serializable
 	@GeneratedValue
 	@Column(name="id")
 	long id;
-	@ManyToOne(cascade=CascadeType.ALL)
+	@ManyToOne(cascade=CascadeType.PERSIST)
 	@JoinColumn(name="images")
 	Article article;
 	@Column(name="path")

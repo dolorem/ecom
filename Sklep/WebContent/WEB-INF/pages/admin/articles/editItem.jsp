@@ -6,9 +6,9 @@
 <%@include file="../before.jsp" %>
 <script type="text/javascript" src="/media/js/jQuery.js"></script>
 <script type="text/javascript" src="/media/js/tinymce/tinymce.min.js"></script>
-<script type="text/javascript" src="/media/js/addArticle.js"></script>
+<script type="text/javascript" src="/media/js/editArticle.js"></script>
 <%@taglib uri="http://www.springframework.org/tags/form" prefix="form"%>
-<form:form modelAttribute="article" action="/administrator/articles/edit.htm" method="POST" class="form-horizontal" enctype="multipart/form:form-data">
+<form:form modelAttribute="article" action="/administrator/articles/edit.htm" method="POST" class="form-horizontal" enctype="multipart/form-data">
 	<form:hidden path="id" />
 	<fieldset>
 		<legend>Edycja artykułu</legend>
@@ -24,21 +24,10 @@
 				<form:textarea path="description" />
 			</div>
 		</div>
-		<!-- <div class="control-group">
-			<label class="control-label" for="categories" name="categories">Kategorie</label>
-			<div class="controls">
-				<select multiple="multiple" name="categories" id="categories">
-					<option value="0">Brak kategorii</option>
-					<c:forEach var="c" items="${categories}">
-						<option value="${c.getLeft().getId()}" <c:if test="${article.getCategories().contains(c.getLeft())}">selected="selected"</c:if>><c:forEach var="i" begin="0" end="${c.getRight()}">&nbsp;</c:forEach>${c.getLeft().getName()}</option>
-					</c:forEach>
-				</select>
-			</div>
-		</div>-->
 		<div class="control-group">
-			<form:label class="control-label" for="categories" path="categories">Kategorie</form:label>
+			<form:label class="control-label" for="categories" path="categoriesId">Kategorie</form:label>
 			<div class="controls">
-				<form:select multiple="true" path="categories">
+				<form:select multiple="true" path="categoriesId">
 					<option value="0">Brak kategorii</option>
 					<c:forEach var="c" items="${categories}">
 						<option value="${c.getLeft().getId()}" <c:if test="${article.getCategories().contains(c.getLeft())}">selected="selected"</c:if>><c:forEach var="i" begin="0" end="${c.getRight()}">&nbsp;</c:forEach>${c.getLeft().getName()}</option>
@@ -52,11 +41,43 @@
 				<form:checkbox path="available" />
 			</div>
 		</div>
+		<div class="control-group">
+			<label class="control-label">Obrazek główny</label>
+			<div class="controls">
+				<c:choose>
+					<c:when test="${article.getMainImage() != null && !article.getMainImage().getPath().equals(\"\")}">
+						<img src="/media/uploadedImages/${article.getMainImage().getPath()}" id="mainImage"/>
+						<button type="button" class="btn btn-danger" id="removeMainImage">Usuń obrazek</button>
+						<form:hidden path="deletedMainImage"/>
+						<input type="file" id="newMainImage" name="newMainImage" style="visibility: hidden" />
+					</c:when>
+					<c:otherwise>
+						<form:hidden path="deletedMainImage" value="true" />
+						<form:input type="file" path="newMainImage" />
+					</c:otherwise>
+				</c:choose> 
+			</div>
+		</div>
+		<div class="control-group">
+			<label class="control-label">Dodatkowe obrazki (miniaturki)</label>
+			<div class="controls">
+				<button type="button" class="btn" id="addAdditionalImageButton">Dodaj kolejny</button>
+			</div>
+		</div>
+			<form:select path="deletedImagesId" style="visibility: hidden; height: 0px;">
+			
+			</form:select>
+			<c:forEach items="${article.getAdditionalImages()}" var="image">
+			<div class="control-group">
+				<label class="control-label"><button type="button" class="removeOriginalImage btn btn-danger" id="${image.getId()}">Usuń</button></label>
+				<div class="controls">
+					<img src="/media/uploadedImages/${image.getPath()}" width="100px" heigth="100px" id="originalImg${image.getId()}"/>
+				</div>
+			</div>
+			</c:forEach>
 		<div class="form-actions">
 			<button type="submit" class="btn btn-primary">Zapisz zmiany</button>
 		</div>
 	</fieldset>
 </form:form>
-
-
 <%@include file="../after.jsp" %>
