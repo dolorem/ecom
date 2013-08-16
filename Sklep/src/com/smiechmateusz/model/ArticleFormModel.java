@@ -33,6 +33,10 @@ public class ArticleFormModel extends Article
 		
 	}
 	
+	public ArticleFormModel(int i) {
+		
+	}
+	
 	public ArticleFormModel(Article a)
 	{
 		this.id = a.getId();

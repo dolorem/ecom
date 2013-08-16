@@ -87,4 +87,20 @@ public class ArticleController
 			model.parseModel(new Article(), articleDAO, categoryDAO, imageDAO);
 		return new ModelAndView("redirect:/administrator/articles/edit.htm");
 	}
+	
+	@RequestMapping(value="delete/{productId}", method=RequestMethod.GET)
+	public ModelAndView delete(@PathVariable("productId") long id)
+	{
+		ModelAndView mav = new ModelAndView("admin/articles/deleteConfirm");
+		mav.addObject("article", (Article) articleDAO.getById(id));
+		return mav;
+	}
+	
+	@RequestMapping(value="delete/{productId}/confirm", method=RequestMethod.GET)
+	public ModelAndView deleteConfirmed(@PathVariable("productId") long id)
+	{
+		ModelAndView mav = new ModelAndView("redirect:/administrator/articles/edit.htm");
+		articleDAO.deleteById(id);
+		return mav;
+	}
 }

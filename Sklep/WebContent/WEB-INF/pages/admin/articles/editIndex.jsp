@@ -2,9 +2,9 @@
     pageEncoding="UTF-8"%>
 <!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
 <%@page import="java.util.ArrayList" %>
-<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
+<%@taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <%@include file="../before.jsp" %>
-<%@ taglib prefix="tg" tagdir="/WEB-INF/tags" %>
+<%@taglib prefix="tg" tagdir="/WEB-INF/tags/" %>
 <jsp:useBean id="pagedListHolder" scope="request" 
    type="org.springframework.beans.support.PagedListHolder"/>
 <c:url value="/administrator/articles/edit.htm" var="pagedLink">
@@ -20,7 +20,7 @@
 		<tr>
 			<td>${item.getName()}</td>
 			<td><a href="/administrator/articles/edit/${item.getId()}.htm">Edytuj</a></td>
-			<td>TODO</td>
+			<td><a href="/administrator/articles/delete/${item.getId()}.htm">Usuń</a></td>
 		</tr>
 	</c:forEach>
 </table>
