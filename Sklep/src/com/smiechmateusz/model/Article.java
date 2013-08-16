@@ -20,6 +20,11 @@ import javax.persistence.Transient;
 
 import org.springframework.web.multipart.commons.CommonsMultipartFile;
 
+import com.smiechmateusz.dao.ArticleDAO;
+import com.smiechmateusz.dao.CategoryDAO;
+import com.smiechmateusz.dao.ImageDAO;
+import com.smiechmateusz.utils.WebUtils;
+
 @Entity
 @Table(name="Article")
 public class Article implements Serializable
@@ -98,6 +103,11 @@ public class Article implements Serializable
 		}
 	}
 	
+	public void addImage(Image i)
+	{
+		this.images.add(i);
+	}
+	
 	public long getId()
 	{
 		return id;
@@ -155,84 +165,5 @@ public class Article implements Serializable
 	public void setAvailable(boolean available)
 	{
 		this.available = available;
-	}
-	
-	
-	
-	
-	
-	
-	@Transient
-	private Set<Long> categoriesId;
-	@Transient
-	private Set<Long> deletedImagesId;
-	@Transient
-	private boolean deletedMainImage;
-	@Transient
-	private int amountOfAddedImages;
-	@Transient
-	private CommonsMultipartFile newMainImage;
-	@Transient
-	private List<CommonsMultipartFile> newAdditionalImages;
-
-	public Set<Long> getCategoriesId()
-	{
-		return categoriesId;
-	}
-
-	public void setCategoriesId(Set<Long> categoriesId)
-	{
-		this.categoriesId = categoriesId;
-	}
-
-	public Set<Long> getDeletedImagesId()
-	{
-		return deletedImagesId;
-	}
-
-	public void setDeletedImagesId(Set<Long> deletedImagesId)
-	{
-		this.deletedImagesId = deletedImagesId;
-	}
-
-	public boolean isDeletedMainImage()
-	{
-		return deletedMainImage;
-	}
-
-	public void setDeletedMainImage(boolean deletedMainImage)
-	{
-		this.deletedMainImage = deletedMainImage;
-	}
-
-	public int getAmountOfAddedImages()
-	{
-		return amountOfAddedImages;
-	}
-
-	public void setAmountOfAddedImages(int amountOfAddedImages)
-	{
-		this.amountOfAddedImages = amountOfAddedImages;
-	}
-
-	public CommonsMultipartFile getNewMainImage()
-	{
-		return newMainImage;
-	}
-
-	public void setNewMainImage(CommonsMultipartFile newMainImage)
-	{
-		this.newMainImage = newMainImage;
-	}
-
-	public List<CommonsMultipartFile> getNewAdditionalImages()
-	{
-		return newAdditionalImages;
-	}
-
-	public void setNewAdditionalImages(
-			List<CommonsMultipartFile> newAdditionalImages)
-	{
-		this.newAdditionalImages = newAdditionalImages;
 	}
 }
