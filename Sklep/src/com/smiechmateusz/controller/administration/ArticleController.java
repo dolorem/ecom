@@ -7,12 +7,14 @@ import javax.servlet.http.HttpServletRequest;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.support.PagedListHolder;
 import org.springframework.stereotype.Controller;
+import org.springframework.ui.Model;
 import org.springframework.web.bind.ServletRequestUtils;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.servlet.ModelAndView;
+import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import com.smiechmateusz.dao.ArticleDAO;
 import com.smiechmateusz.dao.CategoryDAO;
@@ -53,6 +55,7 @@ public class ArticleController
 	@RequestMapping(value="edit", method=RequestMethod.GET)
 	public ModelAndView editIndex(HttpServletRequest request)
 	{
+		System.out.println("Good, here!");
 		ModelAndView mav = new ModelAndView("admin/articles/editIndex");
 		System.out.println("main edit page");
 		List<Article> results = articleDAO.getAll();
@@ -63,6 +66,11 @@ public class ArticleController
 		pagedListHolder.setPage(page);
 		pagedListHolder.setPageSize(pageSize);
 		mav.addObject("pagedListHolder", pagedListHolder);
+		if (request.getSession().getAttribute("success") != null)
+		{
+			mav.addObject("success", request.getSession().getAttribute("success"));
+			request.getSession().setAttribute("success", null);
+		}
 		return mav;
 	}
 	
@@ -78,13 +86,14 @@ public class ArticleController
 	}
 	
 	@RequestMapping(value="edit", method=RequestMethod.POST)
-	public ModelAndView acceptEdit(@ModelAttribute ArticleFormModel model)
+	public ModelAndView acceptEdit(@ModelAttribute ArticleFormModel model, HttpServletRequest request)
 	{
 		Article a = (Article) articleDAO.getById(model.getId());
 		if (a != null)
 			model.parseModel(a, articleDAO, categoryDAO, imageDAO);
 		else
 			model.parseModel(new Article(), articleDAO, categoryDAO, imageDAO);
+		request.getSession().setAttribute("success", "Artykuł został zapisany.");
 		return new ModelAndView("redirect:/administrator/articles/edit.htm");
 	}
 	
@@ -97,10 +106,11 @@ public class ArticleController
 	}
 	
 	@RequestMapping(value="delete/{productId}/confirm", method=RequestMethod.GET)
-	public ModelAndView deleteConfirmed(@PathVariable("productId") long id)
+	public ModelAndView deleteConfirmed(@PathVariable("productId") long id, HttpServletRequest request)
 	{
 		ModelAndView mav = new ModelAndView("redirect:/administrator/articles/edit.htm");
 		articleDAO.deleteById(id);
+		request.getSession().setAttribute("success", "Artykuł został usunięty.");
 		return mav;
 	}
 }

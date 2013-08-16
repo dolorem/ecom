@@ -10,6 +10,16 @@
 <c:url value="/administrator/articles/edit.htm" var="pagedLink">
 	<c:param name="page" value="~"/>
 </c:url>
+<c:if test="${success != null}">
+	<div class="row">
+		<div class="alert alert-success">${success}</div>
+	</div>
+</c:if>
+<c:if test="${error != null }">
+	<div class="row">
+		<div class="alert alert-error">${error}</div>
+	</div>
+</c:if>
 <table class="table">
 	<tr>
 		<th>Nazwa produktu</th>

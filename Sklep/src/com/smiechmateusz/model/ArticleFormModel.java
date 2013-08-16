@@ -27,6 +27,10 @@ public class ArticleFormModel extends Article
 	private CommonsMultipartFile newMainImage;
 	@Transient
 	private List<CommonsMultipartFile> newAdditionalImages;
+	@Transient
+	String error;
+	@Transient
+	String success;
 	
 	public ArticleFormModel()
 	{
@@ -196,5 +200,25 @@ public class ArticleFormModel extends Article
 			List<CommonsMultipartFile> newAdditionalImages)
 	{
 		this.newAdditionalImages = newAdditionalImages;
+	}
+
+	public String getError()
+	{
+		return error;
+	}
+
+	public void setError(String error)
+	{
+		this.error = error;
+	}
+
+	public String getSuccess()
+	{
+		return success;
+	}
+
+	public void setSuccess(String success)
+	{
+		this.success = success;
 	}
 }
