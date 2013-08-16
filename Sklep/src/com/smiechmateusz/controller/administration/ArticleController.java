@@ -92,7 +92,11 @@ public class ArticleController
 		if (a != null)
 			model.parseModel(a, articleDAO, categoryDAO, imageDAO);
 		else
-			model.parseModel(new Article(), articleDAO, categoryDAO, imageDAO);
+		{
+			Article art = new Article();
+			articleDAO.create(art);
+			model.parseModel(art, articleDAO, categoryDAO, imageDAO);
+		}
 		request.getSession().setAttribute("success", "Artykuł został zapisany.");
 		return new ModelAndView("redirect:/administrator/articles/edit.htm");
 	}
@@ -101,7 +105,6 @@ public class ArticleController
 	@ResponseBody
 	public Boolean deleteAjaxMultiple(@RequestBody long[] gotten)
 	{
-		System.out.println("HERE");
 		for (long l : gotten)
 			articleDAO.deleteById(l);
 		return true;

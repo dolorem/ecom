@@ -1,6 +1,7 @@
 package com.smiechmateusz.model;
 
 import java.io.Serializable;
+import java.util.ArrayList;
 import java.util.List;
 
 import javax.persistence.CascadeType;
@@ -35,6 +36,14 @@ public class Category implements Serializable
 		inverseJoinColumns={@JoinColumn(name="articleId", referencedColumnName="id")})
 	List<Article> articles;
 	
+	
+	
+	public Category()
+	{
+		this.children = new ArrayList<Category>();
+		this.articles = new ArrayList<Article>();
+	}
+
 	public boolean equals(Object other)
 	{
 		if (!(other instanceof Category))
@@ -45,6 +54,20 @@ public class Category implements Serializable
 	public List<Category> getChildrenAlphabetically()
 	{
 		return getChildren();
+	}
+	
+	public void removeChild(Category c)
+	{
+		for (int i = 0; i < children.size(); i++)
+		{
+			if (children.get(i) == c)
+				children.remove(i);
+		}
+	}
+	
+	public void addChild(Category c)
+	{
+		children.add(c);
 	}
 	
 	public long getId()

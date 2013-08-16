@@ -22,20 +22,31 @@ public class CategoryDAO extends AbstractDAO
 	
 	public void delete(final Category entity) 
 	{
+		long id = entity.getId();
+		System.out.println("RECEIVED ID " + id);
 		if (entity != null)
 		{	
-			ArrayList<Category> bar = (ArrayList<Category>) getAll();
-			for (int i = 0; i < bar.size(); i++)
+			if (entity.getParent() != null)
 			{
-				if (bar.get(i).getParent() == entity)
-				{
-					bar.get(i).setParent(null);
-					update(bar.get(i));
-				}
+				entity.getParent().removeChild(entity);
+				update(entity.getParent());
 			}
+			if (entity.getChildren() != null)
+			{
+				List<Category> children = entity.getChildren();
+				while (children.size() != 0)
+					this.delete(children.get(0));
+			}				
 			this.getCurrentSession().delete(entity);
+			System.out.println("DELETED ID " + id);
 			this.getCurrentSession().flush();
 	    }
+	}
+	
+	public void deleteById(final long id)
+	{
+		System.out.println("DELETING ID " + id);
+		this.delete((Category) getById(id));
 	}
 	
 	public ArrayList<Category> loadRootAlphabetically()

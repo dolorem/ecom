@@ -88,6 +88,7 @@ public abstract class AbstractDAO<T extends Serializable>
 
     public void delete(final T entity) 
     {
+    	System.out.println("AbstractDAO? WTF?!");
     	try 
         {
     		if (entity != null)

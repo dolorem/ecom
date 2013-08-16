@@ -56,13 +56,14 @@ ul.nav li.dropdown:hover ul.dropdown-menu{
 					<a href="/administrator/articles/index.htm">Artykuły<b class="caret"></b></a>
 					<ul class="dropdown-menu">
 						<li><a href="/administrator/articles/add.htm">Dodaj</a></li>
-						<li><a href="/administrator/articles/edit.htm">Edytuj</a>
+						<li><a href="/administrator/articles/edit.htm">Przeglądaj</a>
 					</ul>
 				</li>
 				<li class="dropdown">
 					<a href="/administrator/categories/index.htm">Kategorie<b class="caret"></b></a>
 					<ul class="dropdown-menu">
 						<li><a href="/administrator/categories/add.htm">Dodaj</a></li>
+						<li><a href="/administrator/categories/edit.htm">Przeglądaj</a></li>
 					</ul>
 				</li>
 			</ul>           
