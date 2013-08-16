@@ -88,13 +88,26 @@ public class ArticleFormModel extends Article
 	{
 		if (this.deletedMainImage && this.newMainImage != null)
 		{
-			WebUtils.removeFileTwice(article.getMainImage().getPath());
-			Image i = article.getMainImage();
-			String filename = this.newMainImage.getOriginalFilename();
-			i.setPath(filename);
-//			article.addImage(i);
-			WebUtils.saveFileTwice(this.newMainImage);
-			imageDAO.update(i);
+			if (article.getMainImage() != null)
+			{
+				WebUtils.removeFileTwice(article.getMainImage().getPath());
+				Image i = article.getMainImage();
+				String filename = this.newMainImage.getOriginalFilename();
+				i.setPath(filename);
+				WebUtils.saveFileTwice(this.newMainImage);
+				imageDAO.update(i);
+			}
+			else
+			{
+				Image i = new Image();
+				i.setType(1);
+				String filename = this.newMainImage.getOriginalFilename();
+				i.setPath(filename);
+				i.setArticle(article);
+				WebUtils.saveFileTwice(this.newMainImage);
+				imageDAO.create(i);
+				article.addImage(i);
+			}
 		}
 	}
 

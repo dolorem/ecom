@@ -44,17 +44,10 @@ public class ArticleController
 	@RequestMapping(value = "add", method = RequestMethod.GET)
 	public ModelAndView add(HttpServletRequest request)
 	{
-		ModelAndView mav = new ModelAndView("admin/articles/add");
+		ModelAndView mav = new ModelAndView("admin/articles/editItem");
+		mav.addObject("article", new ArticleFormModel());
 		mav.addObject("categories", categoryDAO.getItemOffsetAlphabeticalList());
-		System.out.println("a " + request.getAttribute("css") + " " + request.getParameter("css"));
 		return mav;
-	}
-	
-	@RequestMapping(value = "create", method = RequestMethod.POST)
-	public ModelAndView create(HttpServletRequest request)
-	{
-		//TODO
-		return new ModelAndView("redirect:/administrator/articles/add.htm");
 	}
 	
 	@RequestMapping(value="edit", method=RequestMethod.GET)
@@ -90,6 +83,8 @@ public class ArticleController
 		Article a = (Article) articleDAO.getById(model.getId());
 		if (a != null)
 			model.parseModel(a, articleDAO, categoryDAO, imageDAO);
+		else
+			model.parseModel(new Article(), articleDAO, categoryDAO, imageDAO);
 		return new ModelAndView("redirect:/administrator/articles/edit.htm");
 	}
 }

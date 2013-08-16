@@ -16,14 +16,6 @@ import javax.persistence.JoinTable;
 import javax.persistence.ManyToMany;
 import javax.persistence.OneToMany;
 import javax.persistence.Table;
-import javax.persistence.Transient;
-
-import org.springframework.web.multipart.commons.CommonsMultipartFile;
-
-import com.smiechmateusz.dao.ArticleDAO;
-import com.smiechmateusz.dao.CategoryDAO;
-import com.smiechmateusz.dao.ImageDAO;
-import com.smiechmateusz.utils.WebUtils;
 
 @Entity
 @Table(name="Article")
