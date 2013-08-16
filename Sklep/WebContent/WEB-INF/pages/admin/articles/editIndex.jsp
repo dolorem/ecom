@@ -34,7 +34,7 @@
 			<td><input type="checkbox" id="item${item.getId()}" /></td>
 			<td>${item.getName()}</td>
 			<td><a href="/administrator/articles/edit/${item.getId()}.htm">Edytuj</a></td>
-			<td><a href="/administrator/articles/delete/${item.getId()}.htm">Usuń</a></td>
+			<td><a href="#" class="deleteSingleItem" id="singleItem${item.getId()}">Usuń</a></td>
 		</tr>
 	</c:forEach>	
 </table>

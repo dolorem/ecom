@@ -33,10 +33,28 @@ $(document).ready(function() {
 				type: 'DELETE',
 				data: JSON.stringify(arr),
 				success: function(data) {
-					window.location.href = '/administrator/articles/edit.htm';
+					location.reload(true);
+				}				
+			});			
+		}
+	});
+	
+	$('.deleteSingleItem').click(function() {
+		var id = $(this).attr('id').replace('singleItem', '');
+		if (confirm("Czy na pewno usunąć element?"))
+		{
+			$.ajax({
+				headers: {
+					'Accept': 'application/json',
+					'Content-Type': 'application/json'
+				},
+				url: '/administrator/articles/delete.json',
+				type: 'DELETE',
+				data: JSON.stringify([id]),
+				success: function(data) {
+					location.reload(true);
 				}				
 			});
-			
 		}
 	});
 });

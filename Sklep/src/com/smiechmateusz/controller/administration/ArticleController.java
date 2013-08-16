@@ -97,23 +97,6 @@ public class ArticleController
 		return new ModelAndView("redirect:/administrator/articles/edit.htm");
 	}
 	
-	@RequestMapping(value="delete/{productId}", method=RequestMethod.GET)
-	public ModelAndView delete(@PathVariable("productId") long id)
-	{
-		ModelAndView mav = new ModelAndView("admin/articles/deleteConfirm");
-		mav.addObject("article", (Article) articleDAO.getById(id));
-		return mav;
-	}
-	
-	@RequestMapping(value="delete/{productId}/confirm", method=RequestMethod.GET)
-	public ModelAndView deleteConfirmed(@PathVariable("productId") long id, HttpServletRequest request)
-	{
-		ModelAndView mav = new ModelAndView("redirect:/administrator/articles/edit.htm");
-		articleDAO.deleteById(id);
-		request.getSession().setAttribute("success", "Artykuł został usunięty.");
-		return mav;
-	}
-	
 	@RequestMapping(value="delete.json", method=RequestMethod.DELETE, produces="application/json")
 	@ResponseBody
 	public Boolean deleteAjaxMultiple(@RequestBody long[] gotten)
