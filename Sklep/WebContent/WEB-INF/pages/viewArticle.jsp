@@ -1,5 +1,5 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
-    pageEncoding="UTF-8"%>
+	pageEncoding="UTF-8"%>
 <%@include file="before.jsp"%>
 <h1>${article.getName()}</h1>
 <div class="row">

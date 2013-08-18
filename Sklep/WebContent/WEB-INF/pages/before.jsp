@@ -1,8 +1,8 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
-    pageEncoding="UTF-8"%>
-<%@page import="java.util.ArrayList" %>
-<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
-<!DOCTYPE html>
+	pageEncoding="UTF-8"%>
+<%@ page import="java.util.ArrayList"%>
+<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
+<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
 <html>
 <head>
 <c:forEach var="cssItem" items="${css}">
@@ -12,33 +12,31 @@
 	<script type="text/javascript" src="${jsItem}"></script>
 </c:forEach>
 <style>
-body
-{
+body {
 	padding-top: 60px;
 }
-ul.nav li.dropdown:hover ul.dropdown-menu{
-    display: block;    
-    margin: 0px;
+
+ul.nav li.dropdown:hover ul.dropdown-menu {
+	display: block;
+	margin: 0px;
 }
 
-.myMenuNav
-{
+.myMenuNav {
 	float: none;
 	text-align: center;
 }
-.navbar .nav,
-    .navbar .nav > li {
-      float:none;
-      display:inline-block;
-      vertical-align: top;
-    }
 
-    .navbar-inner {
-      text-align:center;
-    }
-    
-.masthead .navbar .nav li a
-{
+.navbar .nav,.navbar .nav>li {
+	float: none;
+	display: inline-block;
+	vertical-align: top;
+}
+
+.navbar-inner {
+	text-align: center;
+}
+
+.masthead .navbar .nav li a {
 	text-align: center;
 	border-left: 1px solid rgba(255, 255, 255, .75);
 	border-right: 1px solid rgba(0, 0, 0, .1);
@@ -47,16 +45,16 @@ ul.nav li.dropdown:hover ul.dropdown-menu{
 <meta charset="UTF-8">
 </head>
 <body>
-<c:choose>
-	<c:when test="${logged}">
-		<%@include file="headerLogged.jsp" %>
-	</c:when>
-	<c:otherwise>
-		<%@include file="headerNotLogged.jsp" %>
-	</c:otherwise>
-</c:choose>
-<div class="container">
-	<%@include file="menu.jsp" %>
-	<div class="row">
-		<div class="span3"><%@include file="sidebar.jsp" %></div>
-		<div class="span9">
+	<c:choose>
+		<c:when test="${logged}">
+			<%@include file="headerLogged.jsp"%>
+		</c:when>
+		<c:otherwise>
+			<%@include file="headerNotLogged.jsp"%>
+		</c:otherwise>
+	</c:choose>
+	<div class="container">
+		<%@include file="menu.jsp"%>
+		<div class="row">
+			<div class="span3"><%@include file="sidebar.jsp"%></div>
+			<div class="span9">

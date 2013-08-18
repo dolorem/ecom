@@ -1,51 +1,41 @@
 <beans xmlns="http://www.springframework.org/schema/beans"
-    xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
-    xsi:schemaLocation="http://www.springframework.org/schema/beans
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xsi:schemaLocation="http://www.springframework.org/schema/beans
                         http://www.springframework.org/schema/beans/spring-beans.xsd">
-
+	<!-- Resolver for mapping json and html requests as well as JSP file locations. -->
 	<bean class="org.springframework.web.servlet.view.ContentNegotiatingViewResolver">
-  <property name="mediaTypes">
-    <map>
-      <entry key="html" value="text/html"/>
-      <entry key="json" value="application/json"/>
-    </map>
-  </property>
-  <property name="viewResolvers">
-    <list>
-      <!-- <bean class="org.springframework.web.servlet.view.UrlBasedViewResolver">
-        <property name="viewClass" value="org.springframework.web.servlet.view.JstlView"/>
-        <property name="prefix" value="/WEB-INF/pages/"/>
-        <property name="suffix" value=".jsp"/>
-      </bean>-->
-      <bean id="viewResolver" class="org.springframework.web.servlet.view.InternalResourceViewResolver">
-<property name="viewClass"><value>org.springframework.web.servlet.view.JstlView</value></property>
-<property name="prefix"><value>/WEB-INF/pages/</value></property>
-<property name="suffix"><value>.jsp</value></property>
-</bean> 
-    </list>
-  </property>
-  <property name="defaultViews">
-    <list>
-      <bean class="org.springframework.web.servlet.view.json.MappingJacksonJsonView">
-        <property name="prefixJson" value="true"/>
-      </bean>
-    </list>
-  </property>
-</bean>
-	
-
-	<!-- <bean id="viewResolver" class="org.springframework.web.servlet.view.InternalResourceViewResolver">
-    	<property name="viewClass" value="org.springframework.web.servlet.view.JstlView"/>
-    	<property name="prefix" value="/WEB-INF/pages/"/>
-    	<property name="suffix" value=".jsp"/>
-	</bean>-->
-	
-<bean id="multipartResolver" class="org.springframework.web.multipart.commons.CommonsMultipartResolver">
-        <!-- one of the properties available; the maximum file size in bytes -->
-        <property name="maxUploadSize" value="100000000"/>
-    </bean>
-
-
-    <import resource="mvc-context.xml" />
-
+		<property name="mediaTypes">
+			<map>
+				<entry key="html" value="text/html" />
+				<entry key="json" value="application/json" />
+			</map>
+		</property>
+		<property name="viewResolvers">
+			<list>
+				<bean id="viewResolver"	class="org.springframework.web.servlet.view.InternalResourceViewResolver">
+					<property name="viewClass">
+						<value>org.springframework.web.servlet.view.JstlView</value>
+					</property>
+					<property name="prefix">
+						<value>/WEB-INF/pages/</value>
+					</property>
+					<property name="suffix">
+						<value>.jsp</value>
+					</property>
+				</bean>
+			</list>
+		</property>
+		<property name="defaultViews">
+			<list>
+				<bean class="org.springframework.web.servlet.view.json.MappingJacksonJsonView">
+					<property name="prefixJson" value="true" />
+				</bean>
+			</list>
+		</property>
+	</bean>
+	<!-- Resolver for MulpipartFiles sent by forms. -->
+	<bean id="multipartResolver" class="org.springframework.web.multipart.commons.CommonsMultipartResolver">
+		<property name="maxUploadSize" value="100000000" />
+	</bean>
+	<import resource="mvc-context.xml" />
 </beans>

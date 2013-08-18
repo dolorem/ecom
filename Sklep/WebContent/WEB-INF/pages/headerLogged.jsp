@@ -1,20 +1,20 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
-    pageEncoding="UTF-8"%>
+	pageEncoding="UTF-8"%>
 <div class="navbar navbar-inverse navbar-fixed-top">
-      <div class="navbar-inner">
-        <div class="container">
-          <button type="button" class="btn btn-navbar" data-toggle="collapse" data-target=".nav-collapse">
-            <span class="icon-bar"></span>
-            <span class="icon-bar"></span>
-            <span class="icon-bar"></span>
-          </button>
-          <a class="brand" href="#">Project name</a>
-          <div class="nav-collapse collapse">
-            <ul class="nav pull-right">
-              <li><a href="#">Witaj, ${user.getUsername()}</a></li>      
-              <li><a href="/auth/logout.htm">Wyloguj się</a></li>  
-            </ul>
-          </div><!--/.nav-collapse -->
-        </div>
-      </div>
-    </div>
+	<div class="navbar-inner">
+		<div class="container">
+			<button type="button" class="btn btn-navbar" data-toggle="collapse"
+				data-target=".nav-collapse">
+				<span class="icon-bar"></span> <span class="icon-bar"></span> <span
+					class="icon-bar"></span>
+			</button>
+			<a class="brand" href="#">Project name</a>
+			<div class="nav-collapse collapse">
+				<ul class="nav pull-right">
+					<li><a href="#">Witaj, ${user.getUsername()}</a></li>
+					<li><a href="/auth/logout.htm">Wyloguj się</a></li>
+				</ul>
+			</div>
+		</div>
+	</div>
+</div>

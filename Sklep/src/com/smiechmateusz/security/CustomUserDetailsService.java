@@ -15,90 +15,60 @@ import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.transaction.annotation.Transactional;
 
 import com.smiechmateusz.dao.UserDAO;
+import com.smiechmateusz.model.MyUser;
 import com.smiechmateusz.model.Role;
- 
+
 /**
- * A custom service for retrieving users from a custom datasource, such as a database.
- * <p>
-* This custom service must implement Spring's {@link UserDetailsService}
+ * An UserDetailsService implementation handling login and previliges.
+ * 
+ * @author Śmiech Mateusz
  */
 @Transactional(readOnly = true)
 public class CustomUserDetailsService implements UserDetailsService {
-  
+
+	/** The user dao. */
 	@Autowired
-     UserDAO userDAO;
-  
- /**
-  * Retrieves a user record containing the user's credentials and access.
-  */
- public UserDetails loadUserByUsername(String username)
-   throws UsernameNotFoundException, DataAccessException {
-   
-  // Declare a null Spring User
-  UserDetails user = null;
-   
-  try {
-    
-   // Search database for a user that matches the specified username
-   // You can provide a custom DAO to access your persistence layer
-   // Or use JDBC to access your database
-   // DbUser is our custom domain user. This is not the same as Spring's User
-	com.smiechmateusz.model.MyUser dbUser = userDAO.findByUsername(username);
-    
-   // Populate the Spring User object with details from the dbUser
-   // Here we just pass the username, password, and access level
-   // getAuthorities() will translate the access level to the correct role type
-	System.out.println(dbUser.getUsername());
-   user =  new User(
-     dbUser.getUsername(),
-     dbUser.getPasswordHash().toLowerCase(),
-     true,
-     true,
-     true,
-     true,
-     getAuthorities(dbUser.getRole()) );
- 
-  } catch (Exception e) {
-   System.out.println("Error in retrieving user");
-   throw new UsernameNotFoundException("Error in retrieving user");
-  }
-   
-  // Return user to Spring for processing.
-  // Take note we're not the one evaluating whether this user is authenticated or valid
-  // We just merely retrieve a user that matches the specified username
-  return user;
- }
-  
- /**
-  * Retrieves the correct ROLE type depending on the access level, where access level is an Integer.
-  * Basically, this interprets the access value whether it's for a regular user or admin.
-  *
-  * @param access an integer value representing the access of the user
-  * @return collection of granted authorities
-  */
-  public Collection<GrantedAuthority> getAuthorities(List<Role> roles) {
-   // Create a list of grants for this user
-   /*List<GrantedAuthority> authList = new ArrayList<GrantedAuthority>(2);
-    
-   // All users are granted with ROLE_USER access
-   // Therefore this user gets a ROLE_USER by default
-   System.out.println("Grant ROLE_USER to this user");
-   authList.add(new GrantedAuthorityImpl("ROLE_USER"));
-    
-   // Check if this user has admin access
-   // We interpret Integer(1) as an admin user
-   if ( access.compareTo(1) == 0) {
-    // User has admin access
-    System.out.println("Grant ROLE_ADMIN to this user");
-    authList.add(new GrantedAuthorityImpl("ROLE_ADMIN"));*/
-	 List<GrantedAuthority> auth = new ArrayList<GrantedAuthority>(2);
-	auth.add(new GrantedAuthorityImpl("ROLE_USER"));
-	for (Role r : roles)
+	UserDAO userDAO;
+
+	/**
+	 * Loads the user from given username.
+	 * 
+	 * @param username the username of the user to retrieve
+	 * @return the user details
+	 * @throws UsernameNotFoundException the username not found exception if they don't exist
+	 * @throws DataAccessException the data access exception 
+	 */
+	public UserDetails loadUserByUsername(String username) throws UsernameNotFoundException, DataAccessException 
 	{
-		if (r.getDescription().equals("admin") || r.getDescription().equals("administrator"))
-			auth.add(new GrantedAuthorityImpl("ROLE_ADMIN"));
+		UserDetails user = null;
+		try 
+		{
+			MyUser dbUser = userDAO.findByUsername(username);
+			user =  new User(dbUser.getUsername(), dbUser.getPasswordHash().toLowerCase(),
+						true, true,	true, true, getUserPreviliges(dbUser.getRole()));
+		} 
+		catch (Exception e) 
+		{
+			throw new UsernameNotFoundException("Error in retrieving user");
+		}
+		return user;
 	}
-   // Return list of granted authorities
-   return auth;
-   }
+
+	/**
+	 * Gets the collection of roles of type GrantedAuthority from list of Role models.
+	 * 
+	 * @param roles the list of role models
+	 * @return collection of granted previliges
+	 */
+	public Collection<GrantedAuthority> getUserPreviliges(List<Role> roles) 
+	{
+		List<GrantedAuthority> auth = new ArrayList<GrantedAuthority>(2);
+		auth.add(new GrantedAuthorityImpl("ROLE_USER"));
+		for (Role r : roles)
+		{
+			if (r.getDescription().equals("admin") || r.getDescription().equals("administrator"))
+				auth.add(new GrantedAuthorityImpl("ROLE_ADMIN"));
+		}
+		return auth;
+	}
 }

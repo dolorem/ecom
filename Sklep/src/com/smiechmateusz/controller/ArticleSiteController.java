@@ -11,28 +11,35 @@ import org.springframework.web.servlet.ModelAndView;
 import com.smiechmateusz.dao.ArticleDAO;
 import com.smiechmateusz.model.Article;
 
+/**
+ * Controller handling site article requests.
+ * 
+ * @author Śmiech Mateusz
+ */
 @Controller
 @RequestMapping("/article/")
 public class ArticleSiteController
 {
+	
+	/** The article dao. */
 	@Autowired
 	ArticleDAO articleDAO;
 	
+	/**
+	 * View article.
+	 * 
+	 * @param request HttpServletRequest injected by Spring
+	 * @return the model and view
+	 * @throws ResourceNotFoundException if article of given ID doesn't exist
+	 */
 	@RequestMapping(value = "view", method = RequestMethod.GET)
 	public ModelAndView viewArticle(HttpServletRequest request)
 	{
 		ModelAndView mav = new ModelAndView("viewArticle");
 		Article a = new Article();
-		try 
-		{
-			a = (Article) articleDAO.getById(Long.parseLong(request.getParameter("id")));
-		}
-		catch (Exception e)
-		{
-			throw new ResourceNotFoundException();
-		}
+		a = (Article) articleDAO.getById(Long.parseLong(request.getParameter("id")));
 		if (a == null)
-			throw new ResourceNotFoundException();
+			throw new ResourceNotFoundException(); //404 Error
 		mav.addObject("article", a);
 		return mav;
 	}

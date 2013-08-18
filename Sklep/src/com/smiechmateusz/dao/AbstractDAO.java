@@ -12,19 +12,42 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
 import org.springframework.transaction.annotation.Transactional;
 
+/**
+ * Abstract DAO containing default implementations of DAO operations.
+ * 
+ * @param <T> type of the serialized item
+ * @author Śmiech Mateusz
+ */
 @Transactional
 public abstract class AbstractDAO<T extends Serializable> 
 {
+	
+	/** Class of the serialized item. */
 	private final Class<T> clazz;
+    
+    /** The session factory. */
     @Autowired
     SessionFactory sessionFactory;
+    
+    /** The static session shared between multiple DAO instances. */
     public static Session fooSession = null;
 
+    /**
+	 * Instantiates a new abstract dao.
+	 * 
+	 * @param clazzToSet type of the serialized item
+	 */
     public AbstractDAO(final Class< T> clazzToSet) 
     {
         this.clazz = clazzToSet;
     }
 
+    /**
+	 * Gets item by its ID.
+	 * 
+	 * @param id the ID of the item to retrieve
+	 * @return item of given ID, null if it doesn't exist
+	 */
     public T getById(final Long id) 
     {
         if (id != null)
@@ -32,11 +55,21 @@ public abstract class AbstractDAO<T extends Serializable>
         return null;
     }
 
+    /**
+	 * Gets all items of given type.
+	 * 
+	 * @return list of all items
+	 */
     public List<T> getAll() 
     {
         return this.getCurrentSession().createQuery("from " + this.clazz.getName()).list();
     }
 
+    /**
+	 * Creates (persists) the item to the database.
+	 * 
+	 * @param entity the entity to be persisted
+	 */
     public void create(final T entity) 
     {
     	boolean persisted = false;
@@ -69,6 +102,11 @@ public abstract class AbstractDAO<T extends Serializable>
         }
     }
 
+    /**
+	 * Updates the item to the database.
+	 * 
+	 * @param entity the entity to be updated
+	 */
     public void update(final T entity) 
     {
         if (entity != null)
@@ -76,7 +114,6 @@ public abstract class AbstractDAO<T extends Serializable>
         	try
         	{
         		this.getCurrentSession().merge(entity);
-        		//this.getCurrentSession().update(entity);
         		this.getCurrentSession().flush();
         	}
         	catch (Exception e)
@@ -86,9 +123,13 @@ public abstract class AbstractDAO<T extends Serializable>
         }
     }
 
+    /**
+	 * Deletes the item.
+	 * 
+	 * @param entity the entity to be deleted
+	 */
     public void delete(final T entity) 
     {
-    	System.out.println("AbstractDAO? WTF?!");
     	try 
         {
     		if (entity != null)
@@ -106,11 +147,15 @@ public abstract class AbstractDAO<T extends Serializable>
     	catch (Exception e)
     	{
     		e.printStackTrace();
-//    		delete(entity);
     	}
     	
     }
 
+    /**
+	 * Deletes entity by its id.
+	 * 
+	 * @param entityId the ID of the entity to delete
+	 */
     public void deleteById(final Long entityId) 
     {
         final T entity = this.getById(entityId);
@@ -118,22 +163,34 @@ public abstract class AbstractDAO<T extends Serializable>
         	this.delete(entity);
     }
 
+    /**
+	 * Sets the session factory.
+	 * 
+	 * @param sessionFactory the new session factory
+	 */
     public void setSessionFactory(SessionFactory sessionFactory) 
     {
         this.sessionFactory = sessionFactory;
     }
 
+    /**
+	 * Gets the current session based on static fooSession.
+	 * 
+	 * @return the current session
+	 */
     protected final Session getCurrentSession() 
     {
-//        return this.sessionFactory.getCurrentSession();
     	if (AbstractDAO.fooSession == null)
-    	
     		AbstractDAO.fooSession = this.sessionFactory.openSession();
-    	
-//    		AbstractDAO.fooSession = this.sessionFactory.getCurrentSession();
     	return AbstractDAO.fooSession;
     }
     
+    /**
+	 * Gets all items matching given criteria.
+	 * 
+	 * @param criteria the criteria
+	 * @return the list of the items matching given criteria
+	 */
     public List<T> getWithCriteria(List<Criterion> criteria)
     {
     	Criteria c = this.getCurrentSession().createCriteria(this.clazz);
@@ -143,4 +200,14 @@ public abstract class AbstractDAO<T extends Serializable>
     	}
     	return c.list();
     }
+    
+    /**
+     * Gets criteria for further database process.
+     * 
+     * @return criteria
+     */
+	public Criteria getCriteria()
+	{
+		return getCurrentSession().createCriteria(this.clazz);
+	}
 }

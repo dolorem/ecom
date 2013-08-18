@@ -12,43 +12,62 @@ import org.springframework.transaction.annotation.Transactional;
 import com.smiechmateusz.model.Category;
 import com.smiechmateusz.utils.Pair;
 
+/**
+ * AbstractDAO implementation for Category overriding some of its methods.
+ */
 @Transactional
 public class CategoryDAO extends AbstractDAO
 {
+	
+	/**
+	 * Instantiates a new category dao.
+	 */
 	public CategoryDAO()
 	{
 		super(Category.class);
 	}
 	
+	/**
+	 * Deletes the Category and all its subcategories.
+	 * 
+	 * @param entity the Category to delete
+	 */
 	public void delete(final Category entity) 
 	{
 		long id = entity.getId();
-		System.out.println("RECEIVED ID " + id);
 		if (entity != null)
 		{	
-			if (entity.getParent() != null)
+			if (entity.getParent() != null) //first we have to detach the item from its parent
 			{
 				entity.getParent().removeChild(entity);
 				update(entity.getParent());
 			}
-			if (entity.getChildren() != null)
+			if (entity.getChildren() != null) //we have to recursively delete every child before removing the entity
 			{
 				List<Category> children = entity.getChildren();
 				while (children.size() != 0)
 					this.delete(children.get(0));
 			}				
 			this.getCurrentSession().delete(entity);
-			System.out.println("DELETED ID " + id);
 			this.getCurrentSession().flush();
 	    }
 	}
 	
+	/**
+	 * Deletes the category of given ID.
+	 * 
+	 * @param id the id of the Category to delete
+	 */
 	public void deleteById(final long id)
 	{
-		System.out.println("DELETING ID " + id);
 		this.delete((Category) getById(id));
 	}
 	
+	/**
+	 * Loads alphabetically ordered categories with root (null) parent.
+	 * 
+	 * @return the alphabetically ordered list of categories with null parent 
+	 */
 	public ArrayList<Category> loadRootAlphabetically()
 	{
 		Criteria c = this.getCurrentSession().createCriteria(Category.class);
@@ -57,24 +76,36 @@ public class CategoryDAO extends AbstractDAO
 		return (ArrayList<Category>) c.list();
 	}
 	
-	public ArrayList<Pair<Category, Integer>> getItemOffsetAlphabeticalList()
+	/**
+	 * Creates the list of categories with their indent level. 
+	 * The categories in each level are ordered alphabetically and children precede siblings.
+	 * 
+	 * @return the category list with offset
+	 */
+	public ArrayList<Category> getItemOffsetAlphabeticalList()
 	{
-		ArrayList<Category> categories = loadRootAlphabetically();
-		ArrayList<Pair<Category, Integer>> cat = new ArrayList<Pair<Category, Integer>>();
-		Stack<Pair<Category, Integer>> q = new Stack<Pair<Category, Integer>>();
-		for (int i = categories.size() - 1; i >= 0; i--)
-			q.add(new Pair<Category, Integer>(categories.get(i), 0));
-		while (!q.empty())
+		ArrayList<Category> root = loadRootAlphabetically();
+		ArrayList<Category> output = new ArrayList<Category>();
+		Stack<Category> stack = new Stack<Category>();
+		for (int i = root.size() - 1; i >= 0; i--)
 		{
-			Pair<Category, Integer> pair = q.pop();
-			List<Category> children = pair.getLeft().getChildrenAlphabetically();
+			root.get(i).setNestingLevel(0);
+			stack.add(root.get(i));
+		}
+		while (!stack.empty())
+		{
+			Category item = stack.pop();
+			List<Category> children = item.getChildrenAlphabetically();
 			if (children != null)
 			{
 				for (int i = children.size() - 1; i >= 0; i--)
-					q.add(new Pair<Category, Integer>(children.get(i), pair.getRight() + 1));
-				cat.add(pair);
+				{
+					children.get(i).setNestingLevel(item.getNestingLevel() + 1);
+					stack.add(children.get(i));
+				}
+				output.add(item);
 			}
 		}
-		return cat;
+		return output;
 	}
 }

@@ -8,14 +8,34 @@ import java.io.InputStream;
 import org.springframework.web.multipart.commons.CommonsMultipartFile;
 
 
+/**
+ * The Class WebUtils containing methods for use in every servlet.
+ * 
+ * @author Śmiech Mateusz
+ */
 public class WebUtils
 {
+	
+	/**
+	 * Save file twice - once in server dir and once in workspace so Eclipse won't remove it during publish.
+	 * 
+	 * @param f
+	 *            the file
+	 */
 	public static void saveFileTwice(CommonsMultipartFile f)
 	{
 		saveFile(f, System.getProperty("catalina.base") + "/wtpwebapps/Sklep/media/uploadedImages/");
 		saveFile(f, "/home/mateusz/git/ecom/Sklep/WebContent/media/uploadedImages/");
 	}
 	
+	/**
+	 * Save file.
+	 * 
+	 * @param f
+	 *            the file
+	 * @param root
+	 *            the path
+	 */
 	public static void saveFile(CommonsMultipartFile f, String root)
 	{
 		try
@@ -41,12 +61,24 @@ public class WebUtils
 		}		
 	}
 	
+	/**
+	 * Removes the file twice - once on the server and once in workspace so Eclipse won't recreate it during publish.
+	 * 
+	 * @param filename
+	 *            the filename
+	 */
 	public static void removeFileTwice(String filename)
 	{
 		removeFile(System.getProperty("catalina.base") + "/wtpwebapps/Sklep/media/uploadedImages/" + filename);
 		removeFile("/home/mateusz/git/ecom/Sklep/WebContent/media/uploadedImages/" + filename);			
 	}
 	
+	/**
+	 * Removes the file.
+	 * 
+	 * @param path
+	 *            the path
+	 */
 	public static void removeFile(String path)
 	{
 		try

@@ -5,15 +5,30 @@ import java.util.Queue;
 
 import com.smiechmateusz.dao.CategoryDAO;
 
+/**
+ * Category model for use in forms. Contains both original and target data.
+ * 
+ * @author Śmiech Mateusz
+ */
 public class CategoryFormModel extends Category
 {
+	
+	/** The parent id. */
 	private long parentId;
 	
+	/**
+	 * Instantiates a new category form model.
+	 */
 	public CategoryFormModel()
 	{
 		
 	}
 	
+	/**
+	 * Instantiates a new category form model from a category.
+	 * 
+	 * @param c the category to copy fields from
+	 */
 	public CategoryFormModel(Category c)
 	{
 		this.id = c.getId();
@@ -23,6 +38,12 @@ public class CategoryFormModel extends Category
 		this.parent = c.getParent();
 	}
 	
+	/**
+	 * Parses the model and updates the category.
+	 * 
+	 * @param c the target category
+	 * @param categoryDAO the category dao
+	 */
 	public void parseModel(Category c, CategoryDAO categoryDAO)
 	{
 		c.setName(this.name);
@@ -43,33 +64,47 @@ public class CategoryFormModel extends Category
 		categoryDAO.update(c);
 	}
 
+	/**
+	 * Checks if category will be self child after update. This would cause category loops and is highly unwanted.
+	 * 
+	 * @param category the category to check
+	 * @return true, if category will be self child after update, false otherwise
+	 */
 	public boolean gonnaBeSelfChild(Category category)
 	{
 		if (category.getId() == parentId)
 			return true;
-		Queue<Category> q = new LinkedList<Category>();
-		q.add(category);
-		while (!q.isEmpty())
+		Queue<Category> queue = new LinkedList<Category>();
+		queue.add(category);
+		while (!queue.isEmpty())
 		{
-			for (Category c : q.poll().getChildren())
+			for (Category c : queue.poll().getChildren())
 			{
 				if (c.getId() == parentId)
 					return true;
-				q.add(c);
+				queue.add(c);
 			}
 		}
 		return false;
 	}
 	
+	/**
+	 * Gets the parent id.
+	 * 
+	 * @return the parent id
+	 */
 	public long getParentId()
 	{
 		return parentId;
 	}
 
+	/**
+	 * Sets the parent id.
+	 * 
+	 * @param parentId the new parent id
+	 */
 	public void setParentId(long parentId)
 	{
 		this.parentId = parentId;
-	}
-	
-	
+	}	
 }
