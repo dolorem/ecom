@@ -5,7 +5,10 @@ import java.io.FileOutputStream;
 import java.io.IOException;
 import java.io.InputStream;
 
+import javax.servlet.http.HttpServletRequest;
+
 import org.springframework.web.multipart.commons.CommonsMultipartFile;
+import org.springframework.web.servlet.ModelAndView;
 
 
 /**
@@ -90,5 +93,77 @@ public class WebUtils
 		{
 			e.printStackTrace();
 		}
+	}
+	
+	/**
+	 * Adds success message set by addSuccess() to model.
+	 * 
+	 * @see WebUtils#addSuccess(String, HttpServletRequest)
+	 * @param request HttpServletRequest injected by Spring
+	 * @param mav ModelAndView representing a page which will be rendered
+	 */
+	public static void handleSuccess(HttpServletRequest request, ModelAndView mav)
+	{
+		if (request.getSession().getAttribute("success") != null)
+		{
+			mav.addObject("success", request.getSession().getAttribute("success"));
+			request.getSession().setAttribute("success", null);
+		}
+	}
+	
+	/**
+	 * Adds success message set by addError() to model.
+	 * 
+	 * @see WebUtils#addError(String, HttpServletRequest)
+	 * @param request HttpServletRequest injected by Spring
+	 * @param mav ModelAndView representing a page which will be rendered
+	 */
+	public static void handleError(HttpServletRequest request, ModelAndView mav)
+	{
+		if (request.getSession().getAttribute("error") != null)
+		{
+			mav.addObject("error", request.getSession().getAttribute("error"));
+			request.getSession().setAttribute("error", null);
+		}
+	}
+	
+	/**
+	 * Adds success and error messages set by addSuccess() and addError() to model  
+	 * 
+	 * @see WebUtils#addError(String, HttpServletRequest)
+	 * @see WebUtils#addSuccess(String, HttpServletRequest)
+	 * @see WebUtils#handleError(HttpServletRequest, ModelAndView)
+	 * @see WebUtils#handleSuccess(HttpServletRequest, ModelAndView)
+	 * @param request HttpServletRequest injected by Spring
+	 * @param mav the model and view representing a page which will be rendered
+	 */
+	public static void handleSuccessAndError(HttpServletRequest request, ModelAndView mav)
+	{
+		handleSuccess(request, mav);
+		handleError(request, mav);
+	}
+	
+	/**
+	 * Adds success message for further retrieval by handleSuccess.
+	 * 
+	 * @see WebUtils#handleSuccess(HttpServletRequest, ModelAndView)
+	 * @param message the success message
+	 * @param request HttpServletRequest injected by Spring
+	 */
+	public static void addSuccess(String message, HttpServletRequest request)
+	{
+		request.getSession().setAttribute("success", message);
+	}
+	
+	/**
+	 * Adds error message for further retrieval by handleError.
+	 * 
+	 * @see WebUtils#handleError(HttpServletRequest, ModelAndView)
+	 * @param message the error message
+	 * @param request HttpServletRequest injected by Spring
+	 */
+	public static void addError(String message, HttpServletRequest request)
+	{
+		request.getSession().setAttribute("error", message);
 	}
 }

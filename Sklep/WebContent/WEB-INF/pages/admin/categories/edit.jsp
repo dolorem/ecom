@@ -8,9 +8,6 @@
 <%@ taglib prefix="tg" tagdir="/WEB-INF/tags/"%>
 <%@ taglib uri="http://www.springframework.org/tags/form" prefix="form"%>
 <%@ include file="../before.jsp"%>
-<c:if test="${error != null}">
-	<div class="alert alert-error">${error}</div>
-</c:if>
 <form:form modelAttribute="category"
 	action="/administrator/categories/edit.htm" method="POST"
 	class="form-horizontal">

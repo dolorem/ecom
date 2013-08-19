@@ -21,6 +21,7 @@ import com.smiechmateusz.dao.CategoryDAO;
 import com.smiechmateusz.dao.ImageDAO;
 import com.smiechmateusz.model.Article;
 import com.smiechmateusz.model.ArticleFormModel;
+import com.smiechmateusz.utils.WebUtils;
 
 
 /**
@@ -87,7 +88,7 @@ public class ArticleController
 		ModelAndView mav = new ModelAndView("admin/articles/editIndex");
 		List<Article> results = articleDAO.getAll();
 		processPagination(request, mav, results);
-		handleSuccess(request, mav);
+		WebUtils.handleSuccess(request, mav);
 		return mav;
 	}
 
@@ -109,21 +110,6 @@ public class ArticleController
 		mav.addObject("pagedListHolder", pagedListHolder);
 	}
 
-	/**
-	 * Moves success message from session to model.
-	 * 
-	 * @param request HttpServletRequest injected by Spring
-	 * @param mav ModelAndView representing a page which will be rendered
-	 */
-	private void handleSuccess(HttpServletRequest request, ModelAndView mav)
-	{
-		if (request.getSession().getAttribute("success") != null)
-		{
-			mav.addObject("success", request.getSession().getAttribute("success"));
-			request.getSession().setAttribute("success", null);
-		}
-	}
-	
 	/**
 	 * Renders the item edition form.
 	 * 
@@ -160,7 +146,7 @@ public class ArticleController
 			articleDAO.create(art);  //and persist via Hibernate
 			model.parseModel(art, articleDAO, categoryDAO, imageDAO); //so that there won't be ID and/or dependency issues
 		}
-		request.getSession().setAttribute("success", "Artykuł został zapisany.");
+		WebUtils.addSuccess("Artykuł został zapisany.", request);
 		return new ModelAndView("redirect:/administrator/articles/edit.htm");
 	}
 	
@@ -168,14 +154,19 @@ public class ArticleController
 	 * Handles multiple item deletion via AJAX.
 	 * 
 	 * @param gotten long array containing IDs of elements to be deleted, decoded from JSON
+	 * @param request HttpServletRequest injected by Spring
 	 * @return true
 	 */
 	@RequestMapping(value="delete.json", method=RequestMethod.DELETE, produces="application/json")
 	@ResponseBody
-	public Boolean deleteAjaxMultiple(@RequestBody long[] gotten)
+	public Boolean deleteAjaxMultiple(@RequestBody long[] gotten, HttpServletRequest request)
 	{
 		for (long l : gotten)
 			articleDAO.deleteById(l);
+		if (gotten.length == 1)
+			WebUtils.addSuccess("Artykuł został usunięty.", request);
+		else
+			WebUtils.addSuccess("Artykuły zostały usunięte.", request);
 		return true;
 	}
 }

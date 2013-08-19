@@ -11,16 +11,6 @@
 </c:url>
 <script type="text/javascript" src="/media/js/jQuery.js"></script>
 <script type="text/javascript" src="/media/js/browseArticles.js"></script>
-<c:if test="${success != null}">
-	<div class="row">
-		<div class="alert alert-success">${success}</div>
-	</div>
-</c:if>
-<c:if test="${error != null }">
-	<div class="row">
-		<div class="alert alert-error">${error}</div>
-	</div>
-</c:if>
 <table class="table">
 	<tr>
 		<th>&nbsp;</th>

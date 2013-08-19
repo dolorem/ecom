@@ -15,6 +15,7 @@ import org.springframework.web.servlet.ModelAndView;
 import com.smiechmateusz.dao.ManufacturerDAO;
 import com.smiechmateusz.model.Manufacturer;
 import com.smiechmateusz.model.ManufacturerFormModel;
+import com.smiechmateusz.utils.WebUtils;
 
 /**
  * Handles manufacturer addition, edition and deletion.
@@ -32,13 +33,14 @@ public class ManufacturerController
 	/**
 	 * Renders summary page.
 	 * 
+	 * @param request HttpServletRequest injected by Spring
 	 * @return the model and view
 	 */
 	@RequestMapping(value="view", method=RequestMethod.GET)
-	public ModelAndView summary()
+	public ModelAndView summary(HttpServletRequest request)
 	{
-		//TODO success and errors
 		ModelAndView mav = new ModelAndView("admin/manufacturer/summary");
+		WebUtils.handleSuccessAndError(request,  mav);
 		mav.addObject("manufacturers", manufacturerDAO.getAllAlphabeticall());
 		return mav;		
 	}
@@ -68,7 +70,7 @@ public class ManufacturerController
 		 ModelAndView mav = new ModelAndView("admin/manufacturer/edit");
 		 Manufacturer m = manufacturerDAO.getById(id);
 		 if (m != null)
-			 mav.addObject("manufacturer", new ManufacturerFormModel(m));
+		 	 mav.addObject("manufacturer", new ManufacturerFormModel(m));
 		 return mav;
 	 }
 	 
@@ -89,7 +91,7 @@ public class ManufacturerController
 			 manufacturerDAO.create(m);
 		 }
 		 model.parseModel(m, manufacturerDAO);
-		 request.getSession().setAttribute("success", "Producent został dodany.");
+		 WebUtils.addSuccess("Producent został zapisany.", request);
 		 return new ModelAndView("redirect:/administrator/manufacturers/view.htm");
 	 }
 	 
@@ -97,14 +99,16 @@ public class ManufacturerController
 	  * Deletes manufacturers of given IDs parsed from JSON object.
 	  * 
 	  * @param gotten the array of IDs
+	  * @param request HttpServletRequest injected by Spring
 	  * @return true
 	  */
 	 @RequestMapping(value="delete.json", method=RequestMethod.DELETE, produces="application/json")
 	 @ResponseBody
-	 public Boolean deleteAjaxMultiple(@RequestBody long[] gotten)
+	 public Boolean deleteAjaxMultiple(@RequestBody long[] gotten, HttpServletRequest request)
 	 {
 		 for (long l : gotten)
 			 manufacturerDAO.deleteById(l);
+		 WebUtils.addSuccess("Producent został usunięty.", request);
 		 return true;
 	 }
 }

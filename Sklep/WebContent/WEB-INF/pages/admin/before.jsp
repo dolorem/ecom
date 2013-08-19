@@ -81,3 +81,9 @@ ul.nav li.dropdown:hover ul.dropdown-menu {
 	<div class="container">
 		<div class="row">
 			<div class="span12">
+				<c:if test="${success != null}">
+					<div class="alert alert-success">${success}</div>
+				</c:if>
+				<c:if test="${error != null}">
+					<div class="alert alert-danger">${error}</div>
+				</c:if>

@@ -17,6 +17,7 @@ import com.smiechmateusz.model.Article;
 import com.smiechmateusz.model.ArticleFormModel;
 import com.smiechmateusz.model.Category;
 import com.smiechmateusz.model.CategoryFormModel;
+import com.smiechmateusz.utils.WebUtils;
 
 /**
  * Controller handling category addition, edition and deletion.
@@ -54,31 +55,10 @@ public class CategoryController
 	public ModelAndView edit(HttpServletRequest request)
 	{
 		ModelAndView mav = new ModelAndView("admin/categories/edit");
-		processSuccessAndError(request, mav);
+		WebUtils.handleSuccessAndError(request, mav);
 		mav.addObject("categories", categoryDAO.getItemOffsetAlphabeticalList());
 		mav.addObject("category", new CategoryFormModel());
 		return mav;
-	}
-
-	/**
-	 * Moves success and/or error communicates from session to model.
-	 * 
-	 * @param request HttpServletRequest injected by Spring
-	 * @param mav the target model
-	 */
-	private void processSuccessAndError(HttpServletRequest request,
-			ModelAndView mav)
-	{
-		if (request.getSession().getAttribute("error") != null)
-		{
-			mav.addObject("error", request.getSession().getAttribute("error"));
-			request.getSession().setAttribute("error",  null);
-		}
-		if (request.getSession().getAttribute("success") != null)
-		{
-			mav.addObject("success", request.getSession().getAttribute("success"));
-			request.getSession().setAttribute("success",  null);
-		}
 	}
 	
 	/**
@@ -111,7 +91,7 @@ public class CategoryController
 				model.parseModel(c, categoryDAO);
 			else
 			{
-				request.getSession().setAttribute("error", "Nie można przenieść kategorii do jej podkategorii.");
+				WebUtils.addError("Nie można przenieść kategorii do jej podkategorii.", request);
 				return new ModelAndView("redirect:/administrator/categories/edit/" + model.getId() + ".htm");
 			}
 		}
@@ -121,6 +101,7 @@ public class CategoryController
 			categoryDAO.create(cat);
 			model.parseModel(cat, categoryDAO);
 		}
+		WebUtils.addSuccess("Kategoria została zapisana.", request);
 		return new ModelAndView("redirect:/administrator/categories/edit.htm");
 	}
 	
@@ -138,11 +119,7 @@ public class CategoryController
 		Category category= (Category) categoryDAO.getById(id);
 		if (category != null)
 			mav.addObject("category", new CategoryFormModel(category));
-		if (request.getSession().getAttribute("error") != null)
-		{
-			mav.addObject("error", request.getSession().getAttribute("error"));
-			request.getSession().setAttribute("error", null);
-		}
+		WebUtils.handleError(request, mav);
 		mav.addObject("categories", categoryDAO.getItemOffsetAlphabeticalList());
 		return mav;
 	}
@@ -155,10 +132,11 @@ public class CategoryController
 	 */
 	@RequestMapping(value="delete.json", method=RequestMethod.DELETE, produces="application/json")
 	@ResponseBody
-	public Boolean deleteAjaxMultiple(@RequestBody long[] gotten)
+	public Boolean deleteAjaxMultiple(@RequestBody long[] gotten, HttpServletRequest request)
 	{
 		for (long l : gotten)
 			categoryDAO.deleteById(l);
+		WebUtils.addSuccess("Kategoria została usunięta.", request);
 		return true;
 	}
 }

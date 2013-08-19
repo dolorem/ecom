@@ -7,12 +7,6 @@
 <%@ include file="../before.jsp"%>
 <script type="text/javascript" src="/media/js/jQuery.js"></script>
 <script type="text/javascript" src="/media/js/browseManufacturers.js"></script>
-<c:if test="${success != null}">
-	<div class="alert alert-success">${success}</div>
-</c:if>
-<c:if test="${error != null}">
-	<div class="alert alert-danger">${error}</div>
-</c:if>
 <table class="table">
 	<tr>
 		<th>Nazwa producenta</th>

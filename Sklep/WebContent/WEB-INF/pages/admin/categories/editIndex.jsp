@@ -6,16 +6,6 @@
 <%@include file="../before.jsp"%>
 <script type="text/javascript" src="/media/js/jQuery.js"></script>
 <script type="text/javascript" src="/media/js/browseCategories.js"></script>
-<c:if test="${success != null}">
-	<div class="row">
-		<div class="alert alert-success">${success}</div>
-	</div>
-</c:if>
-<c:if test="${error != null}">
-	<div class="row">
-		<div class="alert alert-error">${error}</div>
-	</div>
-</c:if>
 <table class="table">
 	<tr>
 		<th>Nazwa kategorii</th>
