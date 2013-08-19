@@ -39,6 +39,23 @@
 			</div>
 		</div>
 		<div class="control-group">
+			<form:label class="control-label" for="manufacturerId" path="manufacturerId">Producent</form:label>
+			<div class="controls">
+				<form:select path="manufacturerId">
+					<option value="0" selected="selected">Brak</option>
+					<c:forEach var="m" items="${manufacturers}">
+						<option value="${m.getId()}"
+							<c:if test="${article.getManufacturer().equals(m)}">
+								selected="selected"
+							</c:if>
+						>
+							${m.getName()}
+						</option>					
+					</c:forEach>
+				</form:select>
+			</div>
+		</div>
+		<div class="control-group">
 			<form:label class="control-label" for="available" path="available">Dostępny</form:label>
 			<div class="controls">
 				<form:checkbox path="available" />

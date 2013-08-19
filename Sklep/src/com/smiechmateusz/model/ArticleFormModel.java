@@ -11,6 +11,7 @@ import org.springframework.web.multipart.commons.CommonsMultipartFile;
 import com.smiechmateusz.dao.ArticleDAO;
 import com.smiechmateusz.dao.CategoryDAO;
 import com.smiechmateusz.dao.ImageDAO;
+import com.smiechmateusz.dao.ManufacturerDAO;
 import com.smiechmateusz.utils.WebUtils;
 
 /**
@@ -40,6 +41,10 @@ public class ArticleFormModel extends Article
 	/** The new main image. */
 	@Transient
 	private CommonsMultipartFile newMainImage;
+	
+	/** The new manufacturer id. */
+	@Transient
+	private long manufacturerId;
 	
 	/** The new additional images. */
 	@Transient
@@ -75,6 +80,7 @@ public class ArticleFormModel extends Article
 		this.addDate = a.getAddDate();
 		this.name = a.getName();
 		this.available = a.isAvailable();
+		this.manufacturer = a.getManufacturer();
 	}
 	
 	/**
@@ -85,14 +91,33 @@ public class ArticleFormModel extends Article
 	 * @param categoryDAO the category dao
 	 * @param imageDAO the image dao
 	 */
-	public void parseModel(Article article, ArticleDAO articleDAO, CategoryDAO categoryDAO, ImageDAO imageDAO)
+	public void parseModel(Article article, ArticleDAO articleDAO, CategoryDAO categoryDAO, 
+			ImageDAO imageDAO, ManufacturerDAO manufacturerDAO)
 	{
 		parseModelMain(article);
 		parseModelCategories(article, categoryDAO);
 		parseModelMainImage(article, imageDAO);
 		parseModelDeletedImages(article, imageDAO);
 		parseModelNewImages(article, imageDAO);
+		parseModelManufacturer(article, manufacturerDAO);
 		articleDAO.update(article);
+	}
+	
+	/**
+	 * Parses the model new manufacturer.
+	 * 
+	 * @param article the target article
+	 * @param manufacturerDAO the manufacturer dao
+	 */
+	private void parseModelManufacturer(Article article, ManufacturerDAO manufacturerDAO)
+	{
+		Manufacturer m = manufacturerDAO.getById(manufacturerId);
+		if (article.getManufacturer() != null)
+		{
+			article.getManufacturer().removeArticle(article);
+			manufacturerDAO.update(article.getManufacturer());
+		}
+		article.setManufacturer(m);
 	}
 
 	/**
@@ -365,5 +390,25 @@ public class ArticleFormModel extends Article
 	public void setSuccess(String success)
 	{
 		this.success = success;
+	}
+	
+	/**
+	 * Gets the manufacturer id.
+	 * 
+	 * @return the manufacturer id
+	 */
+	public long getManufacturerId()
+	{
+		return this.manufacturerId;
+	}
+	
+	/**
+	 * Sets the manufacturer id
+	 * 
+	 * @param manufacturerId the manufacturer id
+	 */
+	public void setManufacturerId(long manufacturerId)
+	{
+		this.manufacturerId = manufacturerId;
 	}
 }

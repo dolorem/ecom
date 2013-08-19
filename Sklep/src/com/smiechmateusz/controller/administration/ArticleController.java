@@ -19,6 +19,7 @@ import org.springframework.web.servlet.ModelAndView;
 import com.smiechmateusz.dao.ArticleDAO;
 import com.smiechmateusz.dao.CategoryDAO;
 import com.smiechmateusz.dao.ImageDAO;
+import com.smiechmateusz.dao.ManufacturerDAO;
 import com.smiechmateusz.model.Article;
 import com.smiechmateusz.model.ArticleFormModel;
 import com.smiechmateusz.utils.WebUtils;
@@ -45,6 +46,10 @@ public class ArticleController
 	/** The image dao. */
 	@Autowired
 	ImageDAO imageDAO;
+	
+	/** The manufacturer dao. */
+	@Autowired
+	ManufacturerDAO manufacturerDAO;
 	
 	/** The page size. */
 	private final int pageSize = 10;
@@ -73,6 +78,7 @@ public class ArticleController
 		ModelAndView mav = new ModelAndView("admin/articles/editItem");
 		mav.addObject("article", new ArticleFormModel());
 		mav.addObject("categories", categoryDAO.getItemOffsetAlphabeticalList());
+		mav.addObject("manufacturers", manufacturerDAO.getAllAlphabeticall());
 		return mav;
 	}
 	
@@ -124,6 +130,7 @@ public class ArticleController
 		if (article != null) //article doesn't exist, we want to create a new one
 			mav.addObject("article", new ArticleFormModel(article)); //initialize the form with an empty ArticleFormModel
 		mav.addObject("categories", categoryDAO.getItemOffsetAlphabeticalList());
+		mav.addObject("manufacturers", manufacturerDAO.getAllAlphabeticall());
 		return mav;
 	}
 	
@@ -139,12 +146,12 @@ public class ArticleController
 	{
 		Article a = (Article) articleDAO.getById(model.getId());
 		if (a != null) //article already exists
-			model.parseModel(a, articleDAO, categoryDAO, imageDAO);
+			model.parseModel(a, articleDAO, categoryDAO, imageDAO, manufacturerDAO);
 		else //article doesn't exist
 		{
 			Article art = new Article(); //we have to create it
 			articleDAO.create(art);  //and persist via Hibernate
-			model.parseModel(art, articleDAO, categoryDAO, imageDAO); //so that there won't be ID and/or dependency issues
+			model.parseModel(art, articleDAO, categoryDAO, imageDAO, manufacturerDAO); //so that there won't be ID and/or dependency issues
 		}
 		WebUtils.addSuccess("Artykuł został zapisany.", request);
 		return new ModelAndView("redirect:/administrator/articles/edit.htm");

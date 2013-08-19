@@ -42,6 +42,33 @@ public class Manufacturer implements Serializable
 	protected List<Article> articles;
 	
 	/**
+	 * 
+	 * @see java.lang.Object#equals(Object)
+	 */
+	public boolean equals(Object other)
+	{
+		if (other == null)
+			return false;
+		if (!(other instanceof Manufacturer))
+			return false;
+		return ((Manufacturer) other).getId() == this.id;
+	}
+	
+	/**
+	 * Removes the article from list.
+	 * 
+	 * @param toRemove article to remove
+	 */
+	public void removeArticle(Article toRemove)
+	{
+		for (int i = 0; i < articles.size(); i++)
+		{
+			if (articles.get(i) == toRemove)
+				articles.remove(i);
+		}
+	}
+	
+	/**
 	 * Instantiates new manufacturer with non-null values.
 	 */
 	public Manufacturer()
