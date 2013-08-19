@@ -10,6 +10,7 @@
 	<c:param name="page" value="~" />
 </c:url>
 <script type="text/javascript" src="/media/js/jQuery.js"></script>
+<script type="text/javascript" src="/media/bootstrap/js/bootstrap.js"></script>
 <script type="text/javascript" src="/media/js/browseArticles.js"></script>
 <table class="table">
 	<tr>
@@ -40,4 +41,14 @@
 	</div>
 </div>
 <tg:paging pagedListHolder="${pagedListHolder}" pagedLink="${pagedLink}" />
+
+<div id="myModal" class="modal hide fade in">
+	<div class="modal-header">Potwierdzenie</div>
+	<div class="modal-body">Czy na pewno usunąć?</div>
+	<div class="modal-footer">
+		<button class="btn btn-danger" id="accept">Tak</button>
+		<button class="btn btn-primary" id="reject">Nie</button>
+	</div>
+</div>
+
 <%@include file="../after.jsp"%>

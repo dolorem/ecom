@@ -6,6 +6,7 @@
 <%@ taglib prefix="tg" tagdir="/WEB-INF/tags/"%>
 <%@ include file="../before.jsp"%>
 <script type="text/javascript" src="/media/js/jQuery.js"></script>
+<script type="text/javascript" src="/media/bootstrap/js/bootstrap.js"></script>
 <script type="text/javascript" src="/media/js/browseManufacturers.js"></script>
 <table class="table">
 	<tr>
@@ -21,4 +22,14 @@
 		</tr>
 	</c:forEach>
 </table>
+
+<div id="myModal" class="modal hide fade in">
+	<div class="modal-header">Potwierdzenie</div>
+	<div class="modal-body">Czy na pewno usunąć tego producenta?</div>
+	<div class="modal-footer">
+		<button class="btn btn-danger" id="accept">Tak</button>
+		<button class="btn btn-primary" id="reject">Nie</button>
+	</div>
+</div>
+
 <%@include file="../after.jsp"%>

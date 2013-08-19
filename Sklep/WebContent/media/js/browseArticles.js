@@ -1,4 +1,6 @@
 $(document).ready(function() {
+	var ids = [];
+	
 	$('#checkAll').click(function() {
 		var allChecked = true;
 		
@@ -22,39 +24,39 @@ $(document).ready(function() {
 			if ($(this).prop('checked'))
 				arr[counter++] = $(this).attr('id').replace('item', '');
 		});
-		if (counter != 0 && confirm("Czy na pewno usunąć zaznaczone elementy?"))
+		if (counter != 0)
 		{
-			$.ajax({
-				headers: {
-					'Accept': 'application/json',
-					'Content-Type': 'application/json'
-				},
-				url: '/administrator/articles/delete.json',
-				type: 'DELETE',
-				data: JSON.stringify(arr),
-				success: function(data) {
-					location.reload(true);
-				}				
-			});			
+			$('#myModal>.modal-body').html('Czy na pewno usunąć zaznaczone elementy?');
+			ids = arr;
+			$('#myModal').modal('toggle');
 		}
 	});
 	
 	$('.deleteSingleItem').click(function() {
-		var id = $(this).attr('id').replace('singleItem', '');
-		if (confirm("Czy na pewno usunąć element?"))
-		{
-			$.ajax({
-				headers: {
-					'Accept': 'application/json',
-					'Content-Type': 'application/json'
-				},
-				url: '/administrator/articles/delete.json',
-				type: 'DELETE',
-				data: JSON.stringify([id]),
-				success: function(data) {
-					location.reload(true);
-				}				
-			});
-		}
+		ids = [$(this).attr('id').replace('singleItem', '')];
+		$('#myModal>.modal-body').html('Czy na pewno usunąć element?');
+		$('#myModal').modal('toggle');
+		
+	});
+	
+	$('#accept').click(function() {
+		$.ajax({
+			headers: {
+				'Accept': 'application/json',
+				'Content-Type': 'application/json'
+			},
+			url: '/administrator/articles/delete.json',
+			type: 'DELETE',
+			data: JSON.stringify(ids),
+			success: function(data) {
+				location.reload(true);
+			}				
+		});	
+		$('#myModal').modal('hide');
+	});
+	
+	$('#reject').click(function() {
+		$('#myModal').modal('hide');
+		ids = [];
 	});
 });
