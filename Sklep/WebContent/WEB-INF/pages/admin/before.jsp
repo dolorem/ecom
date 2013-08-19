@@ -64,6 +64,12 @@ ul.nav li.dropdown:hover ul.dropdown-menu {
 								<li><a href="/administrator/categories/add.htm">Dodaj</a></li>
 								<li><a href="/administrator/categories/edit.htm">Przeglądaj</a></li>
 							</ul></li>
+						<li class="dropdown"><a href="#">Producenci<b
+								class="caret"></b></a>
+							<ul class="dropdown-menu">
+								<li><a href="/administrator/manufacturers/add.htm">Dodaj</a></li>
+								<li><a href="/administrator/manufacturers/view.htm">Przeglądaj</a></li>
+							</ul></li>
 					</ul>
 					<ul class="nav pull-right">
 						<li><a href="/auth/logout.htm">Wyloguj się</a></li>

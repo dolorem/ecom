@@ -14,6 +14,7 @@ import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.JoinTable;
 import javax.persistence.ManyToMany;
+import javax.persistence.ManyToOne;
 import javax.persistence.OneToMany;
 import javax.persistence.Table;
 
@@ -59,6 +60,11 @@ public class Article implements Serializable
 	/** The available. */
 	@Column(name="available")
 	boolean available;
+	
+	/** The manufacturer. */
+	@ManyToOne(cascade=CascadeType.PERSIST)
+	@JoinColumn(name="manufacturer")
+	Manufacturer manufacturer;
 	
 	/**
 	 * Instantiates a new article with non-null values.
@@ -293,5 +299,25 @@ public class Article implements Serializable
 	public void setAvailable(boolean available)
 	{
 		this.available = available;
+	}
+
+	/**
+	 * Gets the manufacturer.
+	 * 
+	 * @return the manufacturer.
+	 */
+	public Manufacturer getManufacturer()
+	{
+		return manufacturer;
+	}
+
+	/**
+	 * Sets the manufacturer.
+	 * 
+	 * @param manufacturer the manufacturer
+	 */
+	public void setManufacturer(Manufacturer manufacturer)
+	{
+		this.manufacturer = manufacturer;
 	}
 }

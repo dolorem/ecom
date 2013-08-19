@@ -7,7 +7,9 @@ import org.aspectj.lang.annotation.Around;
 import org.aspectj.lang.annotation.Aspect;
 import org.aspectj.lang.reflect.MethodSignature;
 import org.hibernate.Criteria;
+import org.hibernate.cfg.Configuration;
 import org.hibernate.criterion.Property;
+import org.hibernate.tool.hbm2ddl.SchemaExport;
 import org.springframework.context.ApplicationContext;
 import org.springframework.context.ApplicationContextAware;
 import org.springframework.security.core.Authentication;
@@ -50,6 +52,8 @@ public class BaseControllerAspect implements ApplicationContextAware
 	@Around("within(com.smiechmateusz.controller.*) || within(com.smiechmateusz.controller.administration.*)")
 	public Object BeforeAny(ProceedingJoinPoint pjp) throws Throwable
 	{
+//		Configuration config = (Configuration) context.getBean("hibernateConfiguration");
+//		new SchemaExport(config).create(true, true); 
 		MethodSignature ms = (MethodSignature) pjp.getSignature();
 		if (ms.getReturnType() == ModelAndView.class)
 		{

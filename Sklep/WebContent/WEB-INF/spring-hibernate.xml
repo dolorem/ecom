@@ -18,6 +18,7 @@
 				<value>com.smiechmateusz.model.MyUser</value>
 				<value>com.smiechmateusz.model.Role</value>
 				<value>com.smiechmateusz.model.Menu</value>
+				<value>com.smiechmateusz.model.Manufacturer</value>
 			</list>
 		</property>
 		<!-- Database dialect. -->
@@ -66,6 +67,7 @@
 	<bean id="UserDAO" parent="AbstractHibernateDAO" class="com.smiechmateusz.dao.UserDAO" />
 	<bean id="RoleDAO" parent="AbstractHibernateDAO" class="com.smiechmateusz.dao.RoleDAO" />
 	<bean id="MenuDAO" parent="AbstractHibernateDAO" class="com.smiechmateusz.dao.MenuDAO" />
+	<bean id="ManufacturerDAO" parent="AbstractHibernateDAO" class="com.smiechmateusz.dao.ManufacturerDAO" />
 	<!-- AOP setup. -->
 	<aop:aspectj-autoproxy />
 	<!-- Aspects. -->
