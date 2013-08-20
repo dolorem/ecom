@@ -31,30 +31,30 @@ public class Category implements Serializable
 	@Id
 	@GeneratedValue
 	@Column(name="id")
-	long id;
+	protected long id;
 	
 	/** The parent. */
 	@ManyToOne(cascade=CascadeType.PERSIST)
 	@JoinColumn(name="parent")
-	Category parent;
+	protected Category parent;
 	
 	/** The children. */
 	@OneToMany(targetEntity=Category.class, mappedBy="parent", cascade=CascadeType.PERSIST)
-	List<Category> children;
+	protected List<Category> children;
 	
 	/** The name. */
 	@Column(name="name")
-	String name;
+	protected String name;
 	
 	/** The articles. */
 	@ManyToMany(cascade=CascadeType.PERSIST, targetEntity=Article.class)
 	@JoinTable(name="category_article", joinColumns = {@JoinColumn(name="categoryId", referencedColumnName="id")}, 
 		inverseJoinColumns={@JoinColumn(name="articleId", referencedColumnName="id")})
-	List<Article> articles;
+	protected List<Article> articles;
 	
 	/** The nesting level. */
 	@Transient
-	private int nestingLevel;
+	protected int nestingLevel;
 	
 	/**
 	 * Returns parent category as an ArrayList containing one or zero elements.

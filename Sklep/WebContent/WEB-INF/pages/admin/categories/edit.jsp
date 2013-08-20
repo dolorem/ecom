@@ -8,7 +8,7 @@
 <%@ taglib prefix="tg" tagdir="/WEB-INF/tags/"%>
 <%@ taglib uri="http://www.springframework.org/tags/form" prefix="form"%>
 <%@ include file="../before.jsp"%>
-<form:form modelAttribute="category"
+<form:form modelAttribute="categoryFormModel"
 	action="/administrator/categories/edit.htm" method="POST"
 	class="form-horizontal">
 	<form:hidden path="id" />
@@ -18,6 +18,7 @@
 			<form:label class="control-label" for="name" path="name">Nazwa</form:label>
 			<div class="controls">
 				<form:input path="name" />
+				<form:errors path="name" class="alert alert-error" />
 			</div>
 		</div>
 		<div class="control-group">
@@ -28,6 +29,7 @@
 					<tg:optionsCategoryOffset categories="${categories}"
 						checked="${category.getParentAsArrayList()}" indentsPerLevel="2" />
 				</form:select>
+				<form:errors path="parentId" class="alert alert-error" />
 			</div>
 		</div>
 		<div class="form-actions">

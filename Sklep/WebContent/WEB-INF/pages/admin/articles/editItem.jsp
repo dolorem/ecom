@@ -8,7 +8,7 @@
 <script type="text/javascript" src="/media/js/jQuery.js"></script>
 <script type="text/javascript" src="/media/js/tinymce/tinymce.min.js"></script>
 <script type="text/javascript" src="/media/js/editArticle.js"></script>
-<form:form modelAttribute="article"
+<form:form modelAttribute="articleFormModel"
 	action="/administrator/articles/edit.htm" method="POST"
 	class="form-horizontal" enctype="multipart/form-data">
 	<form:hidden path="id" />
@@ -18,6 +18,7 @@
 			<form:label class="control-label" path="name" for="name">Nazwa produktu</form:label>
 			<div class="controls">
 				<form:input path="name" />
+				<form:errors class="alert alert-error" path="name" />
 			</div>
 		</div>
 		<div class="control-group">
@@ -25,6 +26,7 @@
 				path="description">Opis produktu</form:label>
 			<div class="controls">
 				<form:textarea path="description" />
+				<form:errors path="description" class="alert alert-error" /> 
 			</div>
 		</div>
 		<div class="control-group">
@@ -53,6 +55,16 @@
 						</option>					
 					</c:forEach>
 				</form:select>
+			</div>
+		</div>
+		<div class="control-group">
+			<form:label class="control-label" for="price" path="price">Cena</form:label>
+			<div class="controls">
+				<div class="input-append">
+					<form:input path="price"></form:input>
+					<span class="add-on">zł</span>
+				</div>
+				<form:errors path="price" class="alert alert-error" />
 			</div>
 		</div>
 		<div class="control-group">

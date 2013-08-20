@@ -8,7 +8,7 @@
 <script type="text/javascript" src="/media/js/jQuery.js"></script>
 <script type="text/javascript" src="/media/js/tinymce/tinymce.min.js"></script>
 <script type="text/javascript" src="/media/js/editManufacturer.js"></script>
-<form:form modelAttribute="manufacturer"
+<form:form modelAttribute="manufacturerFormModel"
 	action="/administrator/manufacturers/edit.htm" method="POST"
 	class="form-horizontal">
 	<form:hidden path="id" />
@@ -18,6 +18,7 @@
 			<form:label for="name" path="name" class="control-label">Nazwa</form:label>
 			<div class="controls">
 				<form:input path="name" />
+				<form:errors path="name" class="alert alert-error" />
 			</div>
 		</div>
 		<div class="control-group">
@@ -25,6 +26,7 @@
 				class="control-label">Opis</form:label>
 			<div class="controls">
 				<form:textarea path="description" />
+				<form:errors path="description" class="alert alert-error" />
 			</div>
 		</div>
 		<div class="form-actions">

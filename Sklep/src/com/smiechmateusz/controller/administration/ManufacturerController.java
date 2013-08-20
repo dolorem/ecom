@@ -4,6 +4,7 @@ import javax.servlet.http.HttpServletRequest;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
+import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestBody;
@@ -14,7 +15,8 @@ import org.springframework.web.servlet.ModelAndView;
 
 import com.smiechmateusz.dao.ManufacturerDAO;
 import com.smiechmateusz.model.Manufacturer;
-import com.smiechmateusz.model.ManufacturerFormModel;
+import com.smiechmateusz.model.form.ManufacturerFormModel;
+import com.smiechmateusz.model.form.ManufacturerValidator;
 import com.smiechmateusz.utils.WebUtils;
 
 /**
@@ -26,9 +28,13 @@ import com.smiechmateusz.utils.WebUtils;
 @RequestMapping(value="/administrator/manufacturers/")
 public class ManufacturerController
 {
+	/** The validator. */
+	@Autowired
+	private ManufacturerValidator validator;
+	
 	/** The manufacturer dao. */
 	@Autowired
-	ManufacturerDAO manufacturerDAO;
+	private ManufacturerDAO manufacturerDAO;
 	
 	/**
 	 * Renders summary page.
@@ -54,7 +60,7 @@ public class ManufacturerController
 	public ModelAndView add()
 	{
 		ModelAndView mav = new ModelAndView("admin/manufacturer/edit");
-		mav.addObject("manufacturer", new ManufacturerFormModel());
+		mav.addObject("manufacturerFormModel", new ManufacturerFormModel());
 		return mav;
 	}
 	
@@ -70,7 +76,7 @@ public class ManufacturerController
 		 ModelAndView mav = new ModelAndView("admin/manufacturer/edit");
 		 Manufacturer m = manufacturerDAO.getById(id);
 		 if (m != null)
-		 	 mav.addObject("manufacturer", new ManufacturerFormModel(m));
+		 	 mav.addObject("manufacturerFormModel", new ManufacturerFormModel(m));
 		 return mav;
 	 }
 	 
@@ -78,12 +84,20 @@ public class ManufacturerController
 	  * Edits the manufacturer and redirects the user to a summary page.
 	  * 
 	  * @param model the model containing data sent by user
+	  * @param errors model binding and validation results
 	  * @param request HttpServletRequest injected by Spring
 	  * @return the model and view forwarding to a summary page
 	  */
 	 @RequestMapping(value="edit", method=RequestMethod.POST)
-	 public ModelAndView acceptEdit(@ModelAttribute ManufacturerFormModel model, HttpServletRequest request)
+	 public ModelAndView acceptEdit(@ModelAttribute ManufacturerFormModel model, BindingResult errors, HttpServletRequest request)
 	 {
+		 validator.validate(model, errors);
+		 if (errors.hasErrors())
+		 {
+			 ModelAndView mav = new ModelAndView("admin/manufacturer/edit");
+			 mav.addObject("manufacturerFormModel", model);
+			 return mav;
+		 }
 		 Manufacturer m = manufacturerDAO.getById(model.getId());
 		 if (m == null)
 		 {

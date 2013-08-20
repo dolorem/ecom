@@ -1,6 +1,7 @@
-package com.smiechmateusz.model;
+package com.smiechmateusz.model.form;
 
 import com.smiechmateusz.dao.ManufacturerDAO;
+import com.smiechmateusz.model.Manufacturer;
 
 /**
  * Manufacturer model for use in forms. Contains both original and target data.

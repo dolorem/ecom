@@ -4,6 +4,7 @@ import javax.servlet.http.HttpServletRequest;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
+import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestBody;
@@ -13,10 +14,9 @@ import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.servlet.ModelAndView;
 
 import com.smiechmateusz.dao.CategoryDAO;
-import com.smiechmateusz.model.Article;
-import com.smiechmateusz.model.ArticleFormModel;
 import com.smiechmateusz.model.Category;
-import com.smiechmateusz.model.CategoryFormModel;
+import com.smiechmateusz.model.form.CategoryFormModel;
+import com.smiechmateusz.model.form.CategoryValidator;
 import com.smiechmateusz.utils.WebUtils;
 
 /**
@@ -28,10 +28,13 @@ import com.smiechmateusz.utils.WebUtils;
 @RequestMapping("/administrator/categories/")
 public class CategoryController
 {
+	/** The validator. */
+	@Autowired
+	private CategoryValidator validator;
 	
 	/** The category dao. */
 	@Autowired
-	CategoryDAO categoryDAO;
+	private CategoryDAO categoryDAO;
 
 	/**
 	 * Renders index page listing possible activities.
@@ -57,7 +60,7 @@ public class CategoryController
 		ModelAndView mav = new ModelAndView("admin/categories/edit");
 		WebUtils.handleSuccessAndError(request, mav);
 		mav.addObject("categories", categoryDAO.getItemOffsetAlphabeticalList());
-		mav.addObject("category", new CategoryFormModel());
+		mav.addObject("categoryFormModel", new CategoryFormModel());
 		return mav;
 	}
 	
@@ -77,24 +80,25 @@ public class CategoryController
 	/**
 	 * Handles article edit.
 	 * 
-	 * @param request HttpServletRequest injected by Spring
 	 * @param model the model containing target data
+	 * @param errors model binding and validation results
+	 * @param request HttpServletRequest injected by Spring
 	 * @return the model and view redirecting the user to summary page or showing an error
 	 */
 	@RequestMapping(value="edit", method=RequestMethod.POST)
-	public ModelAndView acceptEdit(HttpServletRequest request, @ModelAttribute CategoryFormModel model)
+	public ModelAndView acceptEdit(@ModelAttribute CategoryFormModel model, BindingResult errors, HttpServletRequest request)
 	{
+		validator.validate(model, errors);
+		if (errors.hasErrors())
+		{
+			ModelAndView mav = new ModelAndView("admin/categories/edit");
+			mav.addObject("categoryFormModel", model);
+			mav.addObject("categories", categoryDAO.getItemOffsetAlphabeticalList());
+			return mav;
+		}
 		Category c = (Category) categoryDAO.getById(model.getId());
 		if (c != null) //category is being edited
-		{
-			if (!model.gonnaBeSelfChild(c)) //validated without errors, we can process it
-				model.parseModel(c, categoryDAO);
-			else
-			{
-				WebUtils.addError("Nie można przenieść kategorii do jej podkategorii.", request);
-				return new ModelAndView("redirect:/administrator/categories/edit/" + model.getId() + ".htm");
-			}
-		}
+			model.parseModel(c, categoryDAO);
 		else //it's a new category
 		{
 			Category cat = new Category();
@@ -118,7 +122,7 @@ public class CategoryController
 		ModelAndView mav = new ModelAndView("admin/categories/edit");
 		Category category= (Category) categoryDAO.getById(id);
 		if (category != null)
-			mav.addObject("category", new CategoryFormModel(category));
+			mav.addObject("categoryFormModel", new CategoryFormModel(category));
 		WebUtils.handleError(request, mav);
 		mav.addObject("categories", categoryDAO.getItemOffsetAlphabeticalList());
 		return mav;

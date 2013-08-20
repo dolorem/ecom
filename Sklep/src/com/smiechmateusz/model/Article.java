@@ -32,39 +32,43 @@ public class Article implements Serializable
 	@Id
 	@GeneratedValue()
 	@Column(name="id")
-	long id;
+	protected long id;
 	
 	/** The images. */
 	@Column(name="images")
 	@OneToMany(targetEntity=Image.class, mappedBy="article", cascade=CascadeType.PERSIST)
-	List<Image> images;
+	protected List<Image> images;
 	
 	/** The description. */
 	@Column(name="description", columnDefinition="LONGTEXT")
-	String description;
+	protected String description;
 	
 	/** The categories. */
 	@ManyToMany(cascade=CascadeType.PERSIST, targetEntity=Category.class)
 	@JoinTable(name="category_article", joinColumns = {@JoinColumn(name="articleId", referencedColumnName="id")}, 
 		inverseJoinColumns={@JoinColumn(name="categoryId", referencedColumnName="id")})
-	List<Category> categories;
+	protected List<Category> categories;
 	
 	/** The add date. */
 	@Column(name="addDate")
-	Date addDate;
+	protected Date addDate;
 	
 	/** The name. */
 	@Column(name="name")
-	String name;
+	protected String name;
 	
 	/** The available. */
 	@Column(name="available")
-	boolean available;
+	protected boolean available;
 	
 	/** The manufacturer. */
 	@ManyToOne(cascade=CascadeType.PERSIST)
 	@JoinColumn(name="manufacturer")
-	Manufacturer manufacturer;
+	protected Manufacturer manufacturer;
+	
+	/** The price. */
+	@Column(name="price")
+	protected double price;
 	
 	/**
 	 * Instantiates a new article with non-null values.
@@ -319,5 +323,25 @@ public class Article implements Serializable
 	public void setManufacturer(Manufacturer manufacturer)
 	{
 		this.manufacturer = manufacturer;
+	}
+
+	/**
+	 * Gets the price.
+	 * 
+	 * @return the price
+	 */
+	public double getPrice()
+	{
+		return price;
+	}
+
+	/**
+	 * Sets the price.
+	 * 
+	 * @param price the price
+	 */
+	public void setPrice(double price)
+	{
+		this.price = price;
 	}
 }

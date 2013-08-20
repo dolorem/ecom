@@ -1,9 +1,10 @@
-package com.smiechmateusz.model;
+package com.smiechmateusz.model.form;
 
 import java.util.LinkedList;
 import java.util.Queue;
 
 import com.smiechmateusz.dao.CategoryDAO;
+import com.smiechmateusz.model.Category;
 
 /**
  * Category model for use in forms. Contains both original and target data.

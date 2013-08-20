@@ -68,6 +68,10 @@
 	<bean id="RoleDAO" parent="AbstractHibernateDAO" class="com.smiechmateusz.dao.RoleDAO" />
 	<bean id="MenuDAO" parent="AbstractHibernateDAO" class="com.smiechmateusz.dao.MenuDAO" />
 	<bean id="ManufacturerDAO" parent="AbstractHibernateDAO" class="com.smiechmateusz.dao.ManufacturerDAO" />
+	<!-- Validator setup. -->
+	<bean id="ArticleValidator" class="com.smiechmateusz.model.form.ArticleValidator" />
+	<bean id="CategoryValidator" class="com.smiechmateusz.model.form.CategoryValidator" />
+	<bean id="ManufacturerValidator" class="com.smiechmateusz.model.form.ManufacturerValidator" />
 	<!-- AOP setup. -->
 	<aop:aspectj-autoproxy />
 	<!-- Aspects. -->

@@ -1,4 +1,4 @@
-package com.smiechmateusz.model;
+package com.smiechmateusz.model.form;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -12,6 +12,10 @@ import com.smiechmateusz.dao.ArticleDAO;
 import com.smiechmateusz.dao.CategoryDAO;
 import com.smiechmateusz.dao.ImageDAO;
 import com.smiechmateusz.dao.ManufacturerDAO;
+import com.smiechmateusz.model.Article;
+import com.smiechmateusz.model.Category;
+import com.smiechmateusz.model.Image;
+import com.smiechmateusz.model.Manufacturer;
 import com.smiechmateusz.utils.WebUtils;
 
 /**
@@ -81,6 +85,7 @@ public class ArticleFormModel extends Article
 		this.name = a.getName();
 		this.available = a.isAvailable();
 		this.manufacturer = a.getManufacturer();
+		this.price = a.getPrice();
 	}
 	
 	/**
