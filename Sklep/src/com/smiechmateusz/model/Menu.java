@@ -1,6 +1,7 @@
 package com.smiechmateusz.model;
 
 import java.io.Serializable;
+import java.util.ArrayList;
 import java.util.List;
 
 import javax.persistence.CascadeType;
@@ -11,6 +12,7 @@ import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 import javax.persistence.OneToMany;
+import javax.persistence.Transient;
 
 /**
  * Model for Menu containing data like link, submenus or text.
@@ -25,28 +27,40 @@ public class Menu implements Serializable
 	@Id
 	@GeneratedValue
 	@Column(name = "menu")
-	long id;
+	protected long id;
 	
 	/** The description. */
 	@Column(name = "description")
-	String description;
+	protected String description;
 	
 	/** The link. */
 	@Column(name = "link")
-	String link;
+	protected String link;
 	
 	/** The parent. */
 	@ManyToOne(cascade=CascadeType.PERSIST, targetEntity=Menu.class)
 	@JoinColumn(name = "parent")
-	Menu parent;
+	protected Menu parent;
 	
 	/** The children. */
 	@OneToMany(cascade=CascadeType.PERSIST, targetEntity=Menu.class, mappedBy="parent")
-	List<Menu> children;
+	protected List<Menu> children;
 	
 	/** The priority. */
 	@Column(name="priority")
-	int priority;
+	protected int priority;
+	
+	/** The nesting level. */
+	@Transient
+	protected int nestingLevel;
+	
+	/**
+	 * Instantiates a new menu.
+	 */
+	public Menu()
+	{
+		this.children = new ArrayList<Menu>();
+	}
 	
 	/**
 	 * Gets the id.
@@ -166,5 +180,67 @@ public class Menu implements Serializable
 	public void setPriority(int priority)
 	{
 		this.priority = priority;
+	}
+
+	/**
+	 * Gets the nesting level.
+	 * 
+	 * @return the nesting level
+	 */
+	public int getNestingLevel()
+	{
+		return nestingLevel;
+	}
+
+	/**
+	 * Sets the nesting level.
+	 * 
+	 * @param nestingLevel
+	 *            the new nesting level
+	 */
+	public void setNestingLevel(int nestingLevel)
+	{
+		this.nestingLevel = nestingLevel;
+	}
+
+	/**
+	 * Adds the child.
+	 * 
+	 * @param c
+	 *            the child to add
+	 */
+	public void addChild(Menu c)
+	{
+		children.add(c);		
+	}
+
+	/**
+	 * Gets the parent as array list.
+	 * 
+	 * @return the parent as array list
+	 */
+	public ArrayList<Menu> getParentAsArrayList()
+	{
+		ArrayList<Menu> list = new ArrayList<Menu>();
+		list.add(this.parent);
+		return list;
+	}
+	
+	/**
+	 * Removes the child.
+	 * 
+	 * @param c
+	 *            the child to add
+	 */
+	public void removeChild(Menu c)
+	{
+		for (int i = 0; i < children.size(); i++)
+		{
+			if (children.get(i) == c)
+			{
+				children.remove(i);
+				i--;
+			}
+		}
 	}
 }

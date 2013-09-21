@@ -72,6 +72,7 @@
 	<bean id="ArticleValidator" class="com.smiechmateusz.model.form.ArticleValidator" />
 	<bean id="CategoryValidator" class="com.smiechmateusz.model.form.CategoryValidator" />
 	<bean id="ManufacturerValidator" class="com.smiechmateusz.model.form.ManufacturerValidator" />
+	<bean id="MenuValidator" class="com.smiechmateusz.model.form.MenuValidator" />
 	<!-- AOP setup. -->
 	<aop:aspectj-autoproxy />
 	<!-- Aspects. -->
