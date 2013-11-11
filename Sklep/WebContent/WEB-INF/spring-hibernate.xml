@@ -19,6 +19,7 @@
 				<value>com.smiechmateusz.model.Role</value>
 				<value>com.smiechmateusz.model.Menu</value>
 				<value>com.smiechmateusz.model.Manufacturer</value>
+				<value>com.smiechmateusz.model.Site</value>
 			</list>
 		</property>
 		<!-- Database dialect. -->
@@ -68,11 +69,13 @@
 	<bean id="RoleDAO" parent="AbstractHibernateDAO" class="com.smiechmateusz.dao.RoleDAO" />
 	<bean id="MenuDAO" parent="AbstractHibernateDAO" class="com.smiechmateusz.dao.MenuDAO" />
 	<bean id="ManufacturerDAO" parent="AbstractHibernateDAO" class="com.smiechmateusz.dao.ManufacturerDAO" />
+	<bean id="SiteDAO" parent="AbstractHibernateDAO" class="com.smiechmateusz.dao.SiteDAO" />
 	<!-- Validator setup. -->
 	<bean id="ArticleValidator" class="com.smiechmateusz.model.form.ArticleValidator" />
 	<bean id="CategoryValidator" class="com.smiechmateusz.model.form.CategoryValidator" />
 	<bean id="ManufacturerValidator" class="com.smiechmateusz.model.form.ManufacturerValidator" />
 	<bean id="MenuValidator" class="com.smiechmateusz.model.form.MenuValidator" />
+	<bean id="SiteValidator" class="com.smiechmateusz.model.form.SiteValidator" />
 	<!-- AOP setup. -->
 	<aop:aspectj-autoproxy />
 	<!-- Aspects. -->

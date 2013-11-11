@@ -7,6 +7,7 @@
 <%@ include file="../before.jsp"%>
 <script type="text/javascript" src="/media/js/jQuery.js"></script>
 <script type="text/javascript" src="/media/js/tinymce/tinymce.min.js"></script>
+<script type="text/javascript" src="/media/js/tinymceInitTextarea.js"></script>
 <script type="text/javascript" src="/media/js/editArticle.js"></script>
 <form:form modelAttribute="articleFormModel"
 	action="/administrator/articles/edit.htm" method="POST"

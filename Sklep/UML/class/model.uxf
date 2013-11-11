@@ -1,0 +1,874 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<diagram program="umlet" version="11.5.1">
+  <zoom_level>10</zoom_level>
+  <element>
+    <type>com.umlet.element.Class</type>
+    <coordinates>
+      <x>1070</x>
+      <y>730</y>
+      <w>380</w>
+      <h>630</h>
+    </coordinates>
+    <panel_attributes>&lt;&lt;Entity&gt;&gt;
+Article
+--
+#id:long
+#images:List&lt;Image&gt;
+#description:String
+#categories:List&lt;Category&gt;
+#addDate:Date
+#name:String
+#available:boolean
+#manufacturer:Manufacturer
+#price:double
+--
++Article():void
++getMainImage():Image
++getAdditionalImages():List&lt;Image&gt;
++addImages(images:List&lt;Image&gt;):void
++deleteImagesById(ids:Set&lt;Long&gt;):void
++addImage(i:Image):void
++getId():long
++getImages():List&lt;Image&gt;
++getDescription():String
++getCategories():List&lt;Category&gt;
++getAddDate():Date
++getName():String
++isAvailable():boolean
++getManufacturer():Manufacturer
++getPrice():double
++setId(id:long):void
++setImages(images:List&lt;Image&gt;):void
++setDescription(description:String):void
++setCategories(categories:List&lt;Category&gt;):void
++setAddDate(addDate:Date):void
++setName(name:String):void
++setAvailable(available:bool):void
++setManufacturer(manufacturer:Manufacturer):void
++setPrice(price:double):void
+
+
+
+</panel_attributes>
+    <additional_attributes/>
+  </element>
+  <element>
+    <type>com.umlet.element.Class</type>
+    <coordinates>
+      <x>620</x>
+      <y>510</y>
+      <w>300</w>
+      <h>300</h>
+    </coordinates>
+    <panel_attributes>&lt;&lt;Entity&gt;&gt;
+Manufacturer
+--
+#id:long
+#name:String
+#description:String
+#articles:List&lt;Article&gt;
+--
++Manufacturer():void
++equals(other:Object):boolean
++removeArticle(toRemove:Article):void
++getId():long
++getName():String
++getDescription():String
++getArticles():List&lt;Article&gt;
++setId(id:long):void
++setName(name:String):void
++setDescription(description:String):void
++setArticles(articles:List&lt;Article&gt;):void
+</panel_attributes>
+    <additional_attributes/>
+  </element>
+  <element>
+    <type>com.umlet.element.Class</type>
+    <coordinates>
+      <x>600</x>
+      <y>910</y>
+      <w>320</w>
+      <h>440</h>
+    </coordinates>
+    <panel_attributes>&lt;&lt;Entity&gt;&gt;
+Category
+--
+#id:long
+#parent:Category
+#children:List&lt;Category&gt;
+#name:String
+#articles:List&lt;Article&gt;
+#nestingLevel:int
+--
++Category()
++getParentAsArrayList:ArrayList&lt;Category&gt;
++equals(other:Object):boolean
++removeChild(c:Category):void
++getChildrenAlphabetically():List&lt;Category&gt;
++getId():long
++getParent():Category
++getChildren():List&lt;Category&gt;
++getName():String
++getArticles():List&lt;Article&gt;
++getNestingLevel():int
++setId(id:long):void
++setParent(parent:Category):void
++setChildren(children:List&lt;Category&gt;):void
++setName(name:String):void
++setArticles(articles:List&lt;Article&gt;):void
++setNestingLevel(nestingLevel:int):void</panel_attributes>
+    <additional_attributes/>
+  </element>
+  <element>
+    <type>com.umlet.element.Class</type>
+    <coordinates>
+      <x>590</x>
+      <y>1400</y>
+      <w>340</w>
+      <h>320</h>
+    </coordinates>
+    <panel_attributes>&lt;&lt;Entity&gt;&gt;
+Image
+--
+_+TYPE_MAIN_
+_+TYPE_ADDITIONAL_
+#id:long
+#article:Article
+#path:String
+#type:int
+--
++Image(article:Article, path:String, type:int):void
++Image():void
++getId():int
++getArticle():Article
++getPath():String
++getType():int
++setId(id:long):void
++setArticle(article:Article):void
++setPath(path:String):void
++setType(type:int):void</panel_attributes>
+    <additional_attributes/>
+  </element>
+  <element>
+    <type>com.umlet.element.Class</type>
+    <coordinates>
+      <x>2950</x>
+      <y>720</y>
+      <w>310</w>
+      <h>510</h>
+    </coordinates>
+    <panel_attributes>&lt;&lt;Entity&gt;&gt;
+Menu
+--
+#id:long
+#description:String
+#link:String
+#parent:Menu
+#children:List&lt;Menu&gt;
+#priority:int
+#nestingLevel:int
+--
++Menu():void
++addChild(c:Menu):void
++removeChild(c:Menu):void
++getParentAsArrayList():ArrayList&lt;Menu&gt;
++getId():long
++getDescription():String
++getLink():String
++getParent():Menu
++getChildren():List&lt;Menu&gt;
++getPriority():int
++getNestingLevel():int
++setId(id:long):void
++setDescription(description:String):void
++setLink(link:String):void
++setParent(parent:Menu):void
++setChildren(children:List&lt;Menu&gt;):void
++setPriority(priority:int):void
++setNestingLevel(nestingLevel:int):void</panel_attributes>
+    <additional_attributes/>
+  </element>
+  <element>
+    <type>com.umlet.element.Class</type>
+    <coordinates>
+      <x>1480</x>
+      <y>730</y>
+      <w>700</w>
+      <h>410</h>
+    </coordinates>
+    <panel_attributes>&lt;&lt;Entity&gt;&gt;
+Transaction
+--
+#id:long
+#article:Article
+#user:MyUser
+#amount:int
+#course:double
+#date:Date
+#type:int
+--
++Transaction(id:long, article:Article, user:MyUser, amount:int, course:double, date:Date, type:int)
++getId():long
++getArticle():Article
++getUser():MyUser
++getAmount():int
++getCourse():double
++getDate():Date
++getType():int
++setId(id:long):void
++setArticle(article:Article):void
++setUser(user:MyUser):void
++setCourse(course:double):void
++setDate(date:Date):void
++setType(type:int):void</panel_attributes>
+    <additional_attributes/>
+  </element>
+  <element>
+    <type>com.umlet.element.Class</type>
+    <coordinates>
+      <x>2620</x>
+      <y>730</y>
+      <w>300</w>
+      <h>370</h>
+    </coordinates>
+    <panel_attributes>&lt;&lt;Entity&gt;&gt;
+Site
+--
+#id:long
+#title:String
+#description:String
+#tags:String
+#path:String
+#content:String
+--
++Site():void
++getId():long
++getTitle():String
++getDescription():String
++getTags():String
++getPath():String
++getContent():String
++setId(id:long):void
++setTitle(title:String):void
++setDescription(description:String):void
++setTags(tags:String):void
++setPath(path:String):void
++setContent(content:String):void</panel_attributes>
+    <additional_attributes/>
+  </element>
+  <element>
+    <type>com.umlet.element.Class</type>
+    <coordinates>
+      <x>2190</x>
+      <y>1330</y>
+      <w>300</w>
+      <h>220</h>
+    </coordinates>
+    <panel_attributes>&lt;&lt;Entity&gt;&gt;
+Role
+--
+#id:long
+#description:String
+#users:List&lt;MyUser&gt;
+--
++Role():void
++getId():long
++getDescription():String
++getUsers():List&lt;MyUser&gt;
++setId(id:long):void
++setDescription(description:String):void
++setUsers(users:List&lt;MyUser&gt;):void</panel_attributes>
+    <additional_attributes/>
+  </element>
+  <element>
+    <type>com.umlet.element.Class</type>
+    <coordinates>
+      <x>2200</x>
+      <y>730</y>
+      <w>400</w>
+      <h>360</h>
+    </coordinates>
+    <panel_attributes>&lt;&lt;Entity&gt;&gt;
+MyUser
+--
+#id:long
+#username:String
+#passwordHash:String
+#email:String
+#transactions:List&lt;Transaction&gt;
+#role:List&lt;Role&gt;
+--
++getId():long
++getUsername():String
++getPasswordHash():String
++getEmail():String
++getTransactions():List&lt;Transaction&gt;
++getRole():List&lt;Role&gt;
++setId(id:long):void
++setUsername(username:String):void
++setPasswordHash(passwordHash:String):void
++setEmail(email:String):void
++setTransactions(transactions:List&lt;Transaction&gt;):void
++setRole(role:List&lt;Role&gt;:void</panel_attributes>
+    <additional_attributes/>
+  </element>
+  <element>
+    <type>com.umlet.element.Interface</type>
+    <coordinates>
+      <x>1770</x>
+      <y>170</y>
+      <w>80</w>
+      <h>90</h>
+    </coordinates>
+    <panel_attributes>Serializable
+</panel_attributes>
+    <additional_attributes/>
+  </element>
+  <element>
+    <type>com.umlet.element.Relation</type>
+    <coordinates>
+      <x>2290</x>
+      <y>1060</y>
+      <w>70</w>
+      <h>290</h>
+    </coordinates>
+    <panel_attributes>lt=&lt;&lt;&lt;&lt;-
+m1=/0..*     /
+m2=/         1..*/</panel_attributes>
+    <additional_attributes>40;30;40;270</additional_attributes>
+  </element>
+  <element>
+    <type>com.umlet.element.Relation</type>
+    <coordinates>
+      <x>1840</x>
+      <y>620</y>
+      <w>582</w>
+      <h>130</h>
+    </coordinates>
+    <panel_attributes>lt=&lt;&lt;&lt;&lt;-
+m1=/            1..*/
+m2=/1..1     /
+
+</panel_attributes>
+    <additional_attributes>60;110;60;30;270;30;550;30;550;110</additional_attributes>
+  </element>
+  <element>
+    <type>com.umlet.element.Relation</type>
+    <coordinates>
+      <x>3030</x>
+      <y>620</y>
+      <w>300</w>
+      <h>230</h>
+    </coordinates>
+    <panel_attributes>lt=-
+m1=/          0..1/
+m2=/0..1/</panel_attributes>
+    <additional_attributes>60;100;60;30;280;30;280;210;230;210</additional_attributes>
+  </element>
+  <element>
+    <type>com.umlet.element.Relation</type>
+    <coordinates>
+      <x>1280</x>
+      <y>620</y>
+      <w>430</w>
+      <h>130</h>
+    </coordinates>
+    <panel_attributes>lt=&lt;&lt;&lt;&lt;-
+m1=/0..*         /
+m2=/1..1      /</panel_attributes>
+    <additional_attributes>400;110;400;30;30;30;30;110</additional_attributes>
+  </element>
+  <element>
+    <type>com.umlet.element.Relation</type>
+    <coordinates>
+      <x>890</x>
+      <y>720</y>
+      <w>200</w>
+      <h>50</h>
+    </coordinates>
+    <panel_attributes>lt=-
+m1=0..*
+m2=1..1</panel_attributes>
+    <additional_attributes>180;30;30;30</additional_attributes>
+  </element>
+  <element>
+    <type>com.umlet.element.Relation</type>
+    <coordinates>
+      <x>890</x>
+      <y>900</y>
+      <w>200</w>
+      <h>50</h>
+    </coordinates>
+    <panel_attributes>lt=-
+m1=0..*
+m2=0..*</panel_attributes>
+    <additional_attributes>180;30;30;30</additional_attributes>
+  </element>
+  <element>
+    <type>com.umlet.element.Relation</type>
+    <coordinates>
+      <x>900</x>
+      <y>1330</y>
+      <w>330</w>
+      <h>110</h>
+    </coordinates>
+    <panel_attributes>lt=&lt;-
+m1=0..n
+m2=/1..1     /</panel_attributes>
+    <additional_attributes>30;90;310;90;310;30</additional_attributes>
+  </element>
+  <element>
+    <type>com.umlet.element.Relation</type>
+    <coordinates>
+      <x>530</x>
+      <y>830</y>
+      <w>160</w>
+      <h>190</h>
+    </coordinates>
+    <panel_attributes>lt=-
+m1=0..*
+m2=/          0..1/</panel_attributes>
+    <additional_attributes>70;170;30;170;30;30;130;30;130;80</additional_attributes>
+  </element>
+  <element>
+    <type>com.umlet.element.Relation</type>
+    <coordinates>
+      <x>1780</x>
+      <y>180</y>
+      <w>50</w>
+      <h>100</h>
+    </coordinates>
+    <panel_attributes>lt=.&lt;&lt;</panel_attributes>
+    <additional_attributes>30;30;30;80</additional_attributes>
+  </element>
+  <element>
+    <type>com.umlet.element.Relation</type>
+    <coordinates>
+      <x>1710</x>
+      <y>230</y>
+      <w>190</w>
+      <h>50</h>
+    </coordinates>
+    <panel_attributes>lt=.</panel_attributes>
+    <additional_attributes>30;30;170;30</additional_attributes>
+  </element>
+  <element>
+    <type>com.umlet.element.Relation</type>
+    <coordinates>
+      <x>1780</x>
+      <y>230</y>
+      <w>50</w>
+      <h>520</h>
+    </coordinates>
+    <panel_attributes>lt=.</panel_attributes>
+    <additional_attributes>30;500;30;30</additional_attributes>
+  </element>
+  <element>
+    <type>com.umlet.element.Relation</type>
+    <coordinates>
+      <x>1850</x>
+      <y>230</y>
+      <w>650</w>
+      <h>520</h>
+    </coordinates>
+    <panel_attributes>lt=.</panel_attributes>
+    <additional_attributes>30;30;630;30;630;500</additional_attributes>
+  </element>
+  <element>
+    <type>com.umlet.element.Relation</type>
+    <coordinates>
+      <x>2450</x>
+      <y>230</y>
+      <w>330</w>
+      <h>520</h>
+    </coordinates>
+    <panel_attributes>lt=.</panel_attributes>
+    <additional_attributes>30;30;310;30;310;500</additional_attributes>
+  </element>
+  <element>
+    <type>com.umlet.element.Relation</type>
+    <coordinates>
+      <x>2730</x>
+      <y>230</y>
+      <w>320</w>
+      <h>510</h>
+    </coordinates>
+    <panel_attributes>lt=.</panel_attributes>
+    <additional_attributes>30;30;300;30;300;490</additional_attributes>
+  </element>
+  <element>
+    <type>com.umlet.element.Relation</type>
+    <coordinates>
+      <x>2460</x>
+      <y>230</y>
+      <w>170</w>
+      <h>1190</h>
+    </coordinates>
+    <panel_attributes>lt=.</panel_attributes>
+    <additional_attributes>150;30;150;1170;30;1170</additional_attributes>
+  </element>
+  <element>
+    <type>com.umlet.element.Relation</type>
+    <coordinates>
+      <x>1170</x>
+      <y>230</y>
+      <w>590</w>
+      <h>520</h>
+    </coordinates>
+    <panel_attributes>lt=.</panel_attributes>
+    <additional_attributes>570;30;30;30;30;500</additional_attributes>
+  </element>
+  <element>
+    <type>com.umlet.element.Relation</type>
+    <coordinates>
+      <x>740</x>
+      <y>230</y>
+      <w>480</w>
+      <h>300</h>
+    </coordinates>
+    <panel_attributes>lt=.</panel_attributes>
+    <additional_attributes>460;30;30;30;30;280</additional_attributes>
+  </element>
+  <element>
+    <type>com.umlet.element.Relation</type>
+    <coordinates>
+      <x>0</x>
+      <y>230</y>
+      <w>780</w>
+      <h>1230</h>
+    </coordinates>
+    <panel_attributes>lt=.</panel_attributes>
+    <additional_attributes>760;30;30;30;30;1210;590;1210</additional_attributes>
+  </element>
+  <element>
+    <type>com.umlet.element.Relation</type>
+    <coordinates>
+      <x>0</x>
+      <y>1060</y>
+      <w>620</w>
+      <h>50</h>
+    </coordinates>
+    <panel_attributes>lt=.</panel_attributes>
+    <additional_attributes>30;30;600;30</additional_attributes>
+  </element>
+  <element>
+    <type>com.umlet.element.Class</type>
+    <coordinates>
+      <x>60</x>
+      <y>1130</y>
+      <w>440</w>
+      <h>170</h>
+    </coordinates>
+    <panel_attributes>&lt;&lt;Auxiliary&gt;&gt;
+CategoryFormModel
+--
+-parentId:long
+--
++CategoryFormModel():void
++CategoryFormModel(c:Category):void
++parseModel(c:Category, categoryDAO:CategoryDAO):void
++gonnaBeSelfChild(category:Category):boolean
++getParentId():long
++setParentId(id:long):void
+</panel_attributes>
+    <additional_attributes/>
+  </element>
+  <element>
+    <type>com.umlet.element.Relation</type>
+    <coordinates>
+      <x>470</x>
+      <y>1180</y>
+      <w>150</w>
+      <h>50</h>
+    </coordinates>
+    <panel_attributes>lt=&lt;&lt;-</panel_attributes>
+    <additional_attributes>130;30;30;30</additional_attributes>
+  </element>
+  <element>
+    <type>com.umlet.element.Class</type>
+    <coordinates>
+      <x>40</x>
+      <y>600</y>
+      <w>530</w>
+      <h>110</h>
+    </coordinates>
+    <panel_attributes>&lt;&lt;Auxiliary&gt;&gt;
+ManufacturerFormModel
+--
+--
++ManufacturerFormModel():void
++ManufacturerFormModel(m:Manufacturer):void
++parseModel(m:Manufacturer, manufacturerDAO:ManufacturerDAO):void</panel_attributes>
+    <additional_attributes/>
+  </element>
+  <element>
+    <type>com.umlet.element.Relation</type>
+    <coordinates>
+      <x>540</x>
+      <y>630</y>
+      <w>100</w>
+      <h>50</h>
+    </coordinates>
+    <panel_attributes>lt=&lt;&lt;-</panel_attributes>
+    <additional_attributes>80;30;30;30</additional_attributes>
+  </element>
+  <element>
+    <type>com.umlet.element.Class</type>
+    <coordinates>
+      <x>2920</x>
+      <y>1340</y>
+      <w>370</w>
+      <h>170</h>
+    </coordinates>
+    <panel_attributes>&lt;&lt;Auxiliary&gt;&gt;
+MenuFormModel
+--
+-parentId:long
+--
++MenuFormModel():void
++MenuFormModel(m:Menu):void
++parseModel(m:Menu, menuDAO:MenuDAO):void
++gonnaBeSelfChild(menu:Menu):boolean
++getParentId():long
++setParentId(parentId:long):void</panel_attributes>
+    <additional_attributes/>
+  </element>
+  <element>
+    <type>com.umlet.element.Relation</type>
+    <coordinates>
+      <x>3070</x>
+      <y>1200</y>
+      <w>50</w>
+      <h>160</h>
+    </coordinates>
+    <panel_attributes>lt=&lt;&lt;-</panel_attributes>
+    <additional_attributes>30;30;30;140</additional_attributes>
+  </element>
+  <element>
+    <type>com.umlet.element.Class</type>
+    <coordinates>
+      <x>1000</x>
+      <y>1510</y>
+      <w>1050</w>
+      <h>650</h>
+    </coordinates>
+    <panel_attributes>&lt;&lt;Auxiliary&gt;&gt;
+ArticleFormModel
+--
+-categoriesId:Set&lt;Long&gt;
+-deletedImagesId:Set&lt;Long&gt;
+-deletedMainImage:boolean
+-amountOfAddedImages:int
+-newMainImage:CommonsMultipartFile
+-manufacturerId:long
+-newAdditionalImages:List&lt;CommonsMultipartFile&gt;
+success:String
+error:String
+--
++ArticleFormModel():void
++ArticleFormModel(a:Article):void
++parseModel(article:Article, articleDAO:ArticleDAO, categoryDAO:CategoryDAO, imageDAO:ImageDAO, manufacturerDAO:ManufacturerDAO):void )
+-parseModelManufacturer(article:Article, manufacturerDAO:ManufacturerDAO):void
+-parseNewModelImages(article:Article, imageDAO:ImageDAO):void
+-parseModelDeletedImages(article:Article, imageDAO:ImageDAO):void
+-parseModelMainImage(article:Article, imageDAO:ImageDAO):void
+-parseModelCategories(article:Article, categoryDAO:CategoryDAO):void
+-parseModelMain(article:Article):void
++getCategoriesId():Set&lt;Long&gt;
++getDeletegImagesId:Set&lt;Long&gt;
++isDeletedMainImage():boolean
++getNewMainImage():CommonsMultipartFile
++getManufacturerId():long
++getNewAdditionalImages():List&lt;CommonsMultipartFile&gt;
++getSuccess():String
++getError():String
++setCategoriesId(categoriesId:Set&lt;Long&gt;):void
++setDeletedImagesId(deletedImagesId:Set&lt;Long&gt;):void
++setDeletedMainImage(deletedMainImage:boolean):void
++setAmountOfAddedImages(amountOfAddedImages:int):void
++setNewMainImage(newMainImage:CommonsMultipartFile):void
++setManufacturerId(manufacturerId:long):void
++setNewAdditionalImages(newAdditionalImages:List&lt;CommonsMultipartFile):void
++setSuccess(success:String):void
++setError(error:String
+</panel_attributes>
+    <additional_attributes/>
+  </element>
+  <element>
+    <type>com.umlet.element.Relation</type>
+    <coordinates>
+      <x>1270</x>
+      <y>1330</y>
+      <w>50</w>
+      <h>200</h>
+    </coordinates>
+    <panel_attributes>lt=&lt;&lt;-</panel_attributes>
+    <additional_attributes>30;30;30;180</additional_attributes>
+  </element>
+  <element>
+    <type>com.umlet.element.Interface</type>
+    <coordinates>
+      <x>3760</x>
+      <y>220</y>
+      <w>220</w>
+      <h>90</h>
+    </coordinates>
+    <panel_attributes>Validator
+--
++supports(Class&lt;?&gt;):boolean
++validate(Object, Errors):void
+</panel_attributes>
+    <additional_attributes/>
+  </element>
+  <element>
+    <type>com.umlet.element.Class</type>
+    <coordinates>
+      <x>4140</x>
+      <y>500</y>
+      <w>120</w>
+      <h>50</h>
+    </coordinates>
+    <panel_attributes>&lt;&lt;Auxiliary&gt;&gt;
+ArticleValidator
+--
+--</panel_attributes>
+    <additional_attributes/>
+  </element>
+  <element>
+    <type>com.umlet.element.Class</type>
+    <coordinates>
+      <x>3850</x>
+      <y>500</y>
+      <w>100</w>
+      <h>50</h>
+    </coordinates>
+    <panel_attributes>&lt;&lt;Auxiliary&gt;&gt;
+SiteValidator
+--
+--</panel_attributes>
+    <additional_attributes/>
+  </element>
+  <element>
+    <type>com.umlet.element.Class</type>
+    <coordinates>
+      <x>3440</x>
+      <y>500</y>
+      <w>170</w>
+      <h>70</h>
+    </coordinates>
+    <panel_attributes>&lt;&lt;Auxiliary&gt;&gt;
+MenuValidator
+--
+-menuDAO:MenuDAO
+--
+</panel_attributes>
+    <additional_attributes/>
+  </element>
+  <element>
+    <type>com.umlet.element.Class</type>
+    <coordinates>
+      <x>3620</x>
+      <y>500</y>
+      <w>220</w>
+      <h>70</h>
+    </coordinates>
+    <panel_attributes>&lt;&lt;Auxiliary&gt;&gt;
+CategoryValidator
+--
+-categoryDAO:CategoryDAO
+--
+</panel_attributes>
+    <additional_attributes/>
+  </element>
+  <element>
+    <type>com.umlet.element.Class</type>
+    <coordinates>
+      <x>3960</x>
+      <y>500</y>
+      <w>170</w>
+      <h>50</h>
+    </coordinates>
+    <panel_attributes>&lt;&lt;Auxiliary&gt;&gt;
+ManufacturerValidator
+--
+--</panel_attributes>
+    <additional_attributes/>
+  </element>
+  <element>
+    <type>com.umlet.element.Relation</type>
+    <coordinates>
+      <x>3490</x>
+      <y>350</y>
+      <w>760</w>
+      <h>50</h>
+    </coordinates>
+    <panel_attributes>lt=.</panel_attributes>
+    <additional_attributes>30;30;740;30</additional_attributes>
+  </element>
+  <element>
+    <type>com.umlet.element.Relation</type>
+    <coordinates>
+      <x>3490</x>
+      <y>350</y>
+      <w>50</w>
+      <h>170</h>
+    </coordinates>
+    <panel_attributes>lt=.</panel_attributes>
+    <additional_attributes>30;30;30;150</additional_attributes>
+  </element>
+  <element>
+    <type>com.umlet.element.Relation</type>
+    <coordinates>
+      <x>3700</x>
+      <y>350</y>
+      <w>50</w>
+      <h>170</h>
+    </coordinates>
+    <panel_attributes>lt=.</panel_attributes>
+    <additional_attributes>30;30;30;150</additional_attributes>
+  </element>
+  <element>
+    <type>com.umlet.element.Relation</type>
+    <coordinates>
+      <x>3850</x>
+      <y>350</y>
+      <w>50</w>
+      <h>170</h>
+    </coordinates>
+    <panel_attributes>lt=.</panel_attributes>
+    <additional_attributes>30;30;30;150</additional_attributes>
+  </element>
+  <element>
+    <type>com.umlet.element.Relation</type>
+    <coordinates>
+      <x>4020</x>
+      <y>350</y>
+      <w>50</w>
+      <h>170</h>
+    </coordinates>
+    <panel_attributes>lt=.</panel_attributes>
+    <additional_attributes>30;30;30;150</additional_attributes>
+  </element>
+  <element>
+    <type>com.umlet.element.Relation</type>
+    <coordinates>
+      <x>4200</x>
+      <y>350</y>
+      <w>50</w>
+      <h>170</h>
+    </coordinates>
+    <panel_attributes>lt=.</panel_attributes>
+    <additional_attributes>30;150;30;30</additional_attributes>
+  </element>
+  <element>
+    <type>com.umlet.element.Relation</type>
+    <coordinates>
+      <x>3850</x>
+      <y>280</y>
+      <w>50</w>
+      <h>120</h>
+    </coordinates>
+    <panel_attributes>lt=&lt;&lt;.</panel_attributes>
+    <additional_attributes>30;30;30;100</additional_attributes>
+  </element>
+</diagram>

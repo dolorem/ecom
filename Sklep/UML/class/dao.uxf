@@ -1,0 +1,261 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<diagram program="umlet" version="11.5.1">
+  <zoom_level>13</zoom_level>
+  <element>
+    <type>com.umlet.element.Class</type>
+    <coordinates>
+      <x>1339</x>
+      <y>0</y>
+      <w>546</w>
+      <h>377</h>
+    </coordinates>
+    <panel_attributes>&lt;&lt;DAO&gt;&gt;
+/AbstractDAO&lt;T extends Serializable&gt;/
+--
+-clazz:Class&lt;T&gt;
+~sessionFactory:SessionFactory
+_+fooSession:Session_
+--
++AbstractDAO(clazzToSet:Class&lt;T&gt;):void
++getById(id:long):T
++getAll():List&lt;T&gt;
++create(entity:T):void
++update(entity:T):void
++delete(entity:T):void
++deleteById(id:Long):void
++getWithCriteria(criteria:List&lt;Criterion&gt;):List&lt;T&gt;
++getCriteria():Criteria
++getCurrentSession():Session
++setSessionFactory(sessionFactory:SessionFactory):void
+</panel_attributes>
+    <additional_attributes/>
+  </element>
+  <element>
+    <type>com.umlet.element.Class</type>
+    <coordinates>
+      <x>0</x>
+      <y>715</y>
+      <w>273</w>
+      <h>104</h>
+    </coordinates>
+    <panel_attributes>&lt;&lt;DAO&gt;&gt;
+ArticleDAO
+--
+-imageDAO:ImageDAO
+--
++Article():void</panel_attributes>
+    <additional_attributes/>
+  </element>
+  <element>
+    <type>com.umlet.element.Class</type>
+    <coordinates>
+      <x>299</x>
+      <y>715</y>
+      <w>468</w>
+      <h>117</h>
+    </coordinates>
+    <panel_attributes>&lt;&lt;DAO&gt;&gt;
+CategoryDAO
+--
+--
++getItemOffsetAlphabeticalList():List&lt;Category&gt;
++loadRootAlphabetically():List&lt;Category&gt;</panel_attributes>
+    <additional_attributes/>
+  </element>
+  <element>
+    <type>com.umlet.element.Class</type>
+    <coordinates>
+      <x>793</x>
+      <y>715</y>
+      <w>156</w>
+      <h>91</h>
+    </coordinates>
+    <panel_attributes>&lt;&lt;DAO&gt;
+ImageDAO
+--
+--
++ImageDAO()
+</panel_attributes>
+    <additional_attributes/>
+  </element>
+  <element>
+    <type>com.umlet.element.Class</type>
+    <coordinates>
+      <x>975</x>
+      <y>715</y>
+      <w>403</w>
+      <h>143</h>
+    </coordinates>
+    <panel_attributes>&lt;&lt;DAO&gt;&gt;
+ManufacturerDAO
+--
+-articleDAO:ArticleDAO
+--
++ManufacturerDAO():void
++getAllAlphabetical():List&lt;Manufacturer&gt;</panel_attributes>
+    <additional_attributes/>
+  </element>
+  <element>
+    <type>com.umlet.element.Class</type>
+    <coordinates>
+      <x>1430</x>
+      <y>715</y>
+      <w>481</w>
+      <h>143</h>
+    </coordinates>
+    <panel_attributes>&lt;&lt;DAO&gt;&gt;
+MenuDAO
+--
+--
++MenuDAO():void
++loadRootAlphabetically():ArrayList&lt;Menu&gt;
++getItemOffsetAlphabeticalList():ArrayList&lt;Menu&gt;</panel_attributes>
+    <additional_attributes/>
+  </element>
+  <element>
+    <type>com.umlet.element.Class</type>
+    <coordinates>
+      <x>1950</x>
+      <y>715</y>
+      <w>169</w>
+      <h>91</h>
+    </coordinates>
+    <panel_attributes>&lt;&lt;DAO&gt;&gt;
+RoleDAO
+--
+--
++RoleDAO():void</panel_attributes>
+    <additional_attributes/>
+  </element>
+  <element>
+    <type>com.umlet.element.Class</type>
+    <coordinates>
+      <x>2145</x>
+      <y>715</y>
+      <w>299</w>
+      <h>117</h>
+    </coordinates>
+    <panel_attributes>&lt;&lt;DAO&gt;&gt;
+SiteDAO
+--
+--
++SiteDAO():void
++getWithPath(path:String):Site</panel_attributes>
+    <additional_attributes/>
+  </element>
+  <element>
+    <type>com.umlet.element.Class</type>
+    <coordinates>
+      <x>2470</x>
+      <y>715</y>
+      <w>429</w>
+      <h>117</h>
+    </coordinates>
+    <panel_attributes>&lt;&lt;DAO&gt;&gt;
+UserDAO
+--
+--
++UserDAO():void
++findByUsername(username:String):MyUser</panel_attributes>
+    <additional_attributes/>
+  </element>
+  <element>
+    <type>com.umlet.element.Relation</type>
+    <coordinates>
+      <x>1534</x>
+      <y>338</y>
+      <w>64</w>
+      <h>402</h>
+    </coordinates>
+    <panel_attributes>lt=&lt;&lt;-</panel_attributes>
+    <additional_attributes>39;39;39;377</additional_attributes>
+  </element>
+  <element>
+    <type>com.umlet.element.Relation</type>
+    <coordinates>
+      <x>130</x>
+      <y>507</y>
+      <w>2612</w>
+      <h>64</h>
+    </coordinates>
+    <panel_attributes>lt=-</panel_attributes>
+    <additional_attributes>2587;39;39;39</additional_attributes>
+  </element>
+  <element>
+    <type>com.umlet.element.Relation</type>
+    <coordinates>
+      <x>130</x>
+      <y>507</y>
+      <w>64</w>
+      <h>233</h>
+    </coordinates>
+    <panel_attributes>lt=-</panel_attributes>
+    <additional_attributes>39;39;39;208</additional_attributes>
+  </element>
+  <element>
+    <type>com.umlet.element.Relation</type>
+    <coordinates>
+      <x>520</x>
+      <y>507</y>
+      <w>64</w>
+      <h>233</h>
+    </coordinates>
+    <panel_attributes>lt=-</panel_attributes>
+    <additional_attributes>39;39;39;208</additional_attributes>
+  </element>
+  <element>
+    <type>com.umlet.element.Relation</type>
+    <coordinates>
+      <x>845</x>
+      <y>507</y>
+      <w>64</w>
+      <h>233</h>
+    </coordinates>
+    <panel_attributes>lt=-</panel_attributes>
+    <additional_attributes>39;39;39;208</additional_attributes>
+  </element>
+  <element>
+    <type>com.umlet.element.Relation</type>
+    <coordinates>
+      <x>1144</x>
+      <y>507</y>
+      <w>64</w>
+      <h>233</h>
+    </coordinates>
+    <panel_attributes>lt=-</panel_attributes>
+    <additional_attributes>39;39;39;208</additional_attributes>
+  </element>
+  <element>
+    <type>com.umlet.element.Relation</type>
+    <coordinates>
+      <x>2002</x>
+      <y>507</y>
+      <w>64</w>
+      <h>233</h>
+    </coordinates>
+    <panel_attributes>lt=-</panel_attributes>
+    <additional_attributes>39;39;39;208</additional_attributes>
+  </element>
+  <element>
+    <type>com.umlet.element.Relation</type>
+    <coordinates>
+      <x>2275</x>
+      <y>507</y>
+      <w>64</w>
+      <h>233</h>
+    </coordinates>
+    <panel_attributes>lt=-</panel_attributes>
+    <additional_attributes>39;39;39;208</additional_attributes>
+  </element>
+  <element>
+    <type>com.umlet.element.Relation</type>
+    <coordinates>
+      <x>2678</x>
+      <y>507</y>
+      <w>64</w>
+      <h>233</h>
+    </coordinates>
+    <panel_attributes>lt=-</panel_attributes>
+    <additional_attributes>39;39;39;208</additional_attributes>
+  </element>
+</diagram>

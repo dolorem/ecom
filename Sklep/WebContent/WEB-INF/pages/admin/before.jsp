@@ -77,6 +77,13 @@ ul.nav li.dropdown:hover ul.dropdown-menu {
 							<li><a href="/administrator/menu/edit.htm">Edytuj</a></li>
 						</ul>
 						</li>
+						<li class="dropdown"><a href="#">Strony<b
+								class="caret"></b></a>
+							<ul class="dropdown-menu">
+								<li><a href="/administrator/site/add.htm">Dodaj</a></li>
+								<li><a href="/administrator/site/summary.htm">Przeglądaj</a></li>
+							</ul>
+						</li>
 					</ul>
 					<ul class="nav pull-right">
 						<li><a href="/auth/logout.htm">Wyloguj się</a></li>
